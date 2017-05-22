@@ -48,28 +48,23 @@ div {
 	letter-spacing: -3px;
 	font-weight: normal;
 	display: inline-block;
-	font-size: 70px;
-	margin-left: 20px;
-	margin-top: 20px;
+	font-size: 65px;
+	margin-top: 22px;
 	position: absolute;
 }
 
 #page-header > h2 {
-	font-size: 25px;
+	font-size: 30px;
 	font-weight: normal;
-}
-
-#page-header > h2 {
 	position: relative;
 	display: inline-block;
-	margin-left: 20px;
-	top: 0px;
 }
 
 img#logo {
-	height: 100px;
-	margin: 15px;
+	height: 110px;
+	margin: 10px 15px;
 	margin-bottom: 0px;
+	margin-right: 40px
 }
 
 .float-left {
@@ -94,7 +89,8 @@ img#logo {
 	width: 45%;
 	padding: 8px;
 	height: 700px;
-	background: #ffe0e8;
+	/*background-image: url('http://cdn.newsapi.com.au/image/v1/3c36546b5eb1c5167be40dd039db260f');
+	*/background: #ffe0e8;
 	color: black;
 }
 

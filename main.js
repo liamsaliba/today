@@ -5,31 +5,44 @@ Date.prototype.getWeek = function() {
     return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
 }
 
+Number.prototype.leadZero = function(){
+	if (this < 10)
+		return "0" + this;
+	return this;
+}
+
 updateDate();
 updateTime();
 
 function updateDate() {
 	var days = ["sun", "mon", "tues", "wednes", "thurs", "fri", "satur"]
-	var months = ["january", "feburary", "march", "april", "may", "june", "july",
-	"august", "september", "october", "november", "december"]
 	$("#day").html(days[d.getDay()]);
+
+/*	var months = ["january", "feburary", "march", "april", "may", "june", "july",
+	"august", "september", "october", "november", "december"]
 	$("#date").html(d.getDate());
 	$("#month").html(months[d.getMonth()]);
-	$("#year").html(d.getYear()+1900);
+*/
+	$("#date").html(d.getDate().leadZero());
+	if(d.getMonth()===0)
+		$("#month").html(12);
+	else
+		$("#month").html(d.getMonth().leadZero());
+	$("#year").html(d.getYear()-100);
 	$("#week").html(d.getWeek());
+	$("#term").html(Math.ceil(d.getWeek()/13));
 }
 
 function updateTime() {
 	var hours = d.getHours();
 	var minutes = d.getMinutes();
 	var meridian = "pm";
-	
+
 	if(hours === 0 || hours === 12){hours = 12;}
 	else if(hours < 12){meridian = "am";}
 	else {hours = hours%12;}
 
-	if(minutes < 10) {minutes = "0"+minutes};
-	$("#time").html(hours + ":" + minutes + meridian);
+	$("#time").html(hours + ":" + minutes.leadZero() + meridian);
 }
 
 function randomDate(){
@@ -40,5 +53,4 @@ function randomDate(){
    timestamp += startDate;
    return new Date(timestamp);
 }
-
 
