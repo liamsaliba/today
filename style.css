@@ -6,13 +6,15 @@
   -moz-box-sizing: border-box;
 	box-sizing: border-box;
 	text-decoration: none;
-
+	margin: 0;
 }
 
 body {
 	width: 100%;
 	height: 100%;
 	margin: 0;
+		overflow: hidden;
+
 }
 
 .container{
@@ -29,19 +31,24 @@ div {
 }
 
 
-#page-header b, #term, #week, #year {
-	color: #ffe5ec;
+#page-header b {
+	color: #ffdbe5;
 	font-weight: normal;
+}
+
+#page-header small {
+	margin-right: 5px;
 }
 
 #page-header {
 	position: relative;
 	background: #940125;
 	width: 100%;
-	padding: 5px;
-	border-bottom: 5px solid #ea3a66;
+	padding: 20px;
+	padding-top: 5px;
+	padding-bottom: 25px;
+	border-bottom: 10px solid #a27249;
 	color: white;
-	margin-bottom: 10px
 }
 
 #page-header > h1 {
@@ -75,25 +82,75 @@ img#logo {
 	float: right;
 }
 
-#left-panel {
-	width: 63%;
+#left-container {
+	width: 65%;
+	float: left;
 }
 
-#right-panel {
+#right-container {
+	width: 35%;
+	float: right;
+}
+
+
+
+
+
+.column {
+}
+
+#now-column {
+	width: 65%;
+}
+
+#next-column {
 	width: 35%;
 }
 
-.panel {
-	border: 2px solid #8f0024;
-	border-radius: 10px;
-	width: 45%;
-	padding: 8px;
-	height: 700px;
-	/*background-image: url('http://cdn.newsapi.com.au/image/v1/3c36546b5eb1c5167be40dd039db260f');
-	*/background: #ffe0e8;
-	color: black;
+.box-head {
+	padding: 4px;
+	padding-top: 0;
+	color: #3c2a1b;
 }
 
+.box {
+	color: black;
+	border: 2px solid #8f0024;
+	background: #ffebf0;
+	padding: 4px;
+}
+
+.box-left {
+}
+
+.box-right {
+	border-left: 0;
+	background: #fff;
+}
+
+
+.panel {
+	margin-bottom: 40px;
+}
+
+#today {
+	height: 250px;
+}
+
+#announce {
+	height: 200px;
+}
+
+#upcoming {
+	height: 200px;
+}
+
+#rotator {
+	width: 650px;
+	height: 120px;
+}
+
+
 .padded {
-	padding: 20px;
+	padding: 10px 15px;
 }

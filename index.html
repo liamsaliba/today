@@ -14,22 +14,64 @@
 	<body>
 		<div class="container">
 			<div id="page-header">
-				<img id="logo" src="logo.png"><h1><span id="day">thurs</span>day <b>&#8226;</b> <span id="time">HH:DD</span></h1>
-				<h2>term <span id="term">1</span> &#8226; week <span id="week">1</span> &#8226; <span id="date">11</span>/<span id="month">may</span>/<span id="year"></span></h2>
-				<p class="float-right padded" id="quote">Daniel Traicos is good at music</p>
+				<img id="logo" src="logo.png"><h1><span id="day">thurs</span><b>day</b> <b>&#8226;</b> <span id="time">HH:DD</span></h1>
+				<h2>term <span id="term">1</span> <b>&#8226;</b> week <span id="week">1</span> <b>&#8226;</b> <span id="date">11</span>/<span id="month">may</span>/<span id="year"></span></h2>
+				<div class="panel float-right padded">
+					<div class="padded box" id="rotator">
+						Hello!
+					</div>
+				</div>
 			</div>
 
 			<div class="container padded">
-				<div class="float-left panel" id="left-panel">
-					Hello
+				<div class="container padded" id="left-container">
+					<div class="panel">
+						<div class="float-left column" id="now-column">
+							<div class="box-head">
+								<h1>NOW</h1>
+							</div>
+							<div class="box box-left">
+								This one's a box!
+							</div>
+						</div>
+						<div class="float-right column" id="next-column">
+							<div class="box-head">
+								<h1>NEXT</h1>
+							</div>
+							<div class="box box-right">
+								This one's a tighter box
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="float-right panel" id="right-panel">
-					Rello
+				<div class="container padded" id="right-container">
+					<div class="panel">
+						<div class="box-head">
+							<h1>TODAY</h1>
+						</div>
+						<div class="box" id="today">
+							This one's a box!
+						</div>
+					</div>
+					<div class="panel">
+						<div class="box-head">
+							<h1>ANNOUNCEMENTS</h1>
+						</div>
+						<div class="box" id="announce">
+							This one's a box!
+						</div>
+					</div>
+					<div class="panel">
+						<div class="box-head">
+							<h1>UPCOMING</h1>
+						</div>
+						<div class="box" id="upcoming">
+							This one's a box!
+						</div>
+					</div>
 				</div>
 			</div>
-
 		</div>
-
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="main.js"></script>
 	</body>
