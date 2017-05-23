@@ -1,4 +1,6 @@
-var d = randomDate();//new Date();
+var d = new Date();
+// var d = randomDate();
+
 
 Date.prototype.getWeek = function() {
     var onejan = new Date(this.getFullYear(), 0, 1);
