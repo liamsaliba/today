@@ -3,15 +3,16 @@ var t2 = setInterval(runEveryHour, 3600000);
 
 // TODO: make this actually function correctly
 Date.prototype.getWeek = function() {
-    return (this.getYearWeek()+1) % 2;
+    return (this.getYearWeek()+1) % 2 + 1;
 }
 
 Date.prototype.getYearWeek = function() {
-
+	var onejan = new Date(this.getFullYear(), 0, 1);
+    return weekInYear = Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7) 
 }
 
 Date.prototype.getTerm = function() {
-	return Math.ceil(this.getWeek()/13);
+	return Math.ceil(this.getYearWeek()/13);
 }
 
 Number.prototype.leadZero = function(){
