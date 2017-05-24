@@ -3,8 +3,11 @@ var t2 = setInterval(runEveryHour, 3600000);
 
 // TODO: make this actually function correctly
 Date.prototype.getWeek = function() {
-    var onejan = new Date(this.getFullYear(), 0, 1);
-    return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+    return (this.getYearWeek()+1) % 2;
+}
+
+Date.prototype.getYearWeek = function() {
+
 }
 
 Date.prototype.getTerm = function() {
@@ -59,6 +62,7 @@ function updateDate() {
 	$("#date").html(date.leadZero());
 	$("#month").html(month.leadZero());
 	$("#year").html(year.leadZero());
+	$("#yearF").html(year+2000);
 }
 
 function updateTime() {

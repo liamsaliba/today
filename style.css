@@ -54,13 +54,14 @@ div {
 	letter-spacing: -3px;
 	font-weight: normal;
 	display: inline-block;
-	font-size: 65px;
-	margin-top: 22px;
+	font-size: 70px;
+	margin-top: 20px;
 	position: absolute;
 }
 
 #page-header > h2 {
-	font-size: 30px;
+	top: 5px;
+	font-size: 36px;
 	font-weight: normal;
 	position: relative;
 	display: inline-block;
@@ -92,9 +93,6 @@ img#logo {
 }
 
 
-
-
-
 .column {
 }
 
@@ -108,8 +106,21 @@ img#logo {
 
 .box-head {
 	padding: 4px;
-	padding-top: 0;
 	color: #3c2a1b;
+}
+
+.box-head * {
+	display: inline-block;
+	position: relative;
+}
+
+.box-head h1 {
+	font-size: 3em;
+	margin-right: 5px;
+}
+
+.box-head p {
+	font-size: 30px;
 }
 
 .box {
@@ -129,15 +140,15 @@ img#logo {
 
 
 .panel {
-	margin-bottom: 40px;
+	margin-bottom: 30px;
 }
 
 #today {
-	height: 250px;
+	height: 350px;
 }
 
 #announce {
-	height: 200px;
+	height: 350px;
 }
 
 #upcoming {
@@ -155,3 +166,20 @@ img#logo {
 .padded {
 	padding: 10px 15px;
 }
+
+#header-back{
+	position: absolute;
+	top: -70px;
+	left: 380px;
+	font-size: 300px;
+	opacity: .15;
+	letter-spacing: -10px;
+}
+
+#plenty-campus{
+	left: 125px;
+	position: absolute;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
