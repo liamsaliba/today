@@ -1,17 +1,14 @@
 var t1 = setInterval(runEverySecond, 1000);
 var t2 = setInterval(runEveryHour, 3600000);
 
-function runEverySecond(){
-	updateTime();
-}
-
-function runEveryHour(){
-	updateDate();
-}
-
+// TODO: make this actually function correctly
 Date.prototype.getWeek = function() {
     var onejan = new Date(this.getFullYear(), 0, 1);
     return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+}
+
+Date.prototype.getTerm = function() {
+	return Math.ceil(this.getWeek()/13);
 }
 
 Number.prototype.leadZero = function(){
@@ -20,15 +17,31 @@ Number.prototype.leadZero = function(){
 	return this;
 }
 
-updateDate();
-updateTime();
+
+
+
+function runEverySecond(){
+	updateTime();
+}
+function runEveryHour(){
+	updateDate();
+}
+
+function init() {
+	updateDate();
+	updateTime();
+}
+
+init();
+
+
 
 function updateDate() {
 	var d = new Date();
 	var days = ["sun", "mon", "tues", "wednes", "thurs", "fri", "satur"]
 	var day = d.getDay();
 	var week = d.getWeek();
-	var term = Math.ceil(week/13);
+	var term = d.getTerm();
 	var date = d.getDate();
 	var month = d.getMonth();
 	if(month === 0)
@@ -36,13 +49,11 @@ function updateDate() {
 	var year = d.getYear()-100;
 
 	$("#day").html(days[day]);
-	// TODO: make this actually function correctly
 	$("#week").html(week);
 	$("#term").html(term);
 
 /*	var months = ["january", "feburary", "march", "april", "may", "june", "july",
 	"august", "september", "october", "november", "december"]
-	$("#date").html(d.getDate());
 	$("#month").html(months[d.getMonth()]);
 */
 	$("#date").html(date.leadZero());
