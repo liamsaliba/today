@@ -136,13 +136,14 @@ img#logo {
 }
 
 .box-head {
-	padding: 4px;
+
 }
 
-.box-head h1 {
+.box-head h1, .head {
+	padding: 5px;
+	font-weight: bold;
 	color: #3c2a1b;
 	font-size: 4em;
-	margin-right: 5px;
 }
 
 
@@ -198,6 +199,24 @@ img#logo {
 
 .box > .column-next {
 	border-left: .5px solid #8f0024;
+}
+
+.period {
+	font-size: 30px;
+}
+
+.info {
+	float: right;
+	background: #ffccd9;
+	border: 1px solid #8f0024;
+	text-align: center;
+	width: 80px;
+	height: 80px;
+}
+
+.minutes-till {
+	font-weight: normal;
+	font-size: 24px;
 }
 
 

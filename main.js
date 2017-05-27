@@ -3,7 +3,7 @@ var t2 = setInterval(runEveryHour, 3600000);
 
 // TODO: make this actually function correctly
 Date.prototype.getWeek = function() {
-    return (this.getYearWeek()+1) % 2 + 1;
+    return (this.getYearWeek()) % 2 + 1;
 }
 
 Date.prototype.getYearWeek = function() {
@@ -55,7 +55,7 @@ function updateDate() {
 	$("#day").html(days[day]);
 	$("#week").html(week);
 	$("#term").html(term);
-
+	$("#daynum").html(day * week);
 /*	var months = ["january", "feburary", "march", "april", "may", "june", "july",
 	"august", "september", "october", "november", "december"]
 	$("#month").html(months[d.getMonth()]);
