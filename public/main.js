@@ -1,5 +1,9 @@
-var t1 = setInterval(runEverySecond, 1000);
+var t1 = setInterval(runEverySecond, 10000);
 var t2 = setInterval(runEveryHour, 3600000);
+
+var d = new Date();
+var daynum = 6;
+var timetable;
 
 // TODO: make this actually function correctly
 Date.prototype.getWeek = function() {
@@ -26,6 +30,7 @@ Number.prototype.leadZero = function(){
 
 function runEverySecond(){
 	updateTime();
+	getCurrentInfo();
 }
 function runEveryHour(){
 	updateDate();
@@ -41,18 +46,61 @@ init();
 
 
 function unpackJSON() {
-	var timetable;
 	$.getJSON('./timetable.json', function(data){
 		timetable = data;
-		console.log(data)
+		getCurrentInfo(data);
 	});
+}
 
-	console.log(timetable);
+function getTodayTime(time) {
+	return Date.parse(d.toLocaleDateString() + " " + time);
+}
+
+function getCurrentInfo() {
+	// gets the current period.
+	var timesOfCurrentDay = timetable.days[(daynum-1)%5].times;
+	var currentTime = d.getTime();
+	var currentPeriod, nextPeriod, afterPeriod;
+	var firstrun = true;
+	for (var period in timesOfCurrentDay){
+		if(nextPeriod !== undefined){
+			afterPeriod = period;
+			break;
+		}
+		else if(currentPeriod !== undefined){
+			nextPeriod = period;
+		}
+		else if(currentTime < getTodayTime(timesOfCurrentDay[period].endTime)){
+			if(currentTime >= getTodayTime(timesOfCurrentDay[period].startTime)){
+				currentPeriod = period
+			}
+			else {
+				if(firstrun){
+					currentPeriod = "before-school";
+					nextPeriod = period;
+				} else {
+					currentPeriod = period;
+				}
+			}
+		}
+		firstrun = false;
+	}
+	if(afterPeriod === undefined)
+		afterPeriod = "after-school";
+	if(nextPeriod === undefined){
+		nextPeriod = "after-school"
+	if(currentPeriod === undefined)
+		currentPeriod = "after-school"
+	}
+	console.log(d.toLocaleTimeString() + " is " + currentPeriod + ", next is " + nextPeriod + ", after is " + afterPeriod);
+
+	var currentBlock = timetable.timetable[(daynum-1)][currentPeriod];
+	console.log(timetable.blocks[currentBlock].subjects);
 }
 
 
 function updateDate() {
-	var d = new Date();
+	d = new Date();
 	var days = ["sun", "mon", "tues", "wednes", "thurs", "fri", "satur"]
 	var day = d.getDay();
 	var week = d.getWeek();
@@ -76,8 +124,8 @@ function updateDate() {
 }
 
 function updateTime() {
-	var d = new Date();
-	//var d = randomDate();
+	//d = new Date();
+	d = randomDate();
 	var hours = d.getHours();
 	var minutes = d.getMinutes();
 	var seconds = d.getSeconds();

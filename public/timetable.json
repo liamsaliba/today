@@ -7,11 +7,11 @@
           "startTime": "8:30",
           "endTime": "8:35"
         },
-        "period-1": {
+        "period1": {
           "startTime": "8:45",
           "endTime": "9:40"
         },
-        "period-2": {
+        "period2": {
           "startTime": "9:45",
           "endTime": "10:40"
         },
@@ -19,11 +19,11 @@
           "startTime": "10:40",
           "endTime": "11:00"
         },
-        "period-3": {
+        "period3": {
           "startTime": "11:05",
           "endTime": "12:00"
         },
-        "period-4": {
+        "period4": {
           "startTime": "12:05",
           "endTime": "12:45"
         },
@@ -31,11 +31,11 @@
           "startTime": "12:45",
           "endTime": "13:30"
         },
-        "period-5": {
+        "period5": {
           "startTime": "13:35",
           "endTime": "14:30"
         },
-        "period-6": {
+        "period6": {
           "startTime": "14:35",
           "endTime": "15:30"
         }
@@ -44,11 +44,11 @@
     {
       "id": 2,
       "times": {
-        "period-1": {
+        "period1": {
           "startTime": "8:30",
           "endTime": "9:25"
         },
-        "period-2": {
+        "period2": {
           "startTime": "9:30",
           "endTime": "10:25"
         },
@@ -56,11 +56,11 @@
           "startTime": "10:25",
           "endTime": "10:45"
         },
-        "period-3": {
+        "period3": {
           "startTime": "10:50",
           "endTime": "11:45"
         },
-        "period-4": {
+        "period4": {
           "startTime": "11:50",
           "endTime": "12:45"
         },
@@ -68,11 +68,11 @@
           "startTime": "12:45",
           "endTime": "13:30"
         },
-        "period-5": {
+        "period5": {
           "startTime": "13:35",
           "endTime": "14:30"
         },
-        "period-6": {
+        "period6": {
           "startTime": "14:35",
           "endTime": "15:30"
         }
@@ -85,11 +85,11 @@
           "startTime": "8:30",
           "endTime": "8:45"
         },
-        "period-1": {
+        "period1": {
           "startTime": "8:50",
           "endTime": "9:45"
         },
-        "period-2": {
+        "period2": {
           "startTime": "9:50",
           "endTime": "10:45"
         },
@@ -97,11 +97,11 @@
           "startTime": "10:40",
           "endTime": "11:00"
         },
-        "period-3": {
+        "period3": {
           "startTime": "11:10",
           "endTime": "12:05"
         },
-        "period-4": {
+        "period4": {
           "startTime": "12:10",
           "endTime": "13:05"
         },
@@ -109,7 +109,7 @@
           "startTime": "13:05",
           "endTime": "14:00"
         },
-        "period-5": {
+        "period5": {
           "startTime": "14:05",
           "endTime": "15:00"
         }
@@ -118,11 +118,11 @@
     {
       "id": 4,
       "times": {
-        "period-1": {
+        "period1": {
           "startTime": "8:30",
           "endTime": "9:25"
         },
-        "period-2": {
+        "period2": {
           "startTime": "9:30",
           "endTime": "10:25"
         },
@@ -130,11 +130,11 @@
           "startTime": "10:25",
           "endTime": "10:40"
         },
-        "period-3": {
+        "period3": {
           "startTime": "10:45",
           "endTime": "11:40"
         },
-        "period-4": {
+        "period4": {
           "startTime": "11:45",
           "endTime": "12:40"
         },
@@ -142,11 +142,11 @@
           "startTime": "12:40",
           "endTime": "13:05"
         },
-        "period-5": {
+        "period5": {
           "startTime": "13:10",
           "endTime": "14:05"
         },
-        "period-6": {
+        "period6": {
           "startTime": "14:10",
           "endTime": "15:30"
         }
@@ -159,11 +159,11 @@
           "startTime": "8:30",
           "endTime": "8:35"
         },
-        "period-1": {
+        "period1": {
           "startTime": "8:45",
           "endTime": "9:40"
         },
-        "period-2": {
+        "period2": {
           "startTime": "9:45",
           "endTime": "10:40"
         },
@@ -171,11 +171,11 @@
           "startTime": "10:40",
           "endTime": "11:00"
         },
-        "period-3": {
+        "period3": {
           "startTime": "11:05",
           "endTime": "12:00"
         },
-        "period-4": {
+        "period4": {
           "startTime": "12:05",
           "endTime": "12:45"
         },
@@ -183,11 +183,11 @@
           "startTime": "12:45",
           "endTime": "13:30"
         },
-        "period-5": {
+        "period5": {
           "startTime": "13:35",
           "endTime": "14:30"
         },
-        "period-6": {
+        "period6": {
           "startTime": "14:35",
           "endTime": "15:30"
         }
@@ -557,124 +557,84 @@
       ]
     }
   ],
-  "timetable": {
-    "day-1": {
-      "week": 1,
-      "day": 1,
-      "blocks": [
-        4,
-        2,
-        1,
-        0,
-        5,
-        3
-      ]
+  "timetable": [
+    {
+      "period1": 4,
+      "period2": 2,
+      "period3": 1,
+      "period4": 0,
+      "period5": 5,
+      "period6": 3
     },
-    "day-2": {
-      "week": 1,
-      "day": 2,
-      "blocks": [
-        1,
-        1,
-        6,
-        5,
-        0,
-        0
-      ]
+    {
+      "period1": 1,
+      "period2": 1,
+      "period3": 6,
+      "period4": 5,
+      "period5": 0,
+      "period6": 0
     },
-    "day-3": {
-      "week": 1,
-      "day": 3,
-      "blocks": [
-        2,
-        2,
-        6,
-        3,
-        4
-      ]
+    {
+      "period1": 2,
+      "period2": 2,
+      "period3": 6,
+      "period4": 3,
+      "period5": 4
     },
-    "day-4": {
-      "week": 1,
-      "day": 4,
-      "blocks": [
-        3,
-        3,
-        5,
-        6,
-        4,
-        0
-      ]
+    {
+      "period1": 3,
+      "period2": 3,
+      "period3": 5,
+      "period4": 6,
+      "period5": 4,
+      "period6": 0
     },
-    "day-5": {
-      "week": 1,
-      "day": 5,
-      "blocks": [
-        1,
-        4,
-        5,
-        0,
-        2,
-        6
-      ]
+    {
+      "period1": 1,
+      "period2": 4,
+      "period3": 5,
+      "period4": 0,
+      "period5": 2,
+      "period6": 6
     },
-    "day-6": {
-      "week": 2,
-      "day": 1,
-      "blocks": [
-        4,
-        2,
-        1,
-        0,
-        5,
-        3
-      ]
+    {
+      "period1": 4,
+      "period2": 2,
+      "period3": 1,
+      "period4": 0,
+      "period5": 5,
+      "period6": 3
     },
-    "day-7": {
-      "week": 2,
-      "day": 2,
-      "blocks": [
-        6,
-        6,
-        5,
-        1,
-        0,
-        0
-      ]
+    {
+      "period1": 6,
+      "period2": 6,
+      "period3": 5,
+      "period4": 1,
+      "period5": 0,
+      "period6": 0
     },
-    "day-8": {
-      "week": 2,
-      "day": 3,
-      "blocks": [
-        4,
-        4,
-        3,
-        2,
-        6
-      ]
+    {
+      "period1": 4,
+      "period2": 4,
+      "period3": 3,
+      "period4": 2,
+      "period5": 6
     },
-    "day-9": {
-      "week": 2,
-      "day": 4,
-      "blocks": [
-        5,
-        5,
-        3,
-        1,
-        2,
-        0
-      ]
+    {
+      "period1": 5,
+      "period2": 5,
+      "period3": 3,
+      "period4": 1,
+      "period5": 2,
+      "period6": 0
     },
-    "day-10": {
-      "week": 2,
-      "day": 5,
-      "blocks": [
-        6,
-        4,
-        1,
-        0,
-        3,
-        2
-      ]
+    {
+      "period1": 6,
+      "period2": 4,
+      "period3": 1,
+      "period4": 0,
+      "period5": 3,
+      "period6": 2
     }
-  }
+  ]
 }
