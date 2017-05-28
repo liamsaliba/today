@@ -34,10 +34,21 @@ function runEveryHour(){
 function init() {
 	updateDate();
 	updateTime();
+	unpackJSON();
 }
 
 init();
 
+
+function unpackJSON() {
+	var timetable;
+	$.getJSON('./timetable.json', function(data){
+		timetable = data;
+		console.log(data)
+	});
+
+	console.log(timetable);
+}
 
 
 function updateDate() {
