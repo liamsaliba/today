@@ -2,6 +2,27 @@
 {
 	"blocks": [
 		{
+			"id": 0,
+			"subjects": [
+				{
+					"abbr": "12FUTURES1",
+					"name": "Futures"
+				},
+				{
+					"abbr": "ASSEMBLY",
+					"name": "Assembly"
+				},
+				{
+					"abbr": "CHAPEL",
+					"name": "Chapel"
+				},
+				{
+					"abbr": "12EP",
+					"name": "Enhancement Period"
+				}
+			]
+		},
+		{
 			"id": 1,
 			"subjects": [
 				{

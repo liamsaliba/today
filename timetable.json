@@ -200,6 +200,130 @@
 				}	
 			}
 		]
+	},
+	{
+		"timetable": [
+			{
+				"day-1": {
+					"week": 1,
+					"day": 1,
+					"blocks": {
+						"period-1": 4,
+						"period-2": 2,
+						"period-3": 1,
+						"period-4": 0,
+						"period-5": 5,
+						"period-6": 3
+					}
+				},
+				"day-2": {
+					"week": 1,
+					"day": 2,
+					"blocks": {
+						"period-1": 1,
+						"period-2": 1,
+						"period-3": 6,
+						"period-4": 5,
+						"period-5": 0,
+						"period-6": 0
+					}
+				},
+				"day-3": {
+					"week": 1,
+					"day": 3,
+					"blocks": {
+						"period-1": 2,
+						"period-2": 2,
+						"period-3": 6,
+						"period-4": 3,
+						"period-5": 4
+					}
+				},
+				"day-4": {
+					"week": 1,
+					"day": 4,
+					"blocks": {
+						"period-1": 3,
+						"period-2": 3,
+						"period-3": 5,
+						"period-4": 6,
+						"period-5": 4,
+						"period-6": 0
+					}
+				},
+				"day-5": {
+					"week": 1,
+					"day": 5,
+					"blocks": {
+						"period-1": 1,
+						"period-2": 4,
+						"period-3": 5,
+						"period-4": 0,
+						"period-5": 2,
+						"period-6": 6
+					}
+				},
+				"day-6": {
+					"week": 1,
+					"day": 1,
+					"blocks": {
+						"period-1": 4,
+						"period-2": 2,
+						"period-3": 1,
+						"period-4": 0,
+						"period-5": 5,
+						"period-6": 3
+					}
+				},
+				"day-7": {
+					"week": 1,
+					"day": 2,
+					"blocks": {
+						"period-1": 6,
+						"period-2": 6,
+						"period-3": 5,
+						"period-4": 1,
+						"period-5": 0,
+						"period-6": 0
+					}
+				},
+				"day-8": {
+					"week": 1,
+					"day": 3,
+					"blocks": {
+						"period-1": 4,
+						"period-2": 4,
+						"period-3": 3,
+						"period-4": 2,
+						"period-5": 6
+					}
+				},
+				"day-9": {
+					"week": 1,
+					"day": 4,
+					"blocks": {
+						"period-1": 5,
+						"period-2": 5,
+						"period-3": 3,
+						"period-4": 1,
+						"period-5": 2,
+						"period-6": 0
+					}
+				},
+				"day-10": {
+					"week": 1,
+					"day": 5,
+					"blocks": {
+						"period-1": 6,
+						"period-2": 4,
+						"period-3": 1,
+						"period-4": 0,
+						"period-5": 3,
+						"period-6": 2
+					}
+				}
+			}	
+		]
 	}
 
 ]
