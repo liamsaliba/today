@@ -134,12 +134,9 @@ img#logo {
 
 
 .panel {
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 }
 
-.box-head {
-
-}
 
 .box-head h1, .head {
 	padding: 5px;
@@ -155,9 +152,6 @@ img#logo {
 	/*margin-bottom: 8px;*/
 	overflow: hidden;
 	font-size: 24px;
-}
-
-.box-body {
 	padding: 8px;
 	background: #ffebf0;
 }
@@ -185,6 +179,12 @@ img#logo {
 	display: flex;
 }
 
+.flexbox .box {
+	margin: 5px;
+	margin-top: 0px;
+	height: 110px;
+}
+
 .column-now {
 	width: 60%;
 }
@@ -193,13 +193,14 @@ img#logo {
 	width: 40%;
 }
 
-.box > .column-now {
+.column-now > .box {
 	background: #ffccd9;
 }
 
-.box > .column-next {
-	border-left: 5px solid white;
-}
+
+
+
+
 
 .period {
 	font-size: 30px;
@@ -224,7 +225,13 @@ img#logo {
 .subject-title {
 	font-size: 50px;
 	text-transform: uppercase;
+	text-overflow: ellipsis;
+
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
 }
+
 
 .subject-abbr {
 	color: #555;
@@ -234,11 +241,17 @@ img#logo {
 	font-weight: bold;
 }
 
-
 .subject-detail {
 	font-style: italic;
 }
 
+.subject-teacher {
+	text-overflow: ellipsis;
+
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 
 
