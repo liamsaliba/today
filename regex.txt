@@ -1,0 +1,18 @@
+ style="[^<]+"
+ nowrap="" valign="bottom"
+ width="[^<]+"
+
+.
+<td width="104">
+							        <p><span>C-[^<]+</span></p>
+							      </td>
+.
+
+							      <td width="95">
+							        <p><span>[^<]+</span></p>
+							      </td>
+							      <td width="104">
+							        <p><span>[^<]+</span></p>
+							      </td>
+
+.
