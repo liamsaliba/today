@@ -68,7 +68,7 @@ div {
 #page-header > h2 {
 	top: 10px;
 	opacity: .98;
-	font-size: 40px;
+	font-size: 36px;
 	font-weight: normal;
 	position: relative;
 	display: inline-block;
@@ -111,23 +111,16 @@ img#logo {
 
 
 /* body stuff */
-
-.float-left {
-	float: left;
-}
-
-.float-right {
-	float: right;
+.flexbox {
+	display: flex;
 }
 
 #left-container {
 	width: 55%;
-	float: left;
 }
 
 #right-container {
 	width: 45%;
-	float: right;
 }
 
 
@@ -137,12 +130,18 @@ img#logo {
 	margin-bottom: 20px;
 }
 
-
-.box-head h1, .head {
+.box-head {
 	padding: 5px;
 	font-weight: bold;
 	color: #3c2a1b;
-	font-size: 4em;
+	height: 75px;
+	overflow: hidden;
+}
+
+
+.box-head h1 {
+	display: inline-block;
+	font-size: 3.5em;
 }
 
 
@@ -162,7 +161,7 @@ img#logo {
 }
 
 #announce {
-	max-height: 350px;
+	max-height: 330px;
 }
 
 /* unused */
@@ -175,55 +174,37 @@ img#logo {
 
 
 
-.flexbox {
-	display: flex;
-}
 
-.flexbox .box {
+
+#timetable .box {
 	margin: 5px;
 	margin-top: 0px;
 	height: 110px;
 }
 
+.box-short {
+	height: 75px !important;
+}
+
 .column-now {
-	width: 60%;
+	width: 58%;
 }
 
 .column-next {
-	width: 40%;
+	width: 42%;
 }
 
 .column-now > .box {
 	background: #ffccd9;
 }
 
-
-
-
-
-
-.period {
-	font-size: 30px;
+.column-next {
+	opacity: .85;
 }
-
-.info {
-	float: right;
-	background: #ffccd9;
-	border: 1px solid #8f0024;
-	text-align: center;
-	width: 80px;
-	height: 80px;
-}
-
-.minutes-till {
-	font-weight: normal;
-	font-size: 24px;
-}
-
-
 
 .subject-title {
 	font-size: 50px;
+	line-height: 60px;
 	text-transform: uppercase;
 	text-overflow: ellipsis;
 
@@ -256,6 +237,76 @@ img#logo {
 
 
 
+
+#footer {
+	color: #ccc;
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+
+	background: #940125;
+	width: 100%;
+	padding: 10px 20px;
+	border-top: 5px solid #a27249;
+}
+
+
+
 .padded {
 	padding: 10px 15px;
+}
+
+.padded-horiz {
+	padding: 0px 15px;
+}
+
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
+
+
+.badge {
+	font-size: 26px;
+  padding: 3px 10px;
+  font-weight: bold;
+  white-space: nowrap;
+  color: #ffffff;
+  background-color: #999999;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+  vertical-align: middle;
+  position: relative;
+  top: -4px;
+}
+
+}
+.badge-error {
+  background-color: #b94a48;
+}
+.badge-warning {
+  background-color: #f89406;
+}
+.badge-success {
+  background-color: #468847;
+}
+.badge-info {
+  background-color: #3a87ad;
+}
+.badge-inverse {
+  background-color: #333333;
+}
+
+.info {
+	font-weight: normal;
+	font-style: italic;
+	font-size: 24px;
+	color: #555;
+	float: right;
+	margin-top: 28px;
 }

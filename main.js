@@ -56,14 +56,12 @@ function updateDate() {
 	$("#week").html(week);
 	$("#term").html(term);
 	$("#daynum").html(day * week);
-/*	var months = ["january", "feburary", "march", "april", "may", "june", "july",
-	"august", "september", "october", "november", "december"]
-	$("#month").html(months[d.getMonth()]);
-*/
-	$("#date").html(date.leadZero());
-	$("#month").html(month.leadZero());
-	$("#year").html(year.leadZero());
+
 	$("#yearF").html(year+2000);
+	var months = ["January", "Feburary", "March", "April", "May", "June", "July",
+	"August", "September", "October", "November", "December"]
+	$("#shortdate").html(" <b>&#8226;</b> " + date.leadZero() + "/" + month.leadZero() + "/" + year);
+	$("#date").html(date.leadZero() + " " + months[month] + " " + (year+2000));
 }
 
 function updateTime() {
