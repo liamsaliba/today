@@ -310,3 +310,24 @@ img#logo {
 	float: right;
 	margin-top: 28px;
 }
+
+
+td:nth-child(1){
+	font-size: 20px;
+	text-align: center;
+	width: 65px;
+}
+
+td:nth-child(2){
+	width: 580px;
+	font-weight: bold;
+}
+
+td:nth-child(3) {
+	width: 200px;
+	font-size: 20px;
+}
+
+a {
+	color: black;
+}

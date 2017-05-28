@@ -1,0 +1,12 @@
+{
+  "name": "ivanhoe-today",
+  "version": "0.0.0",
+  "description": "Timetable kiosk",
+  "main": "index.js",
+  "author": "Liam Saliba",
+  "private": true,
+  "license": "BSD",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
