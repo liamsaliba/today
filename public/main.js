@@ -93,8 +93,11 @@ function getCurrentInfo() {
 		for (var i = 0; i < 8; i++){
 			if(i < currentSubjects.length) {
 				subjectList.push(currentSubjects[i].name);
-				$(".column-now .box:nth-child(" + (i+2) + ") .subject-title").html(currentSubjects[i].name);
-				$(".column-now .box:nth-child(" + (i+2) + ") .subject-abbr").html(currentSubjects[i].abbr);
+				var currentBox = $(".column-now .box:nth-child(" + (i+2) + ")")
+				currentBox.find(".subject-title").html(currentSubjects[i].name);
+				currentBox.find(".subject-abbr").html(currentSubjects[i].abbr);
+				currentBox.find(".subject-room").html(currentSubjects[i].room);
+				currentBox.find(".subject-teacher").html(currentSubjects[i].teacher);
 			} else {
 				console.log(i);
 			}
@@ -106,8 +109,6 @@ function getCurrentInfo() {
 	}
 	$("#now > .period").html(timetable.periods[currentPeriod]);
 	$("#next > .period").html(timetable.periods[nextPeriod]);
-
-	
 }
 
 
