@@ -387,7 +387,7 @@
         },
         {
           "abbr": "12BM1",
-          "name": "Buisness Management",
+          "name": "Business Management",
           "fullname": "Business Management",
           "teacher": "TEACHERNAME",
           "teacherabbr": "NNN",
@@ -636,5 +636,18 @@
       "period5": 3,
       "period6": 2
     }
-  ]
+  ],
+  "periods": {
+    "beforeSchool": "Before School",
+    "form": "Form",
+    "period1": "Period 1",
+    "period2": "Period 2",
+    "recess": "Recess",
+    "period3": "Period 3",
+    "period4": "Period 4",
+    "lunch": "Lunch",
+    "period5": "Period 5",
+    "period6": "Period 6",
+    "afterSchool": "After School"
+  }
 }

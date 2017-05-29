@@ -1,4 +1,4 @@
-var t1 = setInterval(runEverySecond, 10000);
+var t1 = setInterval(runEverySecond, 1000);
 var t2 = setInterval(runEveryHour, 3600000);
 
 var d = new Date();
@@ -61,13 +61,14 @@ function getCurrentInfo() {
 	var timesOfCurrentDay = timetable.days[(daynum-1)%5].times;
 	var currentTime = d.getTime();
 	var currentPeriod, nextPeriod, afterPeriod;
+	currentPeriod = nextPeriod = afterPeriod = "afterSchool";
 	var firstrun = true;
 	for (var period in timesOfCurrentDay){
-		if(nextPeriod !== undefined){
+		if(nextPeriod !== "afterSchool"){
 			afterPeriod = period;
 			break;
 		}
-		else if(currentPeriod !== undefined){
+		else if(currentPeriod !== "afterSchool"){
 			nextPeriod = period;
 		}
 		else if(currentTime < getTodayTime(timesOfCurrentDay[period].endTime)){
@@ -76,7 +77,7 @@ function getCurrentInfo() {
 			}
 			else {
 				if(firstrun){
-					currentPeriod = "before-school";
+					currentPeriod = "beforeSchool";
 					nextPeriod = period;
 				} else {
 					currentPeriod = period;
@@ -85,17 +86,28 @@ function getCurrentInfo() {
 		}
 		firstrun = false;
 	}
-	if(afterPeriod === undefined)
-		afterPeriod = "after-school";
-	if(nextPeriod === undefined){
-		nextPeriod = "after-school"
-	if(currentPeriod === undefined)
-		currentPeriod = "after-school"
-	}
-	console.log(d.toLocaleTimeString() + " is " + currentPeriod + ", next is " + nextPeriod + ", after is " + afterPeriod);
+	if(currentPeriod.includes("period")) {
+		var currentBlock = timetable.timetable[(daynum-1)][currentPeriod];
+		var currentSubjects = timetable.blocks[currentBlock].subjects;
+		var subjectList = [];
+		for (var i = 0; i < 8; i++){
+			if(i < currentSubjects.length) {
+				subjectList.push(currentSubjects[i].name);
+				$(".column-now .box:nth-child(" + (i+2) + ") .subject-title").html(currentSubjects[i].name);
+				$(".column-now .box:nth-child(" + (i+2) + ") .subject-abbr").html(currentSubjects[i].abbr);
+			} else {
+				console.log(i);
+			}
+		}
+		console.log(subjectList)
+	} else {
 
-	var currentBlock = timetable.timetable[(daynum-1)][currentPeriod];
-	console.log(timetable.blocks[currentBlock].subjects);
+		//TODO show tomorrow's classes
+	}
+	$("#now > .period").html(timetable.periods[currentPeriod]);
+	$("#next > .period").html(timetable.periods[nextPeriod]);
+
+	
 }
 
 
@@ -110,11 +122,11 @@ function updateDate() {
 	if(month === 0)
 		month = 12;
 	var year = d.getYear()-100;
-
+	daynum = day*week;
 	$("#day").html(days[day]);
 	$("#week").html(week);
 	$("#term").html(term);
-	$("#daynum").html(day * week);
+	$("#daynum").html(daynum);
 
 	$("#yearF").html(year+2000);
 	var months = ["January", "Feburary", "March", "April", "May", "June", "July",

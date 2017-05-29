@@ -115,12 +115,17 @@ img#logo {
 	display: flex;
 }
 
+#main-container{ 
+	padding: 15px;
+}
+
 #left-container {
 	width: 55%;
 }
 
 #right-container {
 	width: 45%;
+	padding-left: 20px;
 }
 
 
@@ -177,40 +182,44 @@ img#logo {
 
 
 #timetable .box {
-	margin: 5px;
-	margin-top: 0px;
-	height: 110px;
+	margin-bottom: 10px;
+	height: 90px;
+	/*display: none;*/
 }
 
 .box-short {
-	height: 75px !important;
+	height: 66px !important;
 }
 
 .column-now {
-	width: 58%;
+	width: 55%;
+	margin-right: 12px;
 }
 
 .column-next {
-	width: 42%;
+	width: 45%;
 }
 
 .column-now > .box {
 	background: #ffccd9;
 }
-
+W
 .column-next {
 	opacity: .85;
 }
 
-.subject-title {
-	font-size: 50px;
-	line-height: 60px;
-	text-transform: uppercase;
+#timetable .box p {
 	text-overflow: ellipsis;
 
   /* Required for text-overflow to do anything */
   white-space: nowrap;
   overflow: hidden;
+}
+
+.subject-title {
+	font-size: 40px;
+	line-height: 45px;
+	text-transform: uppercase;
 }
 
 
@@ -219,19 +228,10 @@ img#logo {
 }
 
 .subject-room {
-	font-weight: bold;
-}
-
-.subject-detail {
-	font-style: italic;
 }
 
 .subject-teacher {
-	text-overflow: ellipsis;
-
-  /* Required for text-overflow to do anything */
-  white-space: nowrap;
-  overflow: hidden;
+	font-style: italic;
 }
 
 
@@ -254,10 +254,6 @@ img#logo {
 
 .padded {
 	padding: 10px 15px;
-}
-
-.padded-horiz {
-	padding: 0px 15px;
 }
 
 .float-left {
