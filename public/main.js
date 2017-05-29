@@ -86,31 +86,50 @@ function getCurrentInfo() {
 		}
 		firstrun = false;
 	}
-	if(currentPeriod.includes("period")) {
-		var currentBlock = timetable.timetable[(daynum-1)][currentPeriod];
-		var currentSubjects = timetable.blocks[currentBlock].subjects;
-		var subjectList = [];
-		for (var i = 0; i < 8; i++){
-			if(i < currentSubjects.length) {
-				subjectList.push(currentSubjects[i].name);
-				var currentBox = $(".column-now .box:nth-child(" + (i+2) + ")")
-				currentBox.find(".subject-title").html(currentSubjects[i].name);
-				currentBox.find(".subject-abbr").html(currentSubjects[i].abbr);
-				currentBox.find(".subject-room").html(currentSubjects[i].room);
-				currentBox.find(".subject-teacher").html(currentSubjects[i].teacher);
-			} else {
-				console.log(i);
-			}
-		}
-		console.log(subjectList)
-	} else {
-
-		//TODO show tomorrow's classes
-	}
-	$("#now > .period").html(timetable.periods[currentPeriod]);
-	$("#next > .period").html(timetable.periods[nextPeriod]);
+	updateColumn(currentPeriod, ".column-now");
+	updateColumn(nextPeriod, ".column-next");
 }
 
+function updateColumn(period, column) {
+	$(column + " .period").html(timetable.periods[period]);
+	$(column + " .block").hide();
+
+	if(period.includes("period")) {
+		var block = timetable.timetable[(daynum-1)][period];
+		var subjects = timetable.blocks[block].subjects;
+		
+		if(block !== 0)
+			$(column + " .block").html("<span class='tiny'>Block</span> " + block).show();
+
+		for (var i = 0; i < 8; i++){
+			var box = $(column + " .box:nth-child(" + (i+2) + ")")
+			if(i < subjects.length) {
+				if(subjects[i].name === "Private Study"){
+					box.addClass("box-short");
+					box.find(".line:nth-child(2)").hide();
+				} else {
+					box.find(".subject-room").html(subjects[i].room);
+					var teacher = subjects[i].teacher;
+					if(teacher === "" || teacher === "TEACHERNAME")
+						box.find(".subject-teacher").html(subjects[i].teacherabbr);
+					else
+						box.find(".subject-teacher").html(subjects[i].teacher);
+					box.find(".line:nth-child(2)").show();
+					box.removeClass("box-short");
+				}
+				box.find(".subject-title").html(subjects[i].name);
+				box.find(".subject-abbr").html(subjects[i].abbr);
+				box.fadeIn();
+			} else {
+				box.fadeOut();
+			}
+		}
+	} else {
+		$(column + " .box").fadeOut();
+		//TODO show tomorrow's classes
+	}
+
+}
 
 function updateDate() {
 	d = new Date();
@@ -137,8 +156,8 @@ function updateDate() {
 }
 
 function updateTime() {
-	//d = new Date();
-	d = randomDate();
+	d = new Date();
+	//d = randomDate();
 	var hours = d.getHours();
 	var minutes = d.getMinutes();
 	var seconds = d.getSeconds();
@@ -156,8 +175,8 @@ function updateTime() {
 
 
 function randomDate(){
-   var startDate = new Date(2015,0,1).getTime();
-   var endDate =  new Date(2017,0,1).getTime();
+   var startDate = new Date(2017,0,1,8,0,0,0).getTime();
+   var endDate =  new Date(2017,0,1,17,0,0,0).getTime();
    var spaces = (endDate - startDate);
    var timestamp = Math.round(Math.random() * spaces);
    timestamp += startDate;

@@ -116,7 +116,7 @@ img#logo {
 }
 
 #main-container{ 
-	padding: 15px;
+	padding: 15px 30px;
 }
 
 #left-container {
@@ -147,6 +147,7 @@ img#logo {
 .box-head h1 {
 	display: inline-block;
 	font-size: 3.5em;
+	word-spacing: -5px;
 }
 
 
@@ -205,6 +206,7 @@ img#logo {
 
 .column-now > .box {
 	background: #ffccd9;
+	display: none;
 }
 
 #timetable .box {
@@ -222,11 +224,21 @@ img#logo {
   width: 100%;
 }
 
+#timetable .box .line:not(:first-child) {
+	position: relative;
+	top: -5px;
+}
+
+
+
 .subject-title {
 	font-size: 40px;
-	font-weight: bold;
 	/*text-transform: uppercase;*/
 	width: 600px;
+}
+
+.column-now .subject-title {
+	font-weight: bold;
 }
 
 
@@ -274,7 +286,7 @@ img#logo {
 
 
 .badge {
-	font-size: 26px;
+	font-size: 24px;
   padding: 3px 10px;
   font-weight: bold;
   white-space: nowrap;
@@ -286,6 +298,7 @@ img#logo {
   vertical-align: middle;
   position: relative;
   top: -4px;
+  	word-spacing: 0px;
 }
 
 }
@@ -303,6 +316,10 @@ img#logo {
 }
 .badge-inverse {
   background-color: #333333;
+}
+
+.tiny {
+	font-size: .8em;
 }
 
 .info {
