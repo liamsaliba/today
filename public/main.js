@@ -39,13 +39,13 @@ function runEveryHour(){
 function init() {
 	updateDate();
 	updateTime();
-	unpackJSON();
+	loadTimetable();
 }
 
 init();
 
 
-function unpackJSON() {
+function loadTimetable() {
 	$.getJSON('./timetable.json', function(data){
 		timetable = data;
 		getCurrentInfo(data);
@@ -58,12 +58,12 @@ function getTodayTime(time) {
 
 function getCurrentInfo() {
 	// gets the current period.
-	var timesOfCurrentDay = timetable.days[(daynum-1)%5].times;
+	var periodTimes = timetable.days[(daynum-1)%5].times;
 	var currentTime = d.getTime();
 	var currentPeriod, nextPeriod, afterPeriod;
 	currentPeriod = nextPeriod = afterPeriod = "afterSchool";
 	var firstrun = true;
-	for (var period in timesOfCurrentDay){
+	for (var period in periodTimes){
 		if(nextPeriod !== "afterSchool"){
 			afterPeriod = period;
 			break;
@@ -71,8 +71,8 @@ function getCurrentInfo() {
 		else if(currentPeriod !== "afterSchool"){
 			nextPeriod = period;
 		}
-		else if(currentTime < getTodayTime(timesOfCurrentDay[period].endTime)){
-			if(currentTime >= getTodayTime(timesOfCurrentDay[period].startTime)){
+		else if(currentTime < getTodayTime(periodTimes[period].endTime)){
+			if(currentTime >= getTodayTime(periodTimes[period].startTime)){
 				currentPeriod = period
 			}
 			else {
@@ -86,8 +86,14 @@ function getCurrentInfo() {
 		}
 		firstrun = false;
 	}
+	$(".column-now .time-till").html(periodTimes[currentPeriod].startTime + " - " + periodTimes[currentPeriod].endTime)
+	$(".column-next .time-till").html("<span class='tiny'>in </span>" + minutesUntilTime(d.getTime(), getTodayTime(periodTimes[nextPeriod].startTime)) + "m")
 	updateColumn(currentPeriod, ".column-now");
 	updateColumn(nextPeriod, ".column-next");
+}
+
+function minutesUntilTime(timeBefore, timeAfter){
+	return Math.ceil((timeAfter - timeBefore) / 1000 / 60);
 }
 
 function updateColumn(period, column) {

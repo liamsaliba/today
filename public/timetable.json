@@ -95,7 +95,7 @@
         },
         "recess": {
           "startTime": "10:40",
-          "endTime": "11:00"
+          "endTime": "11:05"
         },
         "period3": {
           "startTime": "11:10",
@@ -355,7 +355,7 @@
           "abbr": "12SA1",
           "name": "Studio Arts",
           "fullname": "Studio Arts",
-          "teacher": "H Swift",
+          "teacher": "Helene Swift",
           "teacherabbr": "HSW",
           "room": "C3"
         },
