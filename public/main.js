@@ -1,9 +1,11 @@
 var t1 = setInterval(runEverySecond, 1000);
-var t2 = setInterval(runEveryHour, 3600000);
+var t2 = setInterval(runEveryHour, 1000);
 
 var d = new Date();
 var daynum;
 var timetable;
+var lastPeriod;
+const EXTRA_EFFECTS = true;
 
 // TODO: make this actually function correctly
 Date.prototype.getWeek = function() {
@@ -25,7 +27,19 @@ Number.prototype.leadZero = function(){
 	return this;
 }
 
-
+jQuery.fn.extend({
+	ahtml: function(text) {
+		this.slideUp(100, function(){
+			$(this).html(text).slideDown(100);
+		});
+		return this;
+	},
+	bhtml: function(text) {
+		if(text != $(this).html()){
+			$(this).ahtml(text);
+		}
+	}
+})
 
 
 function runEverySecond(){
@@ -87,14 +101,13 @@ function getCurrentInfo() {
 		beforeSchool = false;
 	}
 	if(currentPeriod === "afterSchool"){
-		$(".column-now .time-till").hide();
+		$(".column-now .time-till").slideUp();
 	}
 	else {
-		$(".column-now .time-till").show();
 		if(currentPeriod === "beforeSchool"){
-
+			$(".column-now .time-till").bhtml(minutesUntilTime(getTodayTime(periodTimes[nextPeriod].startTime)) + "<span class='tiny'>m until school</span>");
 		} else {
-			$(".column-now .time-till").html(minutesUntilTime(d.getTime(), getTodayTime(periodTimes[currentPeriod].endTime)) + "<span class='tiny'>m left</span>");
+			$(".column-now .time-till").bhtml(minutesUntilTime(getTodayTime(periodTimes[currentPeriod].endTime)) + "<span class='tiny'>m left</span>");
 		}
 	}
 
@@ -102,13 +115,12 @@ function getCurrentInfo() {
 	updateColumn(nextPeriod, ".column-next");
 }
 
-function minutesUntilTime(timeBefore, timeAfter){
-	return Math.ceil((timeAfter - timeBefore) / 1000 / 60);
+function minutesUntilTime(time){
+	return Math.ceil((time - d.getTime()) / 1000 / 60);
 }
 
 function updateColumn(period, column) {
-	$(column + " .period").html(timetable.periods[period]);
-	$(column + " .block").hide();
+	$(column + " .period").bhtml(timetable.periods[period]);
 
 	if(period.includes("period")) {
 		var block = timetable.timetable[(daynum-1)][period];
@@ -117,35 +129,47 @@ function updateColumn(period, column) {
 		console.log(color);
 
 		if(block !== 0)
-			$(column + " .block").html("<span class='tiny'>Block</span> " + block).show();
+			$(column + " .block").bhtml("<span class='tiny'>Block</span> " + block)
 
 		for (var i = 0; i < 8; i++){
 			var box = $(column + " .box:nth-child(" + (i+2) + ")")
 			if(i < subjects.length) {
+				// Private Study short block
 				if(subjects[i].name === "Private Study"){
-					box.addClass("box-short");
-					box.find(".line:nth-child(2)").hide();
+					if(!box.hasClass("box-short")){
+						box.find(".line:nth-child(2)").hide();
+						box.addClass("box-short").slideUp();
+					}
 				} else {
+					if(box.hasClass("box-short")){
+						box.find(".line:nth-child(2)").show();
+						box.removeClass("box-short").slideDown();
+					}
+					// regular subjects
 					box.find(".subject-room").html(subjects[i].room);
 					var teacher = subjects[i].teacher;
 					if(teacher === "" || teacher === "TEACHERNAME")
 						box.find(".subject-teacher").html(subjects[i].teacherabbr);
 					else
 						box.find(".subject-teacher").html(subjects[i].teacher);
-					box.find(".line:nth-child(2)").show();
-					box.removeClass("box-short");
 				}
 				box.find(".subject-title").html(subjects[i].name);
 				box.find(".subject-abbr").html(subjects[i].abbr);
-				box.fadeIn();
+				if(lastPeriod != period && EXTRA_EFFECTS){
+					box.slideUp();
+				}
+				box.slideDown();
 			} else {
-				box.fadeOut();
+				// box not used
+				box.slideUp();
 			}
 		}
 	} else {
-		$(column + " .box").fadeOut();
+		$(column + " .block").slideUp();
+		$(column + " .box").slideUp();
 		//TODO show tomorrow's classes
 	}
+	lastPeriod = period;
 }
 
 function updateDate() {
@@ -158,18 +182,21 @@ function updateDate() {
 	var month = d.getMonth();
 	if(month === 0)
 		month = 12;
+	var months = ["January", "Feburary", "March", "April", "May", "June", "July",
+	"August", "September", "October", "November", "December"];
 	var year = d.getYear()-100;
 	daynum = day*week;
-	$("#day").html(days[day]);
-	$("#week").html(week);
-	$("#term").html(term);
-	$("#daynum").html(daynum);
+
+	$("#date").bhtml(date.leadZero() + " " + months[month] + " " + (year+2000))
+	$("#day").bhtml(days[day]);
+	$("#week").bhtml(week);
+	$("#term").bhtml(term);
+	$("#daynum").bhtml(daynum);
 
 	$("#yearF").html(year+2000);
-	var months = ["January", "Feburary", "March", "April", "May", "June", "July",
-	"August", "September", "October", "November", "December"]
-	$("#shortdate").html(" <b>&#8226;</b> " + date.leadZero() + "/" + month.leadZero() + "/" + year);
-	$("#date").html(date.leadZero() + " " + months[month] + " " + (year+2000));
+	
+	$("#shortdate").bhtml(date.leadZero() + "/" + month.leadZero() + "/" + year);
+	$("#date").bhtml(date.leadZero() + " " + months[month] + " " + (year+2000));
 }
 
 function updateTime() {
@@ -186,7 +213,12 @@ function updateTime() {
 	}
 	if(hours === 0){hours = 12;}
 
-	$("#time").html(hours + ":" + minutes.leadZero() + "<small>:" + seconds.leadZero() + "</small><b>" + meridian + "</b>");
+	$("#hour").bhtml(" " + hours);
+	$("#min").bhtml(minutes.leadZero());
+	$("#sec").bhtml(seconds.leadZero());
+	$("#meridian").bhtml(meridian);
+
+	//TODO: Fix the jittery time bug
 }
 
 
