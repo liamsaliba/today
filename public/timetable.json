@@ -647,14 +647,14 @@
   "periods": {
     "beforeSchool": "Before School",
     "form": "Form",
-    "period1": "<span class='tiny'>Period</span> 1",
-    "period2": "<span class='tiny'>Period</span> 2",
+    "period1": "<span class=\"tiny\">Period</span> 1",
+    "period2": "<span class=\"tiny\">Period</span> 2",
     "recess": "Recess",
-    "period3": "<span class='tiny'>Period</span> 3",
-    "period4": "<span class='tiny'>Period</span> 4",
+    "period3": "<span class=\"tiny\">Period</span> 3",
+    "period4": "<span class=\"tiny\">Period</span> 4",
     "lunch": "Lunch",
-    "period5": "<span class='tiny'>Period</span> 5",
-    "period6": "<span class='tiny'>Period</span> 6",
+    "period5": "<span class=\"tiny\">Period</span> 5",
+    "period6": "<span class=\"tiny\">Period</span> 6",
     "afterSchool": "After School"
   }
 }

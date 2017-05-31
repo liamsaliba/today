@@ -5,7 +5,7 @@ var d = new Date();
 var daynum;
 var timetable;
 var lastPeriod;
-const EXTRA_EFFECTS = true;
+const EXTRA_EFFECTS = false;
 
 // TODO: make this actually function correctly
 Date.prototype.getWeek = function() {
@@ -105,9 +105,9 @@ function getCurrentInfo() {
 	}
 	else {
 		if(currentPeriod === "beforeSchool"){
-			$(".column-now .time-till").bhtml(minutesUntilTime(getTodayTime(periodTimes[nextPeriod].startTime)) + "<span class='tiny'>m until school</span>");
+			$(".column-now .time-till").bhtml(minutesUntilTime(getTodayTime(periodTimes[nextPeriod].startTime)) + '<span class="tiny">m until school</span>');
 		} else {
-			$(".column-now .time-till").bhtml(minutesUntilTime(getTodayTime(periodTimes[currentPeriod].endTime)) + "<span class='tiny'>m left</span>");
+			$(".column-now .time-till").bhtml(minutesUntilTime(getTodayTime(periodTimes[currentPeriod].endTime)) + '<span class="tiny">m left</span>');
 		}
 	}
 
@@ -129,7 +129,7 @@ function updateColumn(period, column) {
 		console.log(color);
 
 		if(block !== 0)
-			$(column + " .block").bhtml("<span class='tiny'>Block</span> " + block)
+			$(column + " .block").bhtml('<span class="tiny">Block</span> ' + block)
 
 		for (var i = 0; i < 8; i++){
 			var box = $(column + " .box:nth-child(" + (i+2) + ")")
@@ -200,8 +200,8 @@ function updateDate() {
 }
 
 function updateTime() {
-	//d = new Date();
-	d = randomDate();
+	d = new Date();
+	//d = randomDate();
 	var hours = d.getHours();
 	var minutes = d.getMinutes();
 	var seconds = d.getSeconds();
