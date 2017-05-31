@@ -2,7 +2,7 @@ var t1 = setInterval(runEverySecond, 1000);
 var t2 = setInterval(runEveryHour, 3600000);
 
 var d = new Date();
-var daynum = 6;
+var daynum;
 var timetable;
 
 // TODO: make this actually function correctly
@@ -103,7 +103,9 @@ function updateColumn(period, column) {
 	if(period.includes("period")) {
 		var block = timetable.timetable[(daynum-1)][period];
 		var subjects = timetable.blocks[block].subjects;
-		
+		var color = timetable.blocks[block].color;
+		console.log(color);
+
 		if(block !== 0)
 			$(column + " .block").html("<span class='tiny'>Block</span> " + block).show();
 

@@ -14,11 +14,3 @@ const PORTNUMBER = 6060;
 http.listen(PORTNUMBER, function(){
 	console.log("Public server started, listening on port " + PORTNUMBER);
 });
-
-
-// words for username generation
-//var words;
-//fs.readFile(__dirname + "/public/timetable.json", function(err, data) {
-//    if(err) throw err;
-//    words = data.toString().split("\n");
-//});

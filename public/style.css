@@ -209,6 +209,10 @@ img#logo {
 	display: none;
 }
 
+.column-next > .box {
+	display: none;
+}
+
 #timetable .box {
 	overflow: hidden;
 }

@@ -197,6 +197,7 @@
   "blocks": [
     {
       "id": 0,
+      "color": "grey",
       "subjects": [
         {
           "abbr": "12FUTURES1",
@@ -218,6 +219,7 @@
     },
     {
       "id": 1,
+      "color": "red",
       "subjects": [
         {
           "abbr": "12EC1",
@@ -268,6 +270,7 @@
     },
     {
       "id": 2,
+      "color": "purple",
       "subjects": [
         {
           "abbr": "12AC1",
@@ -326,6 +329,7 @@
     },
     {
       "id": 3,
+      "color": "blue",
       "subjects": [
         {
           "abbr": "12CH1",
@@ -376,6 +380,7 @@
     },
     {
       "id": 4,
+      "color": "green",
       "subjects": [
         {
           "abbr": "12BI1",
@@ -442,6 +447,7 @@
     },
     {
       "id": 5,
+      "color": "yellow",
       "subjects": [
         {
           "abbr": "12BI2",
@@ -492,6 +498,7 @@
     },
     {
       "id": 6,
+      "color": "orange",
       "subjects": [
         {
           "abbr": "12BM2",
