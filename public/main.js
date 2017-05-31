@@ -62,7 +62,7 @@ function getCurrentInfo() {
 	var currentTime = d.getTime();
 	var currentPeriod, nextPeriod, afterPeriod;
 	currentPeriod = nextPeriod = afterPeriod = "afterSchool";
-	var firstrun = true;
+	var beforeSchool = true;
 	for (var period in periodTimes){
 		if(nextPeriod !== "afterSchool"){
 			afterPeriod = period;
@@ -76,7 +76,7 @@ function getCurrentInfo() {
 				currentPeriod = period
 			}
 			else {
-				if(firstrun){
+				if(beforeSchool){
 					currentPeriod = "beforeSchool";
 					nextPeriod = period;
 				} else {
@@ -84,10 +84,20 @@ function getCurrentInfo() {
 				}
 			}
 		}
-		firstrun = false;
+		beforeSchool = false;
 	}
-	$(".column-now .time-till").html(periodTimes[currentPeriod].startTime + " - " + periodTimes[currentPeriod].endTime)
-	$(".column-next .time-till").html("<span class='tiny'>in </span>" + minutesUntilTime(d.getTime(), getTodayTime(periodTimes[nextPeriod].startTime)) + "m")
+	if(currentPeriod === "afterSchool"){
+		$(".column-now .time-till").hide();
+	}
+	else {
+		$(".column-now .time-till").show();
+		if(currentPeriod === "beforeSchool"){
+
+		} else {
+			$(".column-now .time-till").html(minutesUntilTime(d.getTime(), getTodayTime(periodTimes[currentPeriod].endTime)) + "<span class='tiny'>m left</span>");
+		}
+	}
+
 	updateColumn(currentPeriod, ".column-now");
 	updateColumn(nextPeriod, ".column-next");
 }
@@ -136,7 +146,21 @@ function updateColumn(period, column) {
 		$(column + " .box").fadeOut();
 		//TODO show tomorrow's classes
 	}
+}
 
+function updateTimeTill(currentEndTime, nextStartTime){
+	if(currentPeriod === "afterSchool"){
+		// time-till is end-time
+		$(".column-now .time-till").hide();
+	} else if (currentPeriod === "beforeSchool") {
+		$(".column-now .time-till").hide();
+	} else {
+		//$(".column-now .time-till").html(periodTimes[currentPeriod].startTime + " - " + periodTimes[currentPeriod].endTime)
+		$(".column-now .time-till").html(minutesUntilTime(d.getTime(), getTodayTime(periodTimes[nextPeriod].startTime)) + "<span class='tiny'>min left</span>")
+		$(".column-now .time-till").show();
+		$(".column-next .time-till").html("<span class='tiny'>in </span>" + minutesUntilTime(d.getTime(), getTodayTime(periodTimes[nextPeriod].startTime)) + "m");
+	}
+	
 }
 
 function updateDate() {
@@ -164,8 +188,8 @@ function updateDate() {
 }
 
 function updateTime() {
-	d = new Date();
-	//d = randomDate();
+	//d = new Date();
+	d = randomDate();
 	var hours = d.getHours();
 	var minutes = d.getMinutes();
 	var seconds = d.getSeconds();
