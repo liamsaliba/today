@@ -148,21 +148,6 @@ function updateColumn(period, column) {
 	}
 }
 
-function updateTimeTill(currentEndTime, nextStartTime){
-	if(currentPeriod === "afterSchool"){
-		// time-till is end-time
-		$(".column-now .time-till").hide();
-	} else if (currentPeriod === "beforeSchool") {
-		$(".column-now .time-till").hide();
-	} else {
-		//$(".column-now .time-till").html(periodTimes[currentPeriod].startTime + " - " + periodTimes[currentPeriod].endTime)
-		$(".column-now .time-till").html(minutesUntilTime(d.getTime(), getTodayTime(periodTimes[nextPeriod].startTime)) + "<span class='tiny'>min left</span>")
-		$(".column-now .time-till").show();
-		$(".column-next .time-till").html("<span class='tiny'>in </span>" + minutesUntilTime(d.getTime(), getTodayTime(periodTimes[nextPeriod].startTime)) + "m");
-	}
-	
-}
-
 function updateDate() {
 	d = new Date();
 	var days = ["sun", "mon", "tues", "wednes", "thurs", "fri", "satur"]
