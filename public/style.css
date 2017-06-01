@@ -53,11 +53,6 @@ div {
 
 /* Header stuff */
 
-#page-header b {
-	color: #ffdbe5;
-	font-weight: normal;
-}
-
 #meridian {
 	margin-left: 5px;
 }
@@ -73,16 +68,22 @@ div {
 	color: white;
 }
 
-#page-header > h1 {
+#page-header h1 {
 	letter-spacing: -3px;
 	font-weight: normal;
 	display: inline-block;
 	font-size: 70px;
 	margin-top: 22px;
-	position: absolute;
+	position: fixed;
+	overflow: hidden;
 }
 
-#page-header > h2 {
+#page-header b {
+	color: #ffdbe5;
+	font-weight: normal;
+}
+
+#page-header h2 {
 	top: 10px;
 	opacity: .98;
 	font-size: 36px;
@@ -101,11 +102,12 @@ img#logo {
 #rotator {
 	border-radius: 10px;
 	margin: 10px;
+	margin-right: 8px;
 	margin-top: 15px;
 	background: #ffccd9;
 	height: 120px;
 	opacity: .95;
-	width: calc(100% - 1080px);
+	width: calc(100% - 1090px);
 }
 
 #header-back{
@@ -236,20 +238,19 @@ img#logo {
 
 #timetable .box .line {
 	text-overflow: ellipsis;
-		display: inline-block;
-		-webkit-margin-before: 0;
+	display: inline-block;
+	-webkit-margin-before: 0;
     -webkit-margin-after: 0;
-  /* Required for text-overflow to do anything */
-  white-space: nowrap;
-  overflow: hidden;
-  width: 100%;
+  	/* Required for text-overflow to do anything */
+  	white-space: nowrap;
+  	overflow: hidden;
+ 	width: 100%;
 }
 
 #timetable .box .line:not(:first-child) {
 	position: relative;
 	top: -5px;
 }
-
 
 
 .subject-title {
@@ -367,6 +368,22 @@ button, input {
 	color: #555;
 	float: right;
 	margin-top: 28px;
+}
+
+.start-time, .end-time {
+	position: relative;
+	top: -10px;
+	font-size: 12px;
+	font-weight: normal;
+	color: #aaa;
+}
+
+.start-time {
+	float: left;
+}
+
+.end-time {
+	float: right;
 }
 
 

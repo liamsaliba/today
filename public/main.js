@@ -1,5 +1,6 @@
 var t1 = setInterval(runEverySecond, 1000);
 var t2 = setInterval(runEveryHour, 3600000);
+var t3 = setInterval(runEveryDay, 86400000);
 
 var d = new Date();
 var daynum;
@@ -11,7 +12,7 @@ var EXTRA_EFFECTS = false;
 var DEBUG_RND = false;
 var DEBUG_FRZ = false;
 var DEBUG_TICK = false;
-
+var DEBUG_COL = false;
 
 // TODO: make this actually function correctly
 Date.prototype.getWeek = function() {
@@ -45,6 +46,14 @@ jQuery.fn.extend({
 		if(text != $(this).html()){
 			$(this).ahtml(text);
 		}
+	},
+	applyColor: function(color) {
+		if(!$(this).hasClass("mdc-bg-" + color)){
+			$(this).removeClass (function (index, className) {
+			    return (className.match (/(^|\s)mdc-bg-\S+/g) || []).join(' ');
+			}).addClass("mdc-bg-"+color);
+		}
+		$(this).slideDown(100);
 	}
 })
 
@@ -55,6 +64,10 @@ function runEverySecond(){
 }
 function runEveryHour(){
 	updateDate();
+}
+
+function runEveryDay(){
+	window.reload();
 }
 
 function init() {
@@ -77,6 +90,8 @@ flatpickr('#flatpickr', {
 $("#flatpickr").change(function() {
 	d = new Date(Date.parse($(this).val()));
 	updateDate();
+	updateTime();
+	getCurrentInfo();
 });
 
 /// BUTTONS
@@ -163,7 +178,11 @@ function getCurrentInfo() {
 		if(currentPeriod === "beforeSchool"){
 			$(".column-now .time-till").bhtml(minutesUntilTime(getTodayTime(periodTimes[nextPeriod].startTime)) + '<span class="tiny">m until school</span>');
 		} else {
-			$(".column-now .time-till").bhtml(minutesUntilTime(getTodayTime(periodTimes[currentPeriod].endTime)) + '<span class="tiny">m left</span>');
+			if(currentPeriod.includes("period") && currentTime < getTodayTime(periodTimes[currentPeriod].startTime)){
+				$(".column-now .time-till").bhtml(minutesUntilTime(getTodayTime(periodTimes[currentPeriod].startTime)) + '<span class="tiny">m to class</span>');
+			} else {
+				$(".column-now .time-till").bhtml(minutesUntilTime(getTodayTime(periodTimes[currentPeriod].endTime)) + '<span class="tiny">m left</span>');
+			}
 		}
 	}
 
@@ -184,9 +203,12 @@ function updateColumn(period, column) {
 		var color = timetable.blocks[block].color;
 		console.log(color);
 
-		if(block !== 0)
-			$(column + " .block").bhtml('<span class="tiny">Block</span> ' + block)
-
+		if(block !== 0) {
+			$(column + " .block").bhtml('<span class="tiny">Block</span> ' + block);
+			$(column + " .block").applyColor(color);
+		} else {
+			$(column + " .block").slideUp();
+		}
 		for (var i = 0; i < 8; i++){
 			var box = $(column + " .box:nth-child(" + (i+2) + ")")
 			if(i < subjects.length) {
@@ -211,9 +233,12 @@ function updateColumn(period, column) {
 				}
 				box.find(".subject-title").html(subjects[i].name);
 				box.find(".subject-abbr").html(subjects[i].abbr);
+				//TODO: fix this
 				if(lastPeriod != period && EXTRA_EFFECTS){
 					box.slideUp();
 				}
+				if(DEBUG_COL)
+					box.applyColor(color+"-100");
 				box.slideDown();
 			} else {
 				// box not used
@@ -225,6 +250,15 @@ function updateColumn(period, column) {
 		$(column + " .box").slideUp();
 		//TODO show tomorrow's classes
 	}
+
+	if(!period.includes("School")){
+		$(column + " .start-time").bhtml(timetable.days[(daynum-1)%5].times[period].startTime);
+		$(column + " .end-time").bhtml(timetable.days[(daynum-1)%5].times[period].endTime);
+	} else {
+		$(column + " .start-time").fadeOut();
+		$(column + " .end-time").fadeOut();
+	}
+
 	lastPeriod = period;
 }
 
