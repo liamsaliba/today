@@ -1,11 +1,15 @@
 var t1 = setInterval(runEverySecond, 1000);
-var t2 = setInterval(runEveryHour, 1000);
+var t2 = setInterval(runEveryHour, 3600000);
 
 var d = new Date();
 var daynum;
 var timetable;
 var lastPeriod;
-const EXTRA_EFFECTS = false;
+
+var EXTRA_EFFECTS = false;
+var DEBUG_RND = true;
+var DEBUG_FRZ = false;
+
 
 // TODO: make this actually function correctly
 Date.prototype.getWeek = function() {
@@ -54,9 +58,10 @@ function init() {
 	updateDate();
 	updateTime();
 	loadTimetable();
+	loadComplete();
 }
 
-init();
+$(document).ready(function() { init(); })
 
 
 function loadTimetable() {
@@ -64,6 +69,12 @@ function loadTimetable() {
 		timetable = data;
 		getCurrentInfo(data);
 	});
+}
+
+function loadComplete() {
+	setTimeout(function(){
+		$("#loading").fadeOut();
+	}, 400);
 }
 
 function getTodayTime(time) {
@@ -173,7 +184,6 @@ function updateColumn(period, column) {
 }
 
 function updateDate() {
-	d = new Date();
 	var days = ["sun", "mon", "tues", "wednes", "thurs", "fri", "satur"]
 	var day = d.getDay();
 	var week = d.getWeek();
@@ -200,8 +210,7 @@ function updateDate() {
 }
 
 function updateTime() {
-	d = new Date();
-	//d = randomDate();
+	getDate();
 	var hours = d.getHours();
 	var minutes = d.getMinutes();
 	var seconds = d.getSeconds();
@@ -221,7 +230,17 @@ function updateTime() {
 	//TODO: Fix the jittery time bug
 }
 
+function getDate(){
+	if(DEBUG_RND){
+		d = randomDate();
+	}
+	else if(DEBUG_FRZ){
 
+	}
+	else{
+		d = new Date();
+	};
+}
 
 function randomDate(){
    var startDate = new Date(2017,0,1,8,0,0,0).getTime();
