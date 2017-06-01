@@ -10,8 +10,7 @@
 
 	    <link rel="stylesheet" href="style.css">
 	    <link rel="stylesheet" href="lib/material-design-color-palette.min.css">
-
-	    <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
+	    <link rel="stylesheet" href="lib/flatpickr.min.css">
 
 		<title>Ivanhoe Today</title>
 	</head>
@@ -221,16 +220,25 @@
 			</div>
 
 			<div id="footer">
-				<p>Ivanhoe today | Liam Saliba >> contact for any issues or ideas</p>
+				Ivanhoe today | Liam Saliba >> contact for any issues or ideas
+				<button class="btn-toggle" id="btn-rndmode" name="DEBUG_RND" type="button">Random Mode</button>
+				<button class="btn-toggle" id="btn-effects" name="EXTRA_EFFECTS" type="button">Effects</button>
+				<button class="btn-toggle" id="btn-freeze" name="DEBUG_FRZ" type="button">Freeze Time</button>
+				<button class="btn-toggle" id="btn-tick" name="DEBUG_TICK" type="button">Time Tick</button>
+				<input id="flatpickr" type="text" placeholder="Date/Time">
 			</div>
 		</div>
 		
 		<div id="loading">
 			<img id="loading-icon" src="loading.gif">
+			<script>
+				//random image loading screen
+				//document.getElementById("loading-icon").src = "img/pic"+Math.ceil(Math.random()*2)+".jpeg";
+			</script>
 		</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="https://unpkg.com/flatpickr"></script>
+		<script src="lib/flatpickr.min.js"></script>
 		<script src="main.js"></script>
 	</body>
 

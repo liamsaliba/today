@@ -6,9 +6,11 @@ var daynum;
 var timetable;
 var lastPeriod;
 
+// Button variables
 var EXTRA_EFFECTS = false;
-var DEBUG_RND = true;
+var DEBUG_RND = false;
 var DEBUG_FRZ = false;
+var DEBUG_TICK = false;
 
 
 // TODO: make this actually function correctly
@@ -32,12 +34,13 @@ Number.prototype.leadZero = function(){
 }
 
 jQuery.fn.extend({
+	// animation even when text is not changed
 	ahtml: function(text) {
 		this.slideUp(100, function(){
 			$(this).html(text).slideDown(100);
 		});
 		return this;
-	},
+	}, // animation when text is changed
 	bhtml: function(text) {
 		if(text != $(this).html()){
 			$(this).ahtml(text);
@@ -58,12 +61,52 @@ function init() {
 	updateDate();
 	updateTime();
 	loadTimetable();
+	loadButtons();
 	loadComplete();
 }
 
 $(document).ready(function() { init(); })
 
 
+
+
+flatpickr('#flatpickr', {
+	enableTime: true
+});
+
+$("#flatpickr").change(function() {
+	d = new Date(Date.parse($(this).val()));
+	updateDate();
+});
+
+/// BUTTONS
+// click -> set boolean, set button state
+$(".btn-toggle").click(function() {
+	var bool = $(this).attr('name');
+	window[bool] = !window[bool];
+	setBtnState(this, window[bool]);
+})
+
+// set button state for all toggleable buttons
+function loadButtons() {
+	$(".btn-toggle").each(function() {
+		var bool = $(this).attr('name');
+		setBtnState(this, window[bool]);
+	})
+}
+
+// show button state for its variable
+function setBtnState(button, bool){
+	if(bool){
+		$(button).removeClass("mdc-bg-red").addClass("mdc-bg-green");
+	} else {
+		$(button).removeClass("mdc-bg-green").addClass("mdc-bg-red");
+	}
+}
+
+
+
+/// Loads master timetable json into variable
 function loadTimetable() {
 	$.getJSON('./timetable.json', function(data){
 		timetable = data;
@@ -71,12 +114,14 @@ function loadTimetable() {
 	});
 }
 
+/// fades out loading screen
 function loadComplete() {
 	setTimeout(function(){
 		$("#loading").fadeOut();
 	}, 400);
 }
 
+// 
 function getTodayTime(time) {
 	return Date.parse(d.toLocaleDateString() + " " + time);
 }
@@ -186,6 +231,8 @@ function updateColumn(period, column) {
 function updateDate() {
 	var days = ["sun", "mon", "tues", "wednes", "thurs", "fri", "satur"]
 	var day = d.getDay();
+	if(day === 6)
+		day = 0;
 	var week = d.getWeek();
 	var term = d.getTerm();
 	var date = d.getDate();
@@ -195,7 +242,7 @@ function updateDate() {
 	var months = ["January", "Feburary", "March", "April", "May", "June", "July",
 	"August", "September", "October", "November", "December"];
 	var year = d.getYear()-100;
-	daynum = day*week;
+	daynum = day + (week-1)*5;
 
 	$("#date").bhtml(date.leadZero() + " " + months[month] + " " + (year+2000))
 	$("#day").bhtml(days[day]);
@@ -231,11 +278,14 @@ function updateTime() {
 }
 
 function getDate(){
-	if(DEBUG_RND){
+	if(DEBUG_FRZ){
+
+	}
+	else if(DEBUG_RND){
 		d = randomDate();
 	}
-	else if(DEBUG_FRZ){
-
+	else if(DEBUG_TICK){
+		d = new Date(d.getTime() + 1000);
 	}
 	else{
 		d = new Date();
