@@ -1,6 +1,11 @@
 {
   "days": [
     {
+      "id": 0,
+      "times": {
+      }
+    },
+    {
       "id": 1,
       "times": {
         "form": {
@@ -192,6 +197,11 @@
           "endTime": "15:30"
         }
       }
+    }, 
+    {
+      "id": 6,
+      "times": {
+      }
     }
   ],
   "year": [
@@ -200,7 +210,7 @@
   "blocks": [
     {
       "id": 0,
-      "color": "grey",
+      "color": "brown",
       "subjects": [
         {
           "abbr": "12FUTURES1",
@@ -332,7 +342,7 @@
     },
     {
       "id": 3,
-      "color": "blue",
+      "color": "indigo",
       "subjects": [
         {
           "abbr": "12CH1",
@@ -450,7 +460,7 @@
     },
     {
       "id": 5,
-      "color": "blue-grey",
+      "color": "cyan",
       "subjects": [
         {
           "abbr": "12BI2",

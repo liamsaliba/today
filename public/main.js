@@ -1,11 +1,11 @@
-var t1 = setInterval(runEverySecond, 1000);
-var t2 = setInterval(runEveryHour, 3600000);
-var t3 = setInterval(runEveryDay, 86400000);
+var ts = setInterval(runEverySecond, 1000);
+var th = setInterval(runEveryHour, 3600000);
+var td = setInterval(runEveryDay, 86400000);
 
 var d = new Date();
-var daynum;
+var dayNumberW;
+var dayNumber;
 var timetable;
-var lastPeriod;
 
 // Button variables
 var EXTRA_EFFECTS = false;
@@ -14,7 +14,7 @@ var DEBUG_FRZ = false;
 var DEBUG_TICK = false;
 var DEBUG_COL = false;
 
-// TODO: make this actually function correctly
+// TODO: make these function correctly
 Date.prototype.getWeek = function() {
     return (this.getYearWeek()) % 2 + 1;
 }
@@ -85,7 +85,7 @@ $(document).ready(function() { init(); })
 
 
 
-
+// Time/date picker for debug
 flatpickr('#flatpickr', {
 	enableTime: true
 });
@@ -140,27 +140,25 @@ function loadComplete() {
 }
 
 // 
-function getTodayTime(time) {
+function parseTime(time) {
 	return Date.parse(d.toLocaleDateString() + " " + time);
 }
 
-function getCurrentInfo() {
-	// gets the current period.
-	var periodTimes = timetable.days[(daynum-1)%5].times;
-	var currentTime = d.getTime();
-	var currentPeriod, nextPeriod, afterPeriod;
-	currentPeriod = nextPeriod = afterPeriod = "afterSchool";
+function showNext() {
+
+}
+
+function getPeriods(periodTimes, currentTime) {
+	var currentPeriod, nextPeriod;
+	currentPeriod = nextPeriod = "afterSchool";
 	var beforeSchool = true;
 	for (var period in periodTimes){
-		if(nextPeriod !== "afterSchool"){
-			afterPeriod = period;
+		if(currentPeriod !== "afterSchool"){
+			nextPeriod = period;
 			break;
 		}
-		else if(currentPeriod !== "afterSchool"){
-			nextPeriod = period;
-		}
-		else if(currentTime < getTodayTime(periodTimes[period].endTime)){
-			if(currentTime >= getTodayTime(periodTimes[period].startTime)){
+		else if(currentTime < parseTime(periodTimes[period].endTime)){
+			if(currentTime >= parseTime(periodTimes[period].startTime)){
 				currentPeriod = period
 			}
 			else {
@@ -174,49 +172,64 @@ function getCurrentInfo() {
 		}
 		beforeSchool = false;
 	}
-	//Time-till
+
+	return [currentPeriod, nextPeriod];
+}
+
+function getCurrentInfo() {
+	var periodTimes = timetable.days[dayNumberW].times;
+	var currentTime = d.getTime()
+	var periods = getPeriods(periodTimes, currentTime);
+
+	var currentPeriod = periods[0];
+	var nextPeriod = periods[1];
+
+	//Time-till indicator
 	if(currentPeriod === "afterSchool"){
 		$(".column-now .time-till").slideUp();
+		// TODO: Show what's upcoming
 		if(nextPeriod === "afterSchool"){
-
+			showNext();
 		}
 	}
 	else {
 		if(currentPeriod === "beforeSchool"){
-			$(".column-now .time-till").bhtml(minutesUntilTime(getTodayTime(periodTimes[nextPeriod].startTime)) + '<span class="tiny">m until school</span>');
+			$(".column-now .time-till").bhtml(minutesUntilTime(parseTime(periodTimes[nextPeriod].startTime)) + '<span class="tiny">m until school</span>');
 		} else {
-			if(currentPeriod.includes("period") && currentTime < getTodayTime(periodTimes[currentPeriod].startTime)){
-				$(".column-now .time-till").bhtml(minutesUntilTime(getTodayTime(periodTimes[currentPeriod].startTime)) + '<span class="tiny">m to class</span>');
+			if(currentPeriod.includes("period") && currentTime < parseTime(periodTimes[currentPeriod].startTime)){
+				$(".column-now .time-till").bhtml(minutesUntilTime(parseTime(periodTimes[currentPeriod].startTime)) + '<span class="tiny">m to class</span>');
 			} else {
-				$(".column-now .time-till").bhtml(minutesUntilTime(getTodayTime(periodTimes[currentPeriod].endTime)) + '<span class="tiny">m left</span>');
+				$(".column-now .time-till").bhtml(minutesUntilTime(parseTime(periodTimes[currentPeriod].endTime)) + '<span class="tiny">m left</span>');
 			}
 		}
 	}
 
-	updateColumn(currentPeriod, ".column-now");
-	updateColumn(nextPeriod, ".column-next");
+	var dayNum = dayNumber;
+
+	updateColumn(currentPeriod, ".column-now", dayNum);
+	updateColumn(nextPeriod, ".column-next", dayNum);
 }
 
 function minutesUntilTime(time){
 	return Math.ceil((time - d.getTime()) / 1000 / 60);
 }
 
-function updateColumn(period, column) {
-	// period number is the same
+function updateColumn(period, column, daynum) {
+	// period number is the same, then there hasn't been a change.
 	// TODO: implement temporary timetable check
 	if($(column + " .period").html() === timetable.periods[period]){
 		return;
 	}
-
+	// Period indicator
 	$(column + " .period").bhtml(timetable.periods[period]);
 
 	if(period.includes("period")) {
-		var block = timetable.timetable[(daynum-1)][period];
+		var block = timetable.timetable[daynum-1][period];
 		var blockObj = $(column + " .block");
 
 		var subjects = timetable.blocks[block].subjects;
 		var color = timetable.blocks[block].color;
-
+		// Block indicator
 		if(block !== 0) {
 			blockObj.bhtml('<span class="tiny">Block</span> ' + block);
 			blockObj.applyColor(color);
@@ -248,41 +261,42 @@ function updateColumn(period, column) {
 				}
 				box.find(".subject-title").html(subjects[i].name);
 				box.find(".subject-abbr").html(subjects[i].abbr);
+				// This extra effect isn't really needed...
+				if(EXTRA_EFFECTS){					
+					box.fadeIn();
+				}
 
-				if(EXTRA_EFFECTS){
--					box.slideUp();
--				}
-
-				if(DEBUG_COL)
+				// Still don't know whether or not we want box colours
+				if(DEBUG_COL) {
 					box.applyColor(color+"-100");
+					box.applyColor(color+"-100");
+				}
+
 				box.slideDown();
 			} else {
-				// box not used
+				// No subject in this box
 				box.slideUp();
 			}
 		}
 	} else {
+		// No subjects, so no blocks or boxes needed
 		$(column + " .block").slideUp();
 		$(column + " .box").slideUp();
 	}
 
 	// period time indicators
 	if(!period.includes("School")){
-		$(column + " .start-time").bhtml(timetable.days[(daynum-1)%5].times[period].startTime);
-		$(column + " .end-time").bhtml(timetable.days[(daynum-1)%5].times[period].endTime);
+		$(column + " .start-time").bhtml(timetable.days[(daynum-1)%5+1].times[period].startTime);
+		$(column + " .end-time").bhtml(timetable.days[(daynum-1)%5+1].times[period].endTime);
 	} else {
 		$(column + " .start-time").fadeOut();
 		$(column + " .end-time").fadeOut();
 	}
-
-	lastPeriod = period;
 }
 
 function updateDate() {
 	var days = ["sun", "mon", "tues", "wednes", "thurs", "fri", "satur"]
 	var day = d.getDay();
-	if(day === 6)
-		day = 0;
 	var week = d.getWeek();
 	var term = d.getTerm();
 	var date = d.getDate();
@@ -292,13 +306,20 @@ function updateDate() {
 	var months = ["January", "Feburary", "March", "April", "May", "June", "July",
 	"August", "September", "October", "November", "December"];
 	var year = d.getYear()-100;
-	daynum = day + (week-1)*5;
+	//weekends
+	if(day == 6 || day == 0){
+		dayNumber = 0;
+	}
+	else {
+		dayNumber = day + (week-1)*5;
+	}
+	dayNumberW = day;
 
 	$("#date").bhtml(date.leadZero() + " " + months[month] + " " + (year+2000))
 	$("#day").bhtml(days[day]);
 	$("#week").bhtml(week);
 	$("#term").bhtml(term);
-	$("#daynum").bhtml(daynum);
+	$("#daynum").bhtml(dayNumber);
 
 	$("#yearF").html(year+2000);
 	
@@ -326,17 +347,18 @@ function updateTime() {
 
 	//COMPLETED: Fix the jittery time bug || it's a feature
 }
-
+// Date function with debugging features
 function getDate(){
+	// Freezes time
 	if(DEBUG_FRZ){
 
-	}
+	} // randomise date
 	else if(DEBUG_RND){
 		d = randomDate();
-	}
+	} // continue ticking from previous date
 	else if(DEBUG_TICK){
 		d = new Date(d.getTime() + 1000);
-	}
+	} // new date (default)
 	else{
 		d = new Date();
 	};
