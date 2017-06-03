@@ -28,6 +28,10 @@ Date.prototype.getTerm = function() {
 	return Math.ceil(this.getYearWeek()/13);
 }
 
+Date.prototype.minutesUntil = function() {
+	return Math.ceil((this.getTime() - d.getTime()) / 1000 / 60)
+}
+
 //TODO: implement assemblies/chapels/talks/events into calendar
 //TODO: add admin interface with switchable timetables (duplicate timetable "temporary" object)
 
@@ -141,7 +145,7 @@ function loadComplete() {
 
 // 
 function parseTime(time) {
-	return Date.parse(d.toLocaleDateString() + " " + time);
+	return new Date(d.toLocaleDateString() + " " + time);
 }
 
 function showNext() {
@@ -194,12 +198,12 @@ function getCurrentInfo() {
 	}
 	else {
 		if(currentPeriod === "beforeSchool"){
-			$(".column-now .time-till").bhtml(minutesUntilTime(parseTime(periodTimes[nextPeriod].startTime)) + '<span class="tiny">m until school</span>');
+			$(".column-now .time-till").bhtml(parseTime(periodTimes[nextPeriod].startTime).minutesUntil() + '<span class="tiny">m until school</span>');
 		} else {
 			if(currentPeriod.includes("period") && currentTime < parseTime(periodTimes[currentPeriod].startTime)){
-				$(".column-now .time-till").bhtml(minutesUntilTime(parseTime(periodTimes[currentPeriod].startTime)) + '<span class="tiny">m to class</span>');
+				$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].startTime).minutesUntil() + '<span class="tiny">m to class</span>');
 			} else {
-				$(".column-now .time-till").bhtml(minutesUntilTime(parseTime(periodTimes[currentPeriod].endTime)) + '<span class="tiny">m left</span>');
+				$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].endTime).minutesUntil() + '<span class="tiny">m left</span>');
 			}
 		}
 	}
@@ -208,10 +212,6 @@ function getCurrentInfo() {
 
 	updateColumn(currentPeriod, ".column-now", dayNum);
 	updateColumn(nextPeriod, ".column-next", dayNum);
-}
-
-function minutesUntilTime(time){
-	return Math.ceil((time - d.getTime()) / 1000 / 60);
 }
 
 function updateColumn(period, column, daynum) {
