@@ -3,7 +3,6 @@ var th = setInterval(runEveryHour, 3600000);
 var td = setInterval(runEveryDay, 86400000);
 
 var d = new Date();
-var dayNumberW;
 var dayNumber;
 var timetable;
 
@@ -148,10 +147,6 @@ function parseTime(time) {
 	return new Date(d.toLocaleDateString() + " " + time);
 }
 
-function showNext() {
-
-}
-
 function getPeriods(periodTimes, currentTime) {
 	var currentPeriod, nextPeriod;
 	currentPeriod = nextPeriod = "afterSchool";
@@ -180,8 +175,25 @@ function getPeriods(periodTimes, currentTime) {
 	return [currentPeriod, nextPeriod];
 }
 
+function getNextDay() {
+	if(dayNumber === 0){
+		if(d.getWeek() === 1){ //TODO: fix this (never is 1)
+			return 1;
+		} else {
+			return 6;
+		}
+	}
+	if(dayNumber === 10)
+		return 1;
+	return dayNumber + 1;
+}
+
+function showNext() {
+
+}
+
 function getCurrentInfo() {
-	var periodTimes = timetable.days[dayNumberW].times;
+	var periodTimes = timetable.days[d.getDay()].times;
 	var currentTime = d.getTime()
 	var periods = getPeriods(periodTimes, currentTime);
 
@@ -196,25 +208,23 @@ function getCurrentInfo() {
 			showNext();
 		}
 	}
-	else {
-		if(currentPeriod === "beforeSchool"){
-			$(".column-now .time-till").bhtml(parseTime(periodTimes[nextPeriod].startTime).minutesUntil() + '<span class="tiny">m until school</span>');
+	else if(currentPeriod === "beforeSchool"){
+		$(".column-now .time-till").bhtml(parseTime(periodTimes[nextPeriod].startTime).minutesUntil() + '<span class="tiny">m until school</span>');
+	} else {
+		if(currentPeriod.includes("period") && currentTime < parseTime(periodTimes[currentPeriod].startTime)){
+			$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].startTime).minutesUntil() + '<span class="tiny">m to class</span>');
 		} else {
-			if(currentPeriod.includes("period") && currentTime < parseTime(periodTimes[currentPeriod].startTime)){
-				$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].startTime).minutesUntil() + '<span class="tiny">m to class</span>');
-			} else {
-				$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].endTime).minutesUntil() + '<span class="tiny">m left</span>');
-			}
+			$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].endTime).minutesUntil() + '<span class="tiny">m left</span>');
 		}
 	}
 
 	var dayNum = dayNumber;
 
-	updateColumn(currentPeriod, ".column-now", dayNum);
-	updateColumn(nextPeriod, ".column-next", dayNum);
+	updateColumn(currentPeriod, dayNum,".column-now");
+	updateColumn(nextPeriod, dayNum, ".column-next");
 }
 
-function updateColumn(period, column, daynum) {
+function updateColumn(period, daynum, column) {
 	// period number is the same, then there hasn't been a change.
 	// TODO: implement temporary timetable check
 	if($(column + " .period").html() === timetable.periods[period]){
@@ -261,15 +271,17 @@ function updateColumn(period, column, daynum) {
 				}
 				box.find(".subject-title").html(subjects[i].name);
 				box.find(".subject-abbr").html(subjects[i].abbr);
-				// This extra effect isn't really needed...
+				
+
+				// NOT USED due to performance issues.
+				if(DEBUG_COL) {
+					if(column.includes("now"))
+						$(column + " .box").applyColor(color+"-200");
+					else
+						$(column + " .box").applyColor(color+"-100");
+				}
 				if(EXTRA_EFFECTS){					
 					box.fadeIn();
-				}
-
-				// Still don't know whether or not we want box colours
-				if(DEBUG_COL) {
-					box.applyColor(color+"-100");
-					box.applyColor(color+"-100");
 				}
 
 				box.slideDown();
@@ -313,7 +325,6 @@ function updateDate() {
 	else {
 		dayNumber = day + (week-1)*5;
 	}
-	dayNumberW = day;
 
 	$("#date").bhtml(date.leadZero() + " " + months[month] + " " + (year+2000))
 	$("#day").bhtml(days[day]);
