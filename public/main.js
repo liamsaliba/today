@@ -28,6 +28,9 @@ Date.prototype.getTerm = function() {
 	return Math.ceil(this.getYearWeek()/13);
 }
 
+//TODO: implement assemblies/chapels/talks/events into calendar
+//TODO: add admin interface with switchable timetables (duplicate timetable "temporary" object)
+
 Number.prototype.leadZero = function(){
 	if (this < 10)
 		return "0" + this;
@@ -46,7 +49,7 @@ jQuery.fn.extend({
 		if(text != $(this).html()){
 			$(this).ahtml(text);
 		}
-	},
+	}, // sets assigned bg color, removing previous colour, with animation
 	applyColor: function(color) {
 		if(!$(this).hasClass("mdc-bg-" + color)){
 			$(this).removeClass (function (index, className) {
@@ -171,8 +174,12 @@ function getCurrentInfo() {
 		}
 		beforeSchool = false;
 	}
+	//Time-till
 	if(currentPeriod === "afterSchool"){
 		$(".column-now .time-till").slideUp();
+		if(nextPeriod === "afterSchool"){
+
+		}
 	}
 	else {
 		if(currentPeriod === "beforeSchool"){
@@ -195,22 +202,30 @@ function minutesUntilTime(time){
 }
 
 function updateColumn(period, column) {
+	// period number is the same
+	// TODO: implement temporary timetable check
+	if($(column + " .period").html() === timetable.periods[period]){
+		return;
+	}
+
 	$(column + " .period").bhtml(timetable.periods[period]);
 
 	if(period.includes("period")) {
 		var block = timetable.timetable[(daynum-1)][period];
+		var blockObj = $(column + " .block");
+
 		var subjects = timetable.blocks[block].subjects;
 		var color = timetable.blocks[block].color;
-		console.log(color);
 
 		if(block !== 0) {
-			$(column + " .block").bhtml('<span class="tiny">Block</span> ' + block);
-			$(column + " .block").applyColor(color);
+			blockObj.bhtml('<span class="tiny">Block</span> ' + block);
+			blockObj.applyColor(color);
 		} else {
-			$(column + " .block").slideUp();
+			blockObj.slideUp();
 		}
+
 		for (var i = 0; i < 8; i++){
-			var box = $(column + " .box:nth-child(" + (i+2) + ")")
+			var box = $(column + " .box:nth-child(" + (i+2) + ")");
 			if(i < subjects.length) {
 				// Private Study short block
 				if(subjects[i].name === "Private Study"){
@@ -233,10 +248,11 @@ function updateColumn(period, column) {
 				}
 				box.find(".subject-title").html(subjects[i].name);
 				box.find(".subject-abbr").html(subjects[i].abbr);
-				//TODO: fix this
-				if(lastPeriod != period && EXTRA_EFFECTS){
-					box.slideUp();
-				}
+
+				if(EXTRA_EFFECTS){
+-					box.slideUp();
+-				}
+
 				if(DEBUG_COL)
 					box.applyColor(color+"-100");
 				box.slideDown();
@@ -248,9 +264,9 @@ function updateColumn(period, column) {
 	} else {
 		$(column + " .block").slideUp();
 		$(column + " .box").slideUp();
-		//TODO show tomorrow's classes
 	}
 
+	// period time indicators
 	if(!period.includes("School")){
 		$(column + " .start-time").bhtml(timetable.days[(daynum-1)%5].times[period].startTime);
 		$(column + " .end-time").bhtml(timetable.days[(daynum-1)%5].times[period].endTime);
@@ -295,7 +311,7 @@ function updateTime() {
 	var hours = d.getHours();
 	var minutes = d.getMinutes();
 	var seconds = d.getSeconds();
-	var meridian = "am";
+	var meridian = "am"; 
 
 	if(hours > 11){
 		meridian = "pm";
@@ -308,7 +324,7 @@ function updateTime() {
 	$("#sec").bhtml(seconds.leadZero());
 	$("#meridian").bhtml(meridian);
 
-	//TODO: Fix the jittery time bug
+	//COMPLETED: Fix the jittery time bug || it's a feature
 }
 
 function getDate(){
@@ -337,13 +353,6 @@ function randomDate(){
 
 
 
-
-
-// TODO: Migrate to node.js express server,
-// allow this kind of content to be served by the webserver.
-function getQuote(){
-	console.log(importJSON("quotes.txt"));
-}
 
 // read file helper function
 // https://stackoverflow.com/questions/14446447/javascript-read-local-text-file
