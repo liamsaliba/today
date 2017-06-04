@@ -410,3 +410,26 @@ a {
 	color: black;
 }
 
+
+
+.marquee {
+	display: block;
+	position: relative;
+    height: 200%;
+}
+
+.marquee div {
+	float: top;
+	height: 50%;
+	padding-bottom: 120px;
+	animation: marquee 60s linear infinite;
+}
+
+.marquee div p {
+	padding-bottom: 10px;
+}
+
+@keyframes marquee {
+ 	0%   { transform: translateY(0)}
+    100% { transform: translateY(-100%) }
+}
