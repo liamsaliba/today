@@ -356,9 +356,8 @@ function updateTime() {
 	$("#min").bhtml(minutes.leadZero());
 	$("#sec").bhtml(seconds.leadZero());
 	$("#meridian").bhtml(meridian);
-
-	//COMPLETED: Fix the jittery time bug || it's a feature
 }
+
 // Date function with debugging features
 function getDate(){
 	// Freezes time
@@ -405,3 +404,10 @@ function importJSON(filename){
 	xmlhttp.open("GET", filename, true);
 	xmlhttp.send();
 }
+
+
+var socket = io();
+
+socket.on('bulletin', function(data){
+	$(".announcements").html(data.html);
+})

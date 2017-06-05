@@ -8,9 +8,29 @@ var fs = require('fs');
 // Route handler, sends index.html when root address is hit.
 app.use(express.static(__dirname + '/public'));
 
+var sanitizeHtml = require('sanitize-html');
+var io = require('socket.io')(http);
+
 const PORTNUMBER = 6060;
 
 // HTTP server, listen for activity on port 3000
 http.listen(PORTNUMBER, function(){
 	console.log("Public server started, listening on port " + PORTNUMBER);
 });
+
+var bulletin;
+fs.readFile("./emails/Bulletin-20170605-232423.html", function read(err, data){
+	if(err) throw err;
+	
+	// for whatever reason, the buffer has a space in every second character.
+	str = data.toString().split("");
+	for(var i = 1; i < str.length-1; i+=2){
+		str[i] = ""
+	}
+	bulletin = sanitizeHtml(str.join(""));
+})
+
+io.on('connection', function(socket){
+	console.log("connected to client");
+	socket.emit('bulletin', {html: bulletin});
+})
