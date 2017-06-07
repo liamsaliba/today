@@ -228,9 +228,9 @@ function getCurrentInfo() {
 function updateColumn(period, daynum, column) {
 	// period number is the same, then there hasn't been a change.
 	// TODO: implement temporary timetable check
-	if($(column + " .period").html() === timetable.periods[period]){
-		return;
-	}
+	//if($(column + " .period").html() === timetable.periods[period]){
+	//	return;
+	//}
 	// Period indicator
 	$(column + " .period").bhtml(timetable.periods[period]);
 
