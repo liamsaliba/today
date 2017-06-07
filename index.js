@@ -19,18 +19,26 @@ http.listen(PORTNUMBER, function(){
 });
 
 var bulletin;
-fs.readFile("./emails/Bulletin-20170605-232423.html", function read(err, data){
+fs.readFile("./emails/Bulletin-20170605.html", function read(err, data){
 	if(err) throw err;
 	
 	// for whatever reason, the buffer has a space in every second character.
 	str = data.toString().split("");
 	for(var i = 1; i < str.length-1; i+=2){
 		str[i] = ""
+		
 	}
-	bulletin = sanitizeHtml(str.join(""));
+	string = str.join("");
+	string = string.substring(string.indexOf("NOTICES:") + 15);
+	bulletin = sanitizeHtml(string);
 })
 
 io.on('connection', function(socket){
 	console.log("connected to client");
 	socket.emit('bulletin', {html: bulletin});
 })
+/*
+function getTimestamp() {
+	var d = new Date();
+	return (d.getYear()+1900).toString() + 
+}*/

@@ -422,7 +422,7 @@ a {
 	float: top;
 	height: 50%;
 	padding-bottom: 120px;
-	animation: marquee 60s linear infinite;
+	animation: marquee 200s linear infinite;
 }
 
 .marquee div p {
