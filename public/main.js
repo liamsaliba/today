@@ -81,7 +81,6 @@ function init() {
 	updateTime();
 	loadTimetable();
 	loadButtons();
-	getAnnouncements();
 	loadComplete();
 }
 
@@ -239,6 +238,7 @@ function updateColumn(period, daynum, column) {
 		var blockObj = $(column + " .block");
 
 		var subjects = timetable.blocks[block].subjects;
+
 		var color = timetable.blocks[block].color;
 		// Block indicator
 		if(block !== 0) {
@@ -252,14 +252,13 @@ function updateColumn(period, daynum, column) {
 			var box = $(column + " .box:nth-child(" + (i+2) + ")");
 			if(i < subjects.length) {
 				// Private Study short block
-				if(subjects[i].name === "Private Study"){
+				if(subjects[i].small === true){
+					// Need to check, otherwise animation will play every tick
 					if(!box.hasClass("box-short")){
-						box.find(".line:nth-child(2)").hide();
 						box.addClass("box-short").slideUp();
 					}
 				} else {
 					if(box.hasClass("box-short")){
-						box.find(".line:nth-child(2)").show();
 						box.removeClass("box-short").slideDown();
 					}
 					// regular subjects
@@ -294,7 +293,16 @@ function updateColumn(period, daynum, column) {
 	} else {
 		// No subjects, so no blocks or boxes needed
 		$(column + " .block").slideUp();
-		$(column + " .box").slideUp();
+		$(column + " .box:not(:first)").slideUp();
+
+		var box = $(column + " .box:nth-child(2)")
+
+		if(!box.hasClass("box-short")){
+			box.addClass("box-short").slideUp();
+		}
+		box.find(".subject-title").html(timetable.periods[period]);
+		box.find(".subject-abbr").html("");
+		box.slideDown();
 	}
 
 	// period time indicators
@@ -387,7 +395,7 @@ function randomDate(){
 
 
 
-function getAnnouncements() {
+function debugAnnouncements() {
 	$(".announcements").html("<p><strong>NOTICES:</strong></p><p><strong>Learn to Play Chess:</strong> If you would like to learn to play chess, then here is your chance. Come to the Library at Lunchtime on Thursdays &ndash; Year 12 students will be available to teach you the skills of the game.</p><p><strong><span lang=\"EN-US\">Cambodia Service Project Trip:</span></strong><span lang=\"EN-US\">On </span><strong><span lang=\"EN-US\">Friday 9 of June</span></strong><span lang=\"EN-US\">, I will be running a Fundraising Pizza Lunch for the 2017 Cambodian Service Project Trip.It will be held in the Round, and soft drink will be sold on the day. The order form can be handed to your year level manager NO LATER than <strong>Wednesday the 7th of June. </strong>Thanks for your support!Kate O&rsquo;Sullivan</span></p><p><strong><span lang=\"EN-GB\">Snow Sports:</span></strong>Snow Sports training commences Thursday 1 June. This will occur each Thursday in the weights room from 3.45pm until 4.45pm. Any queries please see Mr Bullen.</p><p><strong><span lang=\"EN-GB\">Fringe Week:</span></strong>The School would like to announce that from 13-16 June we will celebrate 'Fringe Week' at the Plenty Campus. This event is run annually by the Year 12 Fringe Week Committee. Fringe Week is all about, 'letting the hair down' and adding some different flavours and colours to celebrate individuality. Term 2 is a busy time of year and we all tend to feel tired by the end of it, so Fringe Week aims to revitalise the School at the end of the Term. During this week there are many activities running and we have outlined the theme and activities for you.</p><p><strong>The Fringe Week Hat Hunt</strong></p><p>Someone has stolen Mr Brown's precious hat and has left clues around the school to find it. The School must unite to find the clues and figure out who has stolen it! The GROUP of students that presents concrete evidence as to who has stolen the hat will be rewarded with a prize!</p><p><strong>The central theme for the week is 'Individuality and Unity'</strong></p><p><strong>Tuesday 13 June - &ldquo;Crazy Tie and Scarf Day\"</strong></p><p>All levels 7-12 may wear their choice of tie and/or scarf for the day with their School Uniform.</p><p><strong>Wednesday 14 June &ndash; &ldquo;Wacky Hat and Hair Day\"</strong></p><p>Years 7-10 may create their craziest hair style and find their craziest hat to wear with their school uniform. Year 11 and 12 will need to wear Full School Uniform for the VCE GAT.</p><p><strong>Thursday 15 June &ndash; Year 7-12 &ldquo;Silly Shoes and Socks Day\"</strong></p><p>All Levels 7-12 may wear the craziest shoes and socks you have available in your wardrobe with your school uniform.</p><p><strong>Friday 16 June &ndash; &lsquo;Mystery Night and Casual Clothes Day'</strong></p><p>Years 7 to 12 students are given permission to either wear their Mystery Night Costume or Casual Clothes to mark the conclusion of Fringe Week. A $2.00 donation will be required for all students participating on this day, the funds raised will go towards the Cambodia Service Project. Students will have the opportunity to purchase lunch at a sausage sizzle during lunchtime. Also there will be an assembly which highlights this year's theme of &ldquo;Unity\".</p><p><span lang=\"EN-GB\">The <strong>PIANO and SOLOISTS COMPETITION</strong> entries are now open. </span></p><p><span lang=\"EN-GB\">The competition is open to <strong>All Piano Players</strong> (Years Prep to 12) and other Instrumental soloists in Years 10-12, who learn at the School or outside the School. All performers are invited to enter and compete. The competition date is <strong>Thursday 24 August</strong> but the auditions will run early in Term 3. The closing date for applications is Friday 23 June. Please go to the Music Office for Application Forms. </span></p><p><strong>Bus Students: </strong>All Bus Travellers are reminded that they should not be placing their bags on seats, or taking up several seats. For the safety of all, every student should be seated whilst on the bus.</p><p><strong><br /></strong><strong>Library: </strong>A reminder for students in Year 10 to 12 that the library is open until <strong>6.00 pm on Tuesdays.</strong> For students in Year 7-9 it is 5.00 pm as usual.</p><p><strong>THINK BEFORE YOU SPEAK Campaign (TERM 2 WELLBEING)</strong></p><p>MAN-UP</p><p><a href=\"https://www.youtube.com/watch?v=gpxqXZvH0kI\">https://www.youtube.com/watch?v=gpxqXZvH0kI</a></p><p>LIKE A GIRL</p><p><a href=\"https://www.youtube.com/watch?v=XjJQBjWYDTs\">https://www.youtube.com/watch?v=XjJQBjWYDTs</a></p><p>There are some casual sayings in our everyday speech that can have more impact than intended, &lsquo;you throw like a girl&rsquo;, &lsquo;that&rsquo;s so gay&rsquo;, &lsquo;be a man&rsquo; are common phrases that are said day to day with little intent to insult or harm a person. Yet, when you give it a little thought their meaning is clear and this sort of language can normalise more harmful ideas and behaviours.</p><p>Then of course there are purposeful insults said with the intention to offend, or &lsquo;get a laugh&rsquo; at someone else&rsquo;s expense. These insults often cut to the differences between us and highlight the power that some members of the community might have over others helping to maintain inequality, and of course, often deeply hurting the receiver of the insult.</p><p>With this campaign we ask that all members of Plenty Campus pause and think before we speak, does what you&rsquo;re about to say perpetuate an inequality in our culture, will it offend or hurt people around you, is it intended to harm &ndash; if it will do any of these things, then simply choose not to say it and help enhance the respectful culture of our school community. Over term two there will be Wellbeing presentations, notices and video links in the daily bulletin and posters around the school on this issue so keep an eye out for this material.</p>")
 }
 
@@ -409,5 +417,13 @@ function importJSON(filename){
 var socket = io();
 
 socket.on('bulletin', function(data){
-	$(".announcements").html(data.html);
+	table = data.tab;
+	announcements = data.announcements;
+	console.log(announcements)
+
+	$("#today .scroller").html(data.table);
+	$("#today .marquee div").css("animation-duration", (.08*$("#today .scroller").height() + "s"))
+
+	$("#announcements .scroller").html("<p></p>" + announcements);
+	$("#announcements .marquee div").css("animation-duration", (.08*$("#announcements .scroller").height() + "s"))
 })

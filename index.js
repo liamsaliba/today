@@ -19,9 +19,8 @@ http.listen(PORTNUMBER, function(){
 });
 
 var bulletin;
-var bulletinTimeout = setInterval(readBulletin, 100000)
 
-function readBulletin() {
+function getBulletin() {
 	// open file in UTF16-LE because windows
 	var data = "";
 	try {
@@ -32,16 +31,21 @@ function readBulletin() {
 	}
 	
 	if(data === "") {
-		bulletin = "No Announcements Found.";
 		l("Bulletin not found.")
-		return
+		return;
 	}
 
 	str = data.toString();
-	str = str.substring(str.indexOf("NOTICES:") + 15);
 	str = sanitizeHtml(str);
 	l("Bulletin sanitized")
-	bulletin = str;
+	return str;
+
+	if(bulletin !== str) {
+		l("Bulletin changed!")
+		bulletin = str;
+
+		str = str.substring(str.indexOf("NOTICES:") + 15);
+	}
 }
 
 io.on('connection', onConnect)
@@ -52,7 +56,23 @@ function l(string) {
 
 function onConnect(socket) {
 	l("Connected to client");
-	readBulletin();
 
-	socket.emit('bulletin', {html: bulletin});
+	bulletin = "";
+	updateBulletin(socket);
+	var bulletinTimeout = setInterval(updateBulletin, 100000)
+}
+
+function updateBulletin(socket) {
+	str = getBulletin();
+	if(bulletin !== str) {
+		l("Bulletin changed!")
+
+		announcements = str.substring(str.indexOf("NOTICES:") + 25);
+		table = str.substring(str.indexOf("<table>"), str.indexOf("</table>")+8);
+
+		socket.emit('bulletin', {announcements: announcements,
+			table: table});
+
+		bulletin = str;
+	}
 }

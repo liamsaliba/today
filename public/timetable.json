@@ -214,19 +214,23 @@
       "subjects": [
         {
           "abbr": "12FUTURES1",
-          "name": "Futures"
+          "name": "Futures",
+          "small": true
         },
         {
           "abbr": "ASSEMBLY",
-          "name": "Assembly"
+          "name": "Assembly",
+          "small": true
         },
         {
           "abbr": "CHAPEL",
-          "name": "Chapel"
+          "name": "Chapel",
+          "small": true
         },
         {
           "abbr": "12EP",
-          "name": "Enhancement Period"
+          "name": "Enhancement Period",
+          "small": true
         }
       ]
     },
@@ -277,7 +281,8 @@
         {
           "abbr": "12PS1, 12PS2",
           "name": "Private Study",
-          "fullname": "Private Study"
+          "fullname": "Private Study",
+          "small": true
         }
       ]
     },
@@ -336,7 +341,8 @@
         {
           "abbr": "12PS3, 12PS4",
           "name": "Private Study",
-          "fullname": "Private Study"
+          "fullname": "Private Study",
+          "small": true
         }
       ]
     },
@@ -387,7 +393,8 @@
         {
           "abbr": "12PS5, 12PS6",
           "name": "Private Study",
-          "fullname": "Private Study"
+          "fullname": "Private Study",
+          "small": true
         }
       ]
     },
@@ -454,7 +461,8 @@
         {
           "abbr": "12PS7, 12PS8",
           "name": "Private Study",
-          "fullname": "Private Study"
+          "fullname": "Private Study",
+          "small": true
         }
       ]
     },
@@ -505,7 +513,8 @@
         {
           "abbr": "12PS9, 12PS10",
           "name": "Private Study",
-          "fullname": "Private Study"
+          "fullname": "Private Study",
+          "small": true
         }
       ]
     },
@@ -572,7 +581,8 @@
         {
           "abbr": "12PS11",
           "name": "Private Study",
-          "fullname": "Private Study"
+          "fullname": "Private Study",
+          "small": true
         }
       ]
     }
