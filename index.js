@@ -66,11 +66,13 @@ function updateBulletin(socket) {
 	str = getBulletin();
 	if(bulletin !== str) {
 		l("Bulletin changed!")
-
+		date = str.substring(str.indexOf("Plenty Campus – Student Daily Bulletin –") + 42, 
+			str.indexOf("CALENDAR ITEMS:")-57);
+		l(date);
 		announcements = str.substring(str.indexOf("NOTICES:") + 25);
 		table = str.substring(str.indexOf("<table>"), str.indexOf("</table>")+8);
 
-		socket.emit('bulletin', {announcements: announcements,
+		socket.emit('bulletin', {date: date, announcements: announcements,
 			table: table});
 
 		bulletin = str;

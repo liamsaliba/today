@@ -206,16 +206,22 @@ function getCurrentInfo() {
 		// TODO: Show what's upcoming
 		if(nextPeriod === "afterSchool"){
 			showNext();
+			$(".column-next").slideUp();
+		} else {
+			$(".column-next").slideDown();
 		}
 	}
-	else if(currentPeriod === "beforeSchool"){
 		$(".column-now .time-till").bhtml(parseTime(periodTimes[nextPeriod].startTime).minutesUntil() + '<span class="tiny">m until school</span>');
 	} else {
 		if(currentPeriod.includes("period") && currentTime < parseTime(periodTimes[currentPeriod].startTime)){
 			$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].startTime).minutesUntil() + '<span class="tiny">m to class</span>');
 		} else {
 			$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].endTime).minutesUntil() + '<span class="tiny">m left</span>');
+			} else {
+				$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].endTime).minutesUntil() + '<span class="tiny">m left</span>');
+			}
 		}
+		$(".column-next").slideDown();
 	}
 
 	var dayNum = dayNumber;
@@ -316,7 +322,7 @@ function updateColumn(period, daynum, column) {
 }
 
 function updateDate() {
-	var days = ["sun", "mon", "tues", "wednes", "thurs", "fri", "satur"]
+	var days = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"]
 	var day = d.getDay();
 	var week = d.getWeek();
 	var term = d.getTerm();
@@ -344,7 +350,7 @@ function updateDate() {
 	$("#yearF").html(year+2000);
 	
 	$("#shortdate").bhtml(date.leadZero() + "/" + month.leadZero() + "/" + year);
-	$("#date").bhtml(date.leadZero() + " " + months[month] + " " + (year+2000));
+	//$("#date").bhtml(date.leadZero() + " " + months[month] + " " + (year+2000));
 }
 
 function updateTime() {
@@ -417,11 +423,23 @@ function importJSON(filename){
 var socket = io();
 
 socket.on('bulletin', function(data){
-	table = data.tab;
+	table = data.table;
 	announcements = data.announcements;
-	console.log(announcements)
+	date = data.date;
+	$("#date").html(date);
 
-	$("#today .scroller").html(data.table);
+	$("#temp-table").html(table);
+	var tablerow = $("#temp-table > table > tbody > tr");
+	var tabletext = "";
+	tablerow.each(function() {
+		startTime = $(this).find("td:nth-child(1) p").html().replace(/\s\s+/g, ' ');
+		endTime = $(this).find("td:nth-child(2) p").html().replace(/\s\s+/g, ' ');
+		campus = $(this).find("td:nth-child(3) p").html().replace(/\s\s+/g, ' ');
+		event = $(this).find("td:nth-child(4) a").html().replace(/\s\s+/g, ' ');
+		venue = $(this).find("td:nth-child(5) p").html().replace(/\s\s+/g, ' ');
+		tabletext += startTime + " to " + endTime + " - <strong>" + event + "</strong> at " + venue + "<br><br>";
+	});
+	$("#today .scroller").html(tabletext);
 	$("#today .marquee div").css("animation-duration", (.08*$("#today .scroller").height() + "s"))
 
 	$("#announcements .scroller").html("<p></p>" + announcements);
