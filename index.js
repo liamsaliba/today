@@ -19,26 +19,40 @@ http.listen(PORTNUMBER, function(){
 });
 
 var bulletin;
-fs.readFile("./emails/Bulletin-20170605.html", function read(err, data){
-	if(err) throw err;
-	
-	// for whatever reason, the buffer has a space in every second character.
-	str = data.toString().split("");
-	for(var i = 1; i < str.length-1; i+=2){
-		str[i] = ""
-		
-	}
-	string = str.join("");
-	string = string.substring(string.indexOf("NOTICES:") + 15);
-	bulletin = sanitizeHtml(string);
-})
+var bulletinTimeout = setInterval(readBulletin, 100000)
 
-io.on('connection', function(socket){
-	console.log("connected to client");
+function readBulletin() {
+	// open file in UTF16-LE because windows
+	var data = "";
+	try {
+		data = fs.readFileSync("./emails/Bulletin.html", "ucs2")
+		l("Bulletin loaded")
+	} catch (err) {
+		l(err.message)
+	}
+	
+	if(data === "") {
+		bulletin = "No Announcements Found.";
+		l("Bulletin not found.")
+		return
+	}
+
+	str = data.toString();
+	str = str.substring(str.indexOf("NOTICES:") + 15);
+	str = sanitizeHtml(str);
+	l("Bulletin sanitized")
+	bulletin = str;
+}
+
+io.on('connection', onConnect)
+
+function l(string) {
+	console.log(new Date().toLocaleString() + " * " + string)
+}
+
+function onConnect(socket) {
+	l("Connected to client");
+	readBulletin();
+
 	socket.emit('bulletin', {html: bulletin});
-})
-/*
-function getTimestamp() {
-	var d = new Date();
-	return (d.getYear()+1900).toString() + 
-}*/
+}
