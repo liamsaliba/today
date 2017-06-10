@@ -3,8 +3,12 @@ var th = setInterval(runEveryHour, 3600000);
 var td = setInterval(runEveryDay, 86400000);
 
 var d = new Date();
+var days = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"];
+var months = ["January", "Feburary", "March", "April", "May", "June", "July",
+	"August", "September", "October", "November", "December"];
 var dayNumber;
 var timetable;
+var bulletin;
 
 // Button variables
 var EXTRA_EFFECTS = false;
@@ -96,6 +100,7 @@ flatpickr('#flatpickr', {
 $("#flatpickr").change(function() {
 	d = new Date(Date.parse($(this).val()));
 	updateDate();
+	updateBulletin();
 	updateTime();
 	getCurrentInfo();
 });
@@ -312,17 +317,16 @@ function updateColumn(period, daynum, column) {
 	}
 
 	// period time indicators
-	if(!period.includes("School")){
-		$(column + " .start-time").bhtml(timetable.days[(daynum-1)%5+1].times[period].startTime);
-		$(column + " .end-time").bhtml(timetable.days[(daynum-1)%5+1].times[period].endTime);
-	} else {
+	if(period.includes("School")){
 		$(column + " .start-time").fadeOut();
 		$(column + " .end-time").fadeOut();
+	} else {
+		$(column + " .start-time").bhtml(timetable.days[(daynum-1)%5+1].times[period].startTime);
+		$(column + " .end-time").bhtml(timetable.days[(daynum-1)%5+1].times[period].endTime);
 	}
 }
 
 function updateDate() {
-	var days = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"]
 	var day = d.getDay();
 	var week = d.getWeek();
 	var term = d.getTerm();
@@ -330,8 +334,6 @@ function updateDate() {
 	var month = d.getMonth();
 	if(month === 0)
 		month = 12;
-	var months = ["January", "Feburary", "March", "April", "May", "June", "July",
-	"August", "September", "October", "November", "December"];
 	var year = d.getYear()-100;
 	//weekends
 	if(day == 6 || day == 0){
@@ -341,7 +343,7 @@ function updateDate() {
 		dayNumber = day + (week-1)*5;
 	}
 
-	$("#date").bhtml(date.leadZero() + " " + months[month] + " " + (year+2000))
+	//$("#date").bhtml(date.leadZero() + " " + months[month] + " " + (year+2000))
 	$("#day").bhtml(days[day]);
 	$("#week").bhtml(week);
 	$("#term").bhtml(term);
@@ -350,7 +352,6 @@ function updateDate() {
 	$("#yearF").html(year+2000);
 	
 	$("#shortdate").bhtml(date.leadZero() + "/" + month.leadZero() + "/" + year);
-	//$("#date").bhtml(date.leadZero() + " " + months[month] + " " + (year+2000));
 }
 
 function updateTime() {
@@ -423,9 +424,26 @@ function importJSON(filename){
 var socket = io();
 
 socket.on('bulletin', function(data){
-	table = data.table;
-	announcements = data.announcements;
-	date = data.date;
+	bulletin = data;
+	updateBulletin();
+})
+
+function updateBulletin() {
+	table = bulletin.table;
+	announcements = bulletin.announcements;
+	date = bulletin.date;
+	day = date.substring(0, date.indexOf("day"));
+	console.log(day + " .. " + days[d.getDay()])
+	if(day === days[d.getDay()]){
+		$("#today").html("TODAY");
+	} else if (day === days[d.getDay()+1]){
+		$("#today").html("TOMORROW");
+	} else if (day === days[d.getDay()-1]){
+		$("#today").html("Yesterday");
+	} else {
+		$("#today").html(day + "day");
+	}
+	date = date.substring(date.indexOf("day")+3)
 	$("#date").html(date);
 
 	$("#temp-table").html(table);
@@ -439,9 +457,9 @@ socket.on('bulletin', function(data){
 		venue = $(this).find("td:nth-child(5) p").html().replace(/\s\s+/g, ' ');
 		tabletext += startTime + " to " + endTime + " - <strong>" + event + "</strong> at " + venue + "<br><br>";
 	});
-	$("#today .scroller").html(tabletext);
-	$("#today .marquee div").css("animation-duration", (.08*$("#today .scroller").height() + "s"))
+	$("#events .scroller").html(tabletext);
+	$("#events .marquee div").css("animation-duration", (.08*$("#events .scroller").height() + "s"))
 
 	$("#announcements .scroller").html("<p></p>" + announcements);
 	$("#announcements .marquee div").css("animation-duration", (.08*$("#announcements .scroller").height() + "s"))
-})
+}

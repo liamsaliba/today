@@ -43,8 +43,6 @@ function getBulletin() {
 	if(bulletin !== str) {
 		l("Bulletin changed!")
 		bulletin = str;
-
-		str = str.substring(str.indexOf("NOTICES:") + 15);
 	}
 }
 
@@ -68,7 +66,6 @@ function updateBulletin(socket) {
 		l("Bulletin changed!")
 		date = str.substring(str.indexOf("Plenty Campus – Student Daily Bulletin –") + 42, 
 			str.indexOf("CALENDAR ITEMS:")-57);
-		l(date);
 		announcements = str.substring(str.indexOf("NOTICES:") + 25);
 		table = str.substring(str.indexOf("<table>"), str.indexOf("</table>")+8);
 

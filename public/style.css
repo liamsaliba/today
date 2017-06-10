@@ -170,6 +170,9 @@ img#logo {
 	word-spacing: -5px;
 }
 
+.title {
+	text-transform: uppercase;
+}
 
 .box {
 	color: black;
@@ -182,7 +185,7 @@ img#logo {
 }
 
 
-#today {
+#events {
 	max-height: 340px;
 }
 
