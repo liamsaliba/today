@@ -204,8 +204,132 @@
       }
     }
   ],
-  "year": [
-    
+   "years": [
+    {
+      "2017": {
+        "school": [
+          {
+            "name": "ECP",
+            "startDate": "2016-11-14",
+            "endDate": "2016-12-09"
+          },
+          {
+            "name": "Term 1",
+            "startDate": "2017-01-31",
+            "endDate": "2017-03-31"
+          },
+          {
+            "name": "Term 2",
+            "startDate": "2017-04-18",
+            "endDate": "2017-06-24"
+          },
+          {
+            "name": "Term 3",
+            "startDate": "2017-07-17",
+            "endDate": "2017-09-22"
+          },
+          {
+            "name": "Term 4",
+            "startDate": "2017-10-09",
+            "endDate": "2017-10-18"
+          }
+        ],
+        "holidays": [
+          {
+            "name": "Christmas Break",
+            "startDate": "2016-12-10",
+            "endDate": "2017-01-30"
+          },
+          {
+            "name": "Easter Break",
+            "startDate": "2017-04-01",
+            "endDate": "2017-04-17"
+          },
+          {
+            "name": "Winter Break",
+            "startDate": "2017-06-25",
+            "endDate": "2017-07-16"
+          },
+          {
+            "name": "Spring Break",
+            "startDate": "2017-09-23",
+            "endDate": "2017-10-08"
+          }
+        ],
+        "enhancement": [
+          {
+            "name": "OIGA - Financial Literacy",
+            "date": "2017-06-19"
+          },
+          {
+            "name": "Academic Awards Assembly",
+            "date": "2017-06-20"
+          },
+          {
+            "name": "Block Session",
+            "date": "2017-06-22",
+            "block": 4
+          },
+          {
+            "name": "Senior Years Chapel",
+            "date": "2017-06-23"
+          },
+          {
+            "name": "Further Maths SAC",
+            "date": "2017-07-18"
+          },
+          {
+            "name": "Block Session",
+            "date": "2017-07-20",
+            "block": 5
+          },
+          {
+            "name": "Business Management SAC",
+            "date": "2017-07-25"
+          },
+          {
+            "name": "Block Session",
+            "date": "2017-07-27",
+            "block": 3
+          },
+          {
+            "name": "Elevate - Ace Your Exams",
+            "date": "2017-08-01"
+          },
+          {
+            "name": "Block Session",
+            "date": "2017-08-08",
+            "block": 2
+          },
+          {
+            "name": "Block Session",
+            "date": "2017-08-15",
+            "block": 1
+          },
+          {
+            "name": "Block Session",
+            "date": "2017-08-22",
+            "block": 6
+          },
+          {
+            "name": "Further Maths SAC",
+            "date": "2017-08-29"
+          },
+          {
+            "name": "Maths Methods SAC",
+            "date": "2017-09-05"
+          },
+          {
+            "name": "English SAC",
+            "date": "2017-09-12"
+          },
+          {
+            "name": "Methods Exam Seminar",
+            "date": "2017-09-19"
+          }
+        ]
+      }
+    }
   ],
   "blocks": [
     {
