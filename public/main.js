@@ -433,7 +433,7 @@ function updateBulletin() {
 	announcements = bulletin.announcements;
 	date = bulletin.date;
 	day = date.substring(0, date.indexOf("day"));
-	console.log(day + " .. " + days[d.getDay()])
+
 	if(day === days[d.getDay()]){
 		$("#today").html("TODAY");
 	} else if (day === days[d.getDay()+1]){
