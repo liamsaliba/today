@@ -6,4 +6,5 @@
 bin/
 node_modules
 public/img/
-emails
+emails/Bulletin.html
+emails/Bulletin_files
