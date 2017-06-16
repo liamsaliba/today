@@ -68,10 +68,12 @@ function updateBulletin(socket) {
 			str.indexOf("CALENDAR ITEMS:")-57);
 		announcements = str.substring(str.indexOf("NOTICES:") + 25);
 		table = str.substring(str.indexOf("<table>"), str.indexOf("</table>")+8);
-
-		socket.emit('bulletin', {date: date, announcements: announcements,
+		try{
+			socket.emit('bulletin', {date: date, announcements: announcements,
 			table: table});
-
+		} catch(err){
+			console.log(err);
+		}
 		bulletin = str;
 	}
 }
