@@ -101,14 +101,15 @@ img#logo {
 }
 
 #rotator {
+	position: absolute;
+	float: right;
+	top: 25px;
+	right: 30px;
 	border-radius: 10px;
-	margin: 10px;
-	margin-right: 8px;
-	margin-top: 15px;
 	background: #ffccd9;
 	height: 120px;
 	opacity: .95;
-	width: calc(100% - 1090px);
+	max-width: calc(100% - 1060px);
 }
 
 #header-back{
@@ -302,6 +303,11 @@ img#logo {
 	display: inline-block;
 }
 
+#school-left {
+	font-style: italic;
+	margin-left: 20px;
+}
+
 button, input {
 	float: right;
 	margin: 0;
@@ -319,15 +325,6 @@ button, input {
 
 .padded {
 	padding: 10px 15px;
-}
-
-
-.float-left {
-	float: left;
-}
-
-.float-right {
-	float: right;
 }
 
 

@@ -180,6 +180,21 @@ function getPeriods(periodTimes, currentTime) {
 	return [currentPeriod, nextPeriod];
 }
 
+function timeLeftOfSchool(){
+	var lastDay;
+	var keyDates = timetable.years[d.getYear()+1900];
+	for (var term in keyDates.school){
+		if(keyDates.school[term].name === "Term 4")
+			lastDay = new Date(keyDates.school[term].endDate + " 15:30");
+	}
+	var m = lastDay.minutesUntil();
+	if (m > 0)
+		$("#school-left").bhtml(Math.floor(m/7/24/60) + " weeks " + Math.floor(m/24/60%7) + " days " + Math.floor(m/60%(24)) + " hours " + (m%60) + " mins until the end of year 12");
+	else 
+		$("#school-left").bhtml("End of 2017!")
+}
+
+
 function getNextDay() {
 	if(dayNumber === 0){
 		if(d.getWeek() === 1){ //TODO: fix this (never is 1)
@@ -233,6 +248,8 @@ function getCurrentInfo() {
 
 	updateColumn(currentPeriod, dayNum,".column-now");
 	updateColumn(nextPeriod, dayNum, ".column-next");
+
+	timeLeftOfSchool()
 }
 
 function updateColumn(period, daynum, column) {
@@ -463,3 +480,4 @@ function updateBulletin() {
 	$("#announcements .scroller").html("<p></p>" + announcements);
 	$("#announcements .marquee div").css("animation-duration", (.08*$("#announcements .scroller").height() + "s"))
 }
+
