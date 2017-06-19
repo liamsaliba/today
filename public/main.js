@@ -54,6 +54,7 @@ jQuery.fn.extend({
 	}, // animation when text is changed
 	bhtml: function(text) {
 		if(text != $(this).html()){
+			//console.log(text + " + " + $(this).html())
 			$(this).ahtml(text);
 		}
 	}, // sets assigned bg color, removing previous colour, with animation
@@ -137,6 +138,7 @@ function loadTimetable() {
 	$.getJSON('./timetable.json', function(data){
 		timetable = data;
 		getCurrentInfo(data);
+		updateDate();
 	});
 }
 
@@ -147,9 +149,12 @@ function loadComplete() {
 	}, 400);
 }
 
-// 
 function parseTime(time) {
 	return new Date(d.toLocaleDateString() + " " + time);
+}
+
+function parseDate(date) {
+	return new Date(date + " 16:00");
 }
 
 function getPeriods(periodTimes, currentTime) {
@@ -344,14 +349,33 @@ function updateColumn(period, daynum, column) {
 }
 
 function updateDate() {
-	var day = d.getDay();
-	var week = d.getWeek();
-	var term = d.getTerm();
 	var date = d.getDate();
 	var month = d.getMonth();
 	if(month === 0)
 		month = 12;
 	var year = d.getYear()-100;
+	var day, week, term
+	if(timetable === undefined) {
+		day = d.getDay();
+		week = d.getWeek();
+		term = "term " + d.getTerm();
+	} else {
+		var keyDates = timetable.years[year+2000];
+		var currentTime = d.getTime();
+		term = undefined;
+		for(var t in keyDates.school){ // t for term
+			if(currentTime >= parseDate(keyDates.school[t].startDate) && currentTime <= parseDate(keyDates.school[t].endDate))
+				term = keyDates.school[t].name;
+		}
+		if(term === undefined){
+			for(var b in keyDates.holidays){
+				if(currentTime >= parseDate(keyDates.holidays[b].startDate) && currentTime <= parseDate(keyDates.holidays[b].endDate))
+					term = keyDates.holidays[b].name;
+			}
+		}
+	}
+	
+	
 	//weekends
 	if(day == 6 || day == 0){
 		dayNumber = 0;
@@ -467,17 +491,31 @@ function updateBulletin() {
 	var tablerow = $("#temp-table > table > tbody > tr");
 	var tabletext = "";
 	tablerow.each(function() {
-		startTime = $(this).find("td:nth-child(1) p").html().replace(/\s\s+/g, ' ');
-		endTime = $(this).find("td:nth-child(2) p").html().replace(/\s\s+/g, ' ');
 		campus = $(this).find("td:nth-child(3) p").html().replace(/\s\s+/g, ' ');
-		event = $(this).find("td:nth-child(4) a").html().replace(/\s\s+/g, ' ');
-		venue = $(this).find("td:nth-child(5) p").html().replace(/\s\s+/g, ' ');
-		tabletext += startTime + " to " + endTime + " - <strong>" + event + "</strong> at " + venue + "<br><br>";
+		if(campus !== "C-PPrim"){
+			startTime = $(this).find("td:nth-child(1) p").html().replace(/\s\s+/g, ' ');
+			endTime = $(this).find("td:nth-child(2) p").html().replace(/\s\s+/g, ' ');
+			event = $(this).find("td:nth-child(4) a").html().replace(/\s\s+/g, ' ');
+			venue = $(this).find("td:nth-child(5) p").html().replace(/\s\s+/g, ' ');
+			venue = venue.substring(venue.indexOf("]") + 3);
+			tabletext += "<li><span class='bulletin-event'>" + event + "</span> at <span class='bulletin-venue'>" + venue + "</span><span class='bulletin-time'>" + startTime + " - " + endTime + "</span></li>";
+		}
 	});
 	$("#events .scroller").html(tabletext);
-	$("#events .marquee div").css("animation-duration", (.08*$("#events .scroller").height() + "s"))
-
 	$("#announcements .scroller").html("<p></p>" + announcements);
-	$("#announcements .marquee div").css("animation-duration", (.08*$("#announcements .scroller").height() + "s"))
+
+	// ensure that if the scroller is short enough, there's no need to scroll it
+	var duration;
+	if($("#events .scroller").height() > $("#events").height()){
+		duration = (.08*$("#events .scroller").height() + "s");
+	} else
+		duration = 9999999999999;
+	$("#events .marquee div").css("animation-duration", duration)
+
+	if($("#announcements .scroller").height() > $("#announcements").height())
+		duration = (.08*$("#announcements .scroller").height() + "s");
+	else 
+		duration = 9999999999999;
+	$("#announcements .marquee div").css("animation-duration", duration)
 }
 

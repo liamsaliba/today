@@ -91,6 +91,7 @@ div {
 	font-weight: normal;
 	position: relative;
 	display: inline-block;
+	text-transform: lowercase;
 }
 
 img#logo {
@@ -127,7 +128,6 @@ img#logo {
 	text-transform: uppercase;
 	font-weight: bold;
 }
-
 
 
 
@@ -446,4 +446,25 @@ a {
 @keyframes marquee {
  	0%   { transform: translateY(0)}
     100% { transform: translateY(-100%) }
+}
+
+
+
+.bulletin-time {
+	font-size: 18px;
+	display: block;
+}
+
+.bulletin-event {
+	font-weight: bold;
+	font-size: 32px;
+}
+
+.bulletin-venue {
+	font-style: italic;
+}
+
+li {
+	padding-bottom: 20px;
+	list-style: none;
 }
