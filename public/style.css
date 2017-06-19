@@ -464,7 +464,7 @@ a {
 	font-style: italic;
 }
 
-li {
+#events li {
 	padding-bottom: 20px;
 	list-style: none;
 }
