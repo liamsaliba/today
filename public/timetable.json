@@ -197,11 +197,6 @@
           "endTime": "15:30"
         }
       }
-    }, 
-    {
-      "id": 6,
-      "times": {
-      }
     }
   ],
   "years": {
@@ -800,6 +795,8 @@
     "lunch": "Lunch",
     "period5": "<span class=\"tiny\">Period</span> 5",
     "period6": "<span class=\"tiny\">Period</span> 6",
-    "afterSchool": "After School"
+    "afterSchool": "After School",
+    "weekend": "Weekend",
+    "holidays": "Holidays"
   }
 }
