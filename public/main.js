@@ -64,7 +64,6 @@ jQuery.fn.extend({
 			    return (className.match (/(^|\s)mdc-bg-\S+/g) || []).join(' ');
 			}).addClass("mdc-bg-"+color);
 		}
-		$(this).slideDown(100);
 	}
 })
 
@@ -258,6 +257,16 @@ function getCurrentInfo() {
 	timeLeftOfSchool()
 }
 
+function getEnhancement() {
+	var enhancements = timetable.years[d.getYear()+1900].enhancement;
+	var currentDate = new Date(d).setHours(0,0,0,0);
+	for(var event in enhancements) {
+		if(currentDate === new Date(enhancements[event].date).setHours(0,0,0,0)){
+			return enhancements[event].name;
+		}
+	}
+}
+
 function updateColumn(period, daynum, column) {
 	// Period indicator
 	$(column + " .period").bhtml(timetable.periods[period]);
@@ -274,6 +283,7 @@ function updateColumn(period, daynum, column) {
 			blockObj.bhtml('<span class="tiny">Block</span> ' + block);
 			blockObj.applyColor(color);
 		} else {
+			var enhancement = 
 			blockObj.slideUp();
 		}
 
@@ -308,9 +318,6 @@ function updateColumn(period, daynum, column) {
 						$(column + " .box").applyColor(color+"-200");
 					else
 						$(column + " .box").applyColor(color+"-100");
-				}
-				if(EXTRA_EFFECTS){					
-					box.fadeIn();
 				}
 
 				box.slideDown();

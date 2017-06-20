@@ -233,7 +233,7 @@ img#logo {
 }
 
 .column-now > .box {
-	background-color: #ffccd9;
+	background: #ffccd9;
 	display: none;
 }
 

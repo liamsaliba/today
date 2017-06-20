@@ -327,7 +327,7 @@
   "blocks": [
     {
       "id": 0,
-      "color": "brown",
+      "color": "default",
       "subjects": [
         {
           "abbr": "12FUTURES1",
@@ -405,7 +405,7 @@
     },
     {
       "id": 2,
-      "color": "purple",
+      "color": "orange",
       "subjects": [
         {
           "abbr": "12AC1",
@@ -465,7 +465,7 @@
     },
     {
       "id": 3,
-      "color": "indigo",
+      "color": "green",
       "subjects": [
         {
           "abbr": "12CH1",
@@ -517,7 +517,7 @@
     },
     {
       "id": 4,
-      "color": "green",
+      "color": "aqua",
       "subjects": [
         {
           "abbr": "12BI1",
@@ -585,7 +585,7 @@
     },
     {
       "id": 5,
-      "color": "cyan",
+      "color": "blue",
       "subjects": [
         {
           "abbr": "12BI2",
@@ -637,7 +637,7 @@
     },
     {
       "id": 6,
-      "color": "orange",
+      "color": "purple",
       "subjects": [
         {
           "abbr": "12BM2",
