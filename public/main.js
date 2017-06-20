@@ -194,8 +194,17 @@ function timeLeftOfSchool(){
 			lastDay = new Date(keyDates.school[term].endDate + " 15:30");
 	}
 	var m = lastDay.minutesUntil();
-	if (m > 0)
-		$("#school-left").bhtml(Math.floor(m/7/24/60) + " weeks " + Math.floor(m/24/60%7) + " days " + Math.floor(m/60%(24)) + " hours " + (m%60) + " mins until the end of year 12");
+	if (m > 0) {
+		var string = "";
+		var timeTill = [[Math.floor(m/7/24/60), "weeks"], [Math.floor(m/24/60%7), "days"],
+		[Math.floor(m/60%(24)), "hours"], [m%60, "mins"]];
+
+		for(var i = 0; i < timeTill.length; i++){
+			if(timeTill[i][0] !== 0)
+				string += timeTill[i][0] + " " + timeTill[i][1] + " ";
+		}
+		$("#school-left").bhtml(string + "left of year 12!");
+	}
 	else 
 		$("#school-left").bhtml("End of 2017!")
 }
