@@ -498,7 +498,7 @@ function updateBulletin() {
 		$("#today").html(day + "day");
 	}
 	date = date.substring(date.indexOf("day")+3)
-	$("#date").html(date);
+	$("#bulletin-date").html(date);
 
 	$("#temp-table").html(table);
 	var tablerow = $("#temp-table > table > tbody > tr");
