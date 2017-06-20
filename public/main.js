@@ -345,21 +345,26 @@ function updateColumn(period, daynum, column) {
 }
 
 function getTerm() {
-	var keyDates = timetable.years[year+2000];
+	var keyDates = timetable.years[d.getYear()+1900];
 	var currentTime = d.getTime();
 
 	for(var i = 0; i < 2; i++){
-		var condition = (i === 0) ? school : holidays;
-		var startDate = new Date(keyDates.condition[epoch].startDate + " 00:00");
-		var endDate = new Date(keyDates.condition[epoch].endDate + " 23:59");
-
-		for(var epoch in keyDates.condition){
+		var condition = (i === 0) ? "school" : "holidays";
+		for(var epoch in keyDates[condition]){
+			var startDate = new Date(keyDates[condition][epoch].startDate + " 00:00");
+			var endDate = new Date(keyDates[condition][epoch].endDate + " 23:59");
 			if(currentTime >= startDate && currentTime <= endDate) {
-				return keyDates.condition[epoch].name;
+				return keyDates[condition][epoch];
 			}
 		}
 	}
 	return undefined;
+}
+
+function isHoliday(term){
+	if(term.toLowerCase().includes("term") || term.toLowerCase().includes("ECP"))
+		return false;
+	return true;
 }
 
 function updateDate() {
@@ -375,10 +380,11 @@ function updateDate() {
 		week2 = d.getWeek();
 		term = "term " + d.getTerm();
 	} else {
-		term = getTerm();
-		if(term.toLowerCase().includes("term") || term.toLowerCase().includes("ECP")){
-			// school
-			week = d.getYearWeek() - startDate.getYearWeek() + 1; //startDate???
+		var termObj = getTerm();
+		term = termObj.name;
+
+		if(!isHoliday(term)){
+			week = d.getYearWeek() - new Date(termObj.startDate).getYearWeek() + 1;
 			week2 = (week-1)%2+1;
 			$("#term-info").show();
 		} else { // on holiday
