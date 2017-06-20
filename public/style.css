@@ -339,7 +339,7 @@ button, input {
   font-weight: bold;
   white-space: nowrap;
   color: #ffffff;
-  background-color: #999999;
+  background: #999999;
   -webkit-border-radius: 9px;
   -moz-border-radius: 9px;
   border-radius: 9px;
@@ -351,19 +351,19 @@ button, input {
 
 }
 .badge-error {
-  background-color: #b94a48;
+  background: #b94a48;
 }
 .badge-warning {
-  background-color: #f89406;
+  background: #f89406;
 }
 .badge-success {
-  background-color: #468847;
+  background: #468847;
 }
 .badge-info {
-  background-color: #3a87ad;
+  background: #3a87ad;
 }
 .badge-inverse {
-  background-color: #333333;
+  background: #333333;
 }
 
 .tiny {

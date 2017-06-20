@@ -1,0 +1,123 @@
+/*345*/
+.bg-default-now {
+	background: hsla(345, 100%, 90%, 1) !important;
+}
+
+.bg-default-next {
+	background: hsla(345, 100%, 96%, 1) !important;
+}
+
+
+.bg-block0-now {
+	background: hsla(25, 0%, 90%, 1) !important;
+}
+
+.bg-block0-next {
+	background: hsla(25, 0%, 96%, 1) !important;
+}
+
+.bg-block0-badge {
+	background: hsla(25, 0%, 40%, 1) !important;
+}
+
+
+
+.bg-block1-now {
+	background: hsla(25, 100%, 90%, 1) !important;
+}
+
+.bg-block1-next {
+	background: hsla(25, 100%, 96%, 1) !important;
+}
+
+.bg-block1-badge {
+	background: hsla(25, 100%, 40%, 1) !important;
+}
+
+
+
+
+.bg-block2-now {
+	background: hsla(55, 100%, 90%, 1) !important;
+}
+
+.bg-block2-next {
+	background: hsla(55, 100%, 96%, 1) !important;
+}
+
+.bg-block2-badge {
+	background: hsla(55, 100%, 40%, 1) !important;
+}
+
+
+
+
+.bg-block3-now {
+	background: hsla(120, 100%, 90%, 1) !important;
+}
+
+.bg-block3-next {
+	background: hsla(120, 100%, 96%, 1) !important;
+}
+
+.bg-block3-badge {
+	background: hsla(120, 100%, 40%, 1) !important;
+}
+
+
+
+
+
+.bg-block4-now {
+	background: hsla(165, 100%, 90%, 1) !important;
+}
+
+.bg-block4-next {
+	background: hsla(165, 100%, 96%, 1) !important;
+}
+
+.bg-block4-badge {
+	background: hsla(165, 100%, 40%, 1) !important;
+}
+
+
+
+
+.bg-block5-now {
+	background: hsla(230, 100%, 90%, 1) !important;
+}
+
+.bg-block5-next {
+	background: hsla(230, 100%, 96%, 1) !important;
+}
+
+.bg-block5-badge {
+	background: hsla(230, 100%, 40%, 1) !important;
+}
+
+
+
+
+
+.bg-block6-now {
+	background: hsla(265, 100%, 90%, 1) !important;
+}
+
+.bg-block6-next {
+	background: hsla(265, 100%, 96%, 1) !important;
+}
+
+.bg-block6-badge {
+	background: hsla(265, 100%, 40%, 1) !important;
+}
+
+
+
+
+.bg-true {
+	background: #00a81f !important;
+}
+
+.bg-false {
+	background: #a81600 !important;
+}

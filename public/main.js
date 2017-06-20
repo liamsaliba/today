@@ -11,11 +11,10 @@ var timetable;
 var bulletin;
 
 // Button variables
-var EXTRA_EFFECTS = false;
 var DEBUG_RND = false;
 var DEBUG_FRZ = false;
 var DEBUG_TICK = false;
-var DEBUG_COL = false;
+var DEBUG_COL = true;
 
 // TODO: make these function correctly
 Date.prototype.getWeek = function() {
@@ -58,11 +57,14 @@ jQuery.fn.extend({
 			$(this).ahtml(text);
 		}
 	}, // sets assigned bg color, removing previous colour, with animation
-	applyColor: function(color) {
-		if(!$(this).hasClass("mdc-bg-" + color)){
+	applyColor: function(color, type) {
+		if(color === undefined) color = "default";
+		else color = "block" + color;
+		const colorClass = "bg-" + color + "-" + type;
+		if(!$(this).hasClass(colorClass)){
 			$(this).removeClass (function (index, className) {
-			    return (className.match (/(^|\s)mdc-bg-\S+/g) || []).join(' ');
-			}).addClass("mdc-bg-"+color);
+			    return (className.match (/(^|\s)bg-\S+/g) || []).join(' ');
+			}).addClass(colorClass);
 		}
 	}
 })
@@ -123,11 +125,7 @@ function loadButtons() {
 
 // show button state for its variable
 function setBtnState(button, bool){
-	if(bool){
-		$(button).removeClass("mdc-bg-red").addClass("mdc-bg-green");
-	} else {
-		$(button).removeClass("mdc-bg-green").addClass("mdc-bg-red");
-	}
+	$(button).removeClass("bg-"+!bool).addClass("bg-"+bool);
 }
 
 
@@ -270,21 +268,20 @@ function getEnhancement() {
 function updateColumn(period, daynum, column) {
 	// Period indicator
 	$(column + " .period").bhtml(timetable.periods[period]);
-
+	var block = undefined;
 	if(period.includes("period")) {
-		var block = timetable.timetable[daynum-1][period];
-		var blockObj = $(column + " .block");
+		block = timetable.timetable[daynum-1][period];
+		var blockBadge = $(column + " .block");
 
 		var subjects = timetable.blocks[block].subjects;
 
-		var color = timetable.blocks[block].color;
 		// Block indicator
 		if(block !== 0) {
-			blockObj.bhtml('<span class="tiny">Block</span> ' + block);
-			blockObj.applyColor(color);
+			blockBadge.bhtml('<span class="tiny">Block</span> ' + block);
+			blockBadge.applyColor(block, "badge");
 		} else {
-			var enhancement = 
-			blockObj.slideUp();
+			var enhancement = getEnhancement();
+			blockBadge.slideUp();
 		}
 
 		for (var i = 0; i < 8; i++){
@@ -310,15 +307,6 @@ function updateColumn(period, daynum, column) {
 				}
 				box.find(".subject-title").html(subjects[i].name);
 				box.find(".subject-abbr").html(subjects[i].abbr);
-				
-
-				// NOT USED due to performance issues.
-				if(DEBUG_COL) {
-					if(column.includes("now"))
-						$(column + " .box").applyColor(color+"-200");
-					else
-						$(column + " .box").applyColor(color+"-100");
-				}
 
 				box.slideDown();
 			} else {
@@ -331,6 +319,7 @@ function updateColumn(period, daynum, column) {
 		$(column + " .block").slideUp();
 		$(column + " .box:not(:first)").slideUp();
 
+		// Handle information box when there is no class
 		var box = $(column + " .box:nth-child(2)")
 
 		if(!box.hasClass("box-short")){
@@ -339,6 +328,11 @@ function updateColumn(period, daynum, column) {
 		box.find(".subject-title").html(timetable.periods[period]);
 		box.find(".subject-abbr").html("");
 		box.slideDown();
+	}
+
+	if(DEBUG_COL) {
+		var type = column.includes("now") ? "now" : "next";
+		$(column + " .box").applyColor(block, type);
 	}
 
 	// period time indicators
