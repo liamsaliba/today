@@ -355,7 +355,7 @@ function updateDate() {
 		month = 12;
 	var year = d.getYear()-100;
 	var day = d.getDay();
-	var week, week2, term
+	var week, week2, term;
 	if(timetable === undefined) {
 		week = d.getYearWeek();
 		week2 = d.getWeek();

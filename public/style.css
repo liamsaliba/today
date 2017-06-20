@@ -308,8 +308,12 @@ img#logo {
 	margin-left: 20px;
 }
 
-button, input {
+#debug-buttons {
+	display: inline-block;
 	float: right;
+}
+
+button, input {
 	margin: 0;
 	border: none;
 	margin-top: -5px;
