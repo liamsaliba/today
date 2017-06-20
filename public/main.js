@@ -344,8 +344,22 @@ function updateColumn(period, daynum, column) {
 	}
 }
 
-function parseDate(date) {
-	return new Date(date + " 16:00");
+function getTerm() {
+	var keyDates = timetable.years[year+2000];
+	var currentTime = d.getTime();
+
+	for(var i = 0; i < 2; i++){
+		var condition = (i === 0) ? school : holidays;
+		var startDate = new Date(keyDates.condition[epoch].startDate + " 00:00");
+		var endDate = new Date(keyDates.condition[epoch].endDate + " 23:59");
+
+		for(var epoch in keyDates.condition){
+			if(currentTime >= startDate && currentTime <= endDate) {
+				return keyDates.condition[epoch].name;
+			}
+		}
+	}
+	return undefined;
 }
 
 function updateDate() {
@@ -361,29 +375,14 @@ function updateDate() {
 		week2 = d.getWeek();
 		term = "term " + d.getTerm();
 	} else {
-		var keyDates = timetable.years[year+2000];
-		var currentTime = d.getTime();
-		term = undefined;
-		for(var epoch in keyDates.school){
-			if(currentTime >= parseDate(keyDates.school[epoch].startDate) && currentTime <= parseDate(keyDates.school[epoch].endDate)) {
-				term = keyDates.school[epoch].name;
-				week = d.getYearWeek() - new Date(parseDate(keyDates.school[epoch].startDate)).getYearWeek() + 1;
-				week2 = week%2;
-				console.log(week)
-				$("#term-info").fadeIn();
-				break;
-			}
-		}
-		// on holiday
-		if(term === undefined){
-			for(var epoch in keyDates.holidays){
-				if(currentTime >= parseDate(keyDates.holidays[epoch].startDate) && currentTime <= parseDate(keyDates.holidays[epoch].endDate)) {
-					term = keyDates.holidays[epoch].name;
-					$("#term-info").fadeOut();
-					break;
-				}
-			}
-			
+		term = getTerm();
+		if(term.toLowerCase().includes("term") || term.toLowerCase().includes("ECP")){
+			// school
+			week = d.getYearWeek() - startDate.getYearWeek() + 1; //startDate???
+			week2 = (week-1)%2+1;
+			$("#term-info").show();
+		} else { // on holiday
+			$("#term-info").hide();
 			dayNumber = 0;
 		}
 	}
@@ -393,12 +392,12 @@ function updateDate() {
 		dayNumber = 0;
 	}
 	else {
-		dayNumber = day + (week-1)*5;
+		dayNumber = day + (week2-1)*5;
 	}
 
 	//$("#date").bhtml(date.leadZero() + " " + months[month] + " " + (year+2000))
 	$("#day").bhtml(days[day]);
-	$("#week").bhtml(week2);
+	$("#week").bhtml(week2 + " <small>(" + week + ")</small>");
 	$("#term").bhtml(term);
 	$("#daynum").bhtml(dayNumber);
 
