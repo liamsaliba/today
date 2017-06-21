@@ -9,6 +9,7 @@ var months = ["January", "Feburary", "March", "April", "May", "June", "July",
 var dayNumber;
 var timetable;
 var bulletin;
+var enhancements;
 
 // Button variables
 var DEBUG_RND = false;
@@ -16,7 +17,6 @@ var DEBUG_FRZ = false;
 var DEBUG_TICK = false;
 var DEBUG_COL = true;
 
-// TODO: make these function correctly
 Date.prototype.getWeek = function() {
     return (this.getYearWeek()) % 2 + 1;
 }
@@ -76,6 +76,7 @@ function runEverySecond(){
 }
 function runEveryHour(){
 	updateDate();
+	updateEnhancements();
 }
 
 function runEveryDay(){
@@ -83,9 +84,9 @@ function runEveryDay(){
 }
 
 function init() {
+	loadTimetable();
 	updateDate();
 	updateTime();
-	loadTimetable();
 	loadButtons();
 	loadComplete();
 }
@@ -101,13 +102,12 @@ flatpickr('#flatpickr', {
 
 $("#flatpickr").change(function() {
 	d = new Date(Date.parse($(this).val()));
-	updateDate();
+	runEveryHour();
+	runEverySecond();
 	updateBulletin();
-	updateTime();
-	getCurrentInfo();
 });
 
-/// BUTTONS
+/// DEBUG BUTTONS
 // click -> set boolean, set button state
 $(".btn-toggle").click(function() {
 	var bool = $(this).attr('name');
@@ -138,6 +138,7 @@ function loadTimetable() {
 		timetable = data;
 		getCurrentInfo(data);
 		updateDate();
+		updateEnhancements();
 	});
 }
 
@@ -196,12 +197,17 @@ function timeLeftOfSchool(){
 	var m = lastDay.minutesUntil();
 	if (m > 0) {
 		var string = "";
-		var timeTill = [[Math.floor(m/7/24/60), "weeks"], [Math.floor(m/24/60%7), "days"],
-		[Math.floor(m/60%(24)), "hours"], [m%60, "mins"]];
+		var timeTill = [[Math.floor(m/7/24/60), "week"], [Math.floor(m/24/60)%7, "day"],
+		[Math.floor(m/60)%(24), "hour"], [m%60, "min"]];
 
 		for(var i = 0; i < timeTill.length; i++){
-			if(timeTill[i][0] !== 0)
-				string += timeTill[i][0] + " " + timeTill[i][1] + " ";
+			if(timeTill[i][0] !== 0){
+				string += timeTill[i][0] + " " + timeTill[i][1];
+				if(timeTill[i][0] == 1)
+					string += " ";
+				else ///pluralisation
+					string += "s ";
+			}
 		}
 		$("#school-left").bhtml(string + "left of year 12!");
 	}
@@ -228,6 +234,8 @@ function showNext() {
 }
 
 function getCurrentInfo() {
+	timeLeftOfSchool()
+
 	var periodTimes = timetable.days[d.getDay()].times;
 	var currentTime = d.getTime()
 	var periods = getPeriods(periodTimes, currentTime);
@@ -261,15 +269,18 @@ function getCurrentInfo() {
 	updateColumn(currentPeriod, dayNumber,".column-now");
 	updateColumn(nextPeriod, dayNumber, ".column-next");
 
-	timeLeftOfSchool()
 }
 
-function getEnhancement() {
-	var enhancements = timetable.years[d.getYear()+1900].enhancement;
-	var currentDate = new Date(d).setHours(0,0,0,0);
-	for(var event in enhancements) {
-		if(currentDate === new Date(enhancements[event].date).setHours(0,0,0,0)){
-			return enhancements[event].name;
+function isToday(date){
+	return new Date(d).setHours(0,0,0,0) === date.setHours(0,0,0,0)
+}
+
+function updateEnhancements() {
+	var enhancementObj = timetable.years[d.getYear()+1900].enhancement;
+	enhancements = [];
+	for(var event in enhancementObj) {
+		if(isToday(new Date(enhancementObj[event].date))){
+			enhancements.push(enhancementObj[event]);
 		}
 	}
 }
@@ -289,7 +300,6 @@ function updateColumn(period, daynum, column) {
 			blockBadge.bhtml('<span class="tiny">Block</span> ' + block);
 			blockBadge.applyColor(block, "badge");
 		} else {
-			var enhancement = getEnhancement();
 			blockBadge.slideUp();
 		}
 
