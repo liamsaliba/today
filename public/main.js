@@ -14,7 +14,7 @@ var enhancements;
 // Button variables
 var DEBUG_RND = false;
 var DEBUG_FRZ = false;
-var DEBUG_TICK = false;
+var DEBUG_TICK = true;
 var DEBUG_COL = true;
 
 Date.prototype.getWeek = function() {
@@ -285,76 +285,113 @@ function updateEnhancements() {
 	}
 }
 
-function updateColumn(period, daynum, column) {
-	// Period indicator
-	$(column + " .period").bhtml(timetable.periods[period]);
-	var block;
-	if(period.includes("period")) {
-		block = timetable.timetable[daynum-1][period];
-		var blockBadge = $(column + " .block");
-
-		var subjects = timetable.blocks[block].subjects;
-
-		// Block indicator
-		if(block !== 0) {
-			blockBadge.bhtml('<span class="tiny">Block</span> ' + block);
-			blockBadge.applyColor(block, "badge");
-		} else {
-			blockBadge.slideUp();
-		}
-
-		for (var i = 0; i < 8; i++){
-			var box = $(column + " .box:nth-child(" + (i+2) + ")");
-			if(i < subjects.length) {
-				// Private Study short block
-				if(subjects[i].small === true){
-					// Need to check, otherwise animation will play every tick
-					if(!box.hasClass("box-short")){
-						box.addClass("box-short").slideUp();
-					}
-				} else {
-					if(box.hasClass("box-short")){
-						box.removeClass("box-short").slideDown();
-					}
-					// regular subjects
-					box.find(".subject-room").html(subjects[i].room);
-					var teacher = subjects[i].teacher;
-					if(teacher === "" || teacher === "TEACHERNAME")
-						box.find(".subject-teacher").html(subjects[i].teacherabbr);
-					else
-						box.find(".subject-teacher").html(subjects[i].teacher);
-				}
-				box.find(".subject-title").html(subjects[i].name);
-				box.find(".subject-abbr").html(subjects[i].abbr);
-
-				box.slideDown();
-			} else {
-				// No subject in this box
-				box.slideUp();
-			}
-		}
-	} else {
-		// No subjects, so no blocks or boxes needed
-		$(column + " .block").slideUp();
-		$(column + " .box:not(:first)").slideUp();
-
-		// Handle information box when there is no class
-		var box = $(column + " .box:nth-child(2)")
-
+function showBox(subject, column, pos){
+	var box = $(column + " .box:nth-child(" + (pos+2) + ")");
+	// Short block
+	if(subject.small) {
+		// Need to check, otherwise animation will play every tick
 		if(!box.hasClass("box-short")){
 			box.addClass("box-short").slideUp();
 		}
-		box.find(".subject-title").html(timetable.periods[period]);
-		box.find(".subject-abbr").html("");
-		box.slideDown();
+	} else {
+		if(box.hasClass("box-short")){
+			box.removeClass("box-short").slideDown();
+		}
+		// regular subjects
+		var room = (subject.room === undefined) ? "" : subject.room;
+		box.find(".subject-room").html(room);
+
+		var teacher;
+		if(subject.teacher === "" || subject.teacher === undefined){
+			if(subject.teacherabbr === "" || subject.teacherabbr === undefined){
+				teacher = "";
+			} else
+				teacher = subject.teacherabbr;
+		}
+		else {
+			teacher = subject.teacher;
+		}
+		box.find(".subject-teacher").html(teacher);
+	}
+	box.find(".subject-title").html(subject.name);
+	var abbr = (subject.abbr === undefined) ? "" : subject.abbr;
+	box.find(".subject-abbr").html(abbr);
+
+	box.slideDown();
+}
+
+function hideBox(column, pos){
+	$(column + " .box:nth-child(" + (pos+2) + ")").slideUp();
+}
+
+function checkEnhancements(period, column) {
+	for(enhancement in enhancements) {
+		for(var p in enhancements[enhancement].periods) {
+			if(period == "period" + enhancements[enhancement].periods[p]){
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+function updateColumn(period, daynum, column) {
+	// Period indicator
+	$(column + " .period").bhtml(timetable.periods[period]);
+	
+	var block;
+	var hasEnhancements = checkEnhancements(period, column);
+	
+	if (!hasEnhancements) {
+		if(period.includes("period")) {
+			block = timetable.timetable[daynum-1][period];
+
+			var subjects = timetable.blocks[block].subjects;
+
+			for (var i = 0; i < 8; i++){
+				var box = $(column + " .box:nth-child(" + (i+2) + ")");
+				if(i < subjects.length) {
+					showBox(subjects[i], column, i);
+				} else {
+					// No subject shown in this box
+					hideBox(column, i);
+				}
+			}
+		} else {
+			// No subjects, so no blocks or boxes needed
+			$(column + " .box:not(:first)").slideUp();
+			// Show current period (recess, lunch, before, after school)
+			showBox({name: timetable.periods[period], small: true}, column, 0);
+		}
+	} else {
+		// No subjects, so no blocks or boxes needed
+		$(column + " .box:not(:first)").slideUp();
+		// Show current enhancements
+		for(enhancement in enhancements) {
+			for(var p in enhancements[enhancement].periods) {
+				if(period == "period" + enhancements[enhancement].periods[p]){
+					showBox(enhancements[enhancement], column, 0);
+				}
+			}
+		}
 	}
 
-	if(DEBUG_COL) {
+	// Block backgrounds
+	if(DEBUG_COL && block) {
 		var type = column.includes("now") ? "now" : "next";
 		$(column + " .box").applyColor(block, type);
 	}
 
-	// period time indicators
+	// Block badge
+	var blockBadge = $(column + " .block");
+	if(block !== 0 && block !== undefined && !hasEnhancements) {
+		blockBadge.bhtml('<span class="tiny">Block</span> ' + block);
+		blockBadge.applyColor(block, "badge");
+	} else {
+		blockBadge.slideUp();
+	}
+
+	// Period start / end time indicators
 	if(period.includes("School")){
 		$(column + " .start-time").fadeOut();
 		$(column + " .end-time").fadeOut();
@@ -396,6 +433,7 @@ function updateDate() {
 	var day = d.getDay();
 	var week, week2, term;
 	if(timetable === undefined) {
+		l("could not find timetable, setting approximate date")
 		week = d.getYearWeek();
 		week2 = d.getWeek();
 		term = "term " + d.getTerm();
@@ -552,3 +590,6 @@ function updateBulletin() {
 	$("#announcements .marquee div").css("animation-duration", duration)
 }
 
+function l(string) {
+	console.log(new Date().toLocaleString() + " * " + string)
+}

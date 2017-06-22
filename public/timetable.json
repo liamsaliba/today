@@ -254,104 +254,105 @@
         {
           "name": "OIGA - Financial Literacy",
           "date": "2017-06-19",
-          "type": "EP",
-          "period": 4
+          "abbr": "EP",
+          "periods": [4]
         },
         {
-          "name": "Academic Awards Assembly",
+          "name": "Academic Awards",
           "date": "2017-06-20",
-          "type": "Assembly",
-          "period": 4
+          "abbr": "Assembly",
+          "room": "Gymmnasium",
+          "periods": [4]
         },
         {
-          "name": "Block Session",
+          "name": "Block 4",
           "date": "2017-06-22",
           "block": 4,
-          "type": "EP",
-          "period": [5,6]
+          "abbr": "EP",
+          "periods": [6]
         },
         {
-          "name": "Senior Years Chapel",
+          "name": "Senior Years",
           "date": "2017-06-23",
-          "type": "Chapel",
-          "period": 4
+          "abbr": "Chapel",
+          "periods": [4]
         },
         {
           "name": "Further Maths SAC",
           "date": "2017-07-18",
-          "type": "EP",
-          "period": [5,6]
+          "abbr": "EP",
+          "periods": [5,6]
         },
         {
-          "name": "Block Session",
+          "name": "Block 5",
           "date": "2017-07-20",
           "block": 5,
-          "type": "EP",
-          "period": [5,6]
+          "abbr": "EP",
+          "periods": [5,6]
         },
         {
           "name": "Business Management SAC",
           "date": "2017-07-25",
-          "type": "EP",
-          "period": [5,6]
+          "abbr": "EP",
+          "periods": [5,6]
         },
         {
-          "name": "Block Session",
+          "name": "Block 3",
           "date": "2017-07-27",
           "block": 3,
-          "type": "EP",
-          "period": [5,6]
+          "abbr": "EP",
+          "periods": [5,6]
         },
         {
           "name": "Elevate - Ace Your Exams",
           "date": "2017-08-01",
-          "type": "EP",
-          "period": [5,6]
+          "abbr": "EP",
+          "periods": [5,6]
         },
         {
-          "name": "Block Session",
+          "name": "Block 2",
           "date": "2017-08-08",
           "block": 2,
-          "type": "EP",
-          "period": [5,6]
+          "abbr": "EP",
+          "periods": [5,6]
         },
         {
-          "name": "Block Session",
+          "name": "Block 1",
           "date": "2017-08-15",
           "block": 1,
-          "type": "EP",
-          "period": [5,6]
+          "abbr": "EP",
+          "periods": [5,6]
         },
         {
-          "name": "Block Session",
+          "name": "Block 6",
           "date": "2017-08-22",
           "block": 6,
-          "type": "EP",
-          "period": [5,6]
+          "abbr": "EP",
+          "periods": [5,6]
         },
         {
           "name": "Further Maths SAC",
           "date": "2017-08-29",
-          "type": "EP",
-          "period": [5,6]
+          "abbr": "EP",
+          "periods": [5,6]
         },
         {
           "name": "Maths Methods SAC",
           "date": "2017-09-05",
-          "type": "EP",
-          "period": [5,6]
+          "abbr": "EP",
+          "periods": [5,6]
         },
         {
           "name": "English SAC",
           "date": "2017-09-12",
-          "type": "EP",
-          "period": [5,6]
+          "abbr": "EP",
+          "periods": [5,6]
         },
         {
           "name": "Methods Exam Seminar",
           "date": "2017-09-19",
-          "type": "EP",
-          "period": [5,6]
+          "abbr": "EP",
+          "periods": [5,6]
         }
       ]
     }
@@ -360,26 +361,6 @@
     {
       "id": 0,
       "subjects": [
-        {
-          "abbr": "12FUTURES1",
-          "name": "Futures",
-          "small": true
-        },
-        {
-          "abbr": "ASSEMBLY",
-          "name": "Assembly",
-          "small": true
-        },
-        {
-          "abbr": "CHAPEL",
-          "name": "Chapel",
-          "small": true
-        },
-        {
-          "abbr": "12EP",
-          "name": "Enhancement Period",
-          "small": true
-        }
       ]
     },
     {

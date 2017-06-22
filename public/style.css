@@ -275,9 +275,11 @@ img#logo {
 
 .subject-abbr {
 	color: #555;
+	margin-right: 5px;
 }
 
 .subject-room {
+	margin-right: 5px;
 }
 
 .subject-teacher {
