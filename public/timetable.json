@@ -88,15 +88,15 @@
       "times": {
         "form": {
           "startTime": "8:30",
-          "endTime": "8:45"
+          "endTime": "8:40"
         },
         "period1": {
-          "startTime": "8:50",
-          "endTime": "9:45"
+          "startTime": "8:45",
+          "endTime": "9:40"
         },
         "period2": {
-          "startTime": "9:50",
-          "endTime": "10:45"
+          "startTime": "9:45",
+          "endTime": "10:40"
         },
         "recess": {
           "startTime": "10:40",
@@ -125,31 +125,31 @@
       "times": {
         "period1": {
           "startTime": "8:30",
-          "endTime": "9:25"
+          "endTime": "9:23"
         },
         "period2": {
-          "startTime": "9:30",
-          "endTime": "10:25"
+          "startTime": "9:26",
+          "endTime": "10:19"
         },
         "recess": {
-          "startTime": "10:25",
-          "endTime": "10:40"
+          "startTime": "10:19",
+          "endTime": "10:39"
         },
         "period3": {
-          "startTime": "10:45",
-          "endTime": "11:40"
+          "startTime": "10:44",
+          "endTime": "11:37"
         },
         "period4": {
-          "startTime": "11:45",
-          "endTime": "12:40"
+          "startTime": "11:40",
+          "endTime": "12:33"
         },
         "lunch": {
-          "startTime": "12:40",
-          "endTime": "13:05"
+          "startTime": "12:33",
+          "endTime": "13:08"
         },
         "period5": {
-          "startTime": "13:10",
-          "endTime": "14:05"
+          "startTime": "13:13",
+          "endTime": "14:06"
         },
         "period6": {
           "startTime": "14:10",
