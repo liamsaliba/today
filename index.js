@@ -15,17 +15,17 @@ const PORTNUMBER = 6060;
 
 // HTTP server, listen for activity on port 3000
 http.listen(PORTNUMBER, function(){
-	console.log("Public server started, listening on port " + PORTNUMBER);
+	l("Public server started, listening on port " + PORTNUMBER);
 });
 
-var bulletin;
-
+var bulletin = "";
+const BULLETIN_PATH = "./emails/Bulletin.html";
 function getBulletin() {
 	// open file in UTF16-LE because windows
 	var data = "";
 	try {
-		data = fs.readFileSync("./emails/Bulletin.html", "ucs2")
-		l("Bulletin loaded")
+		data = fs.readFileSync(BULLETIN_PATH, "ucs2")
+		l("Found bulletin at " + BULLETIN_PATH)
 	} catch (err) {
 		l(err.message)
 	}
@@ -39,11 +39,6 @@ function getBulletin() {
 	str = sanitizeHtml(str);
 	l("Bulletin sanitized")
 	return str;
-
-	if(bulletin !== str) {
-		l("Bulletin changed!")
-		bulletin = str;
-	}
 }
 
 io.on('connection', onConnect)
@@ -55,25 +50,24 @@ function l(string) {
 function onConnect(socket) {
 	l("Connected to client");
 
-	bulletin = "";
 	updateBulletin(socket);
 	var bulletinTimeout = setInterval(updateBulletin, 100000)
 }
 
 function updateBulletin(socket) {
+	l("Bulletin update requested");
 	str = getBulletin();
-	if(bulletin !== str) {
-		l("Bulletin changed!")
-		date = str.substring(str.indexOf("Plenty Campus – Student Daily Bulletin –") + 42, 
-			str.indexOf("CALENDAR ITEMS:")-57);
-		announcements = str.substring(str.indexOf("NOTICES:") + 25);
-		table = str.substring(str.indexOf("<table>"), str.indexOf("</table>")+8);
-		try{
-			socket.emit('bulletin', {date: date, announcements: announcements,
-			table: table});
-		} catch(err){
-			console.log(err);
-		}
-		bulletin = str;
+	l("Bulletin mismatch!")
+	date = str.substring(str.indexOf("Plenty Campus – Student Daily Bulletin –") + 42, 
+		str.indexOf("CALENDAR ITEMS:")-57);
+	l("Bulletin changed for date " + date);
+	announcements = str.substring(str.indexOf("NOTICES:") + 25);
+	table = str.substring(str.indexOf("<table>"), str.indexOf("</table>")+8);
+	try{
+		socket.emit('bulletin', {date: date, announcements: announcements,
+		table: table});
+	} catch(err){
+		console.log(err);
 	}
+	bulletin = str;
 }
