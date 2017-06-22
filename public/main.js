@@ -288,7 +288,7 @@ function updateEnhancements() {
 function updateColumn(period, daynum, column) {
 	// Period indicator
 	$(column + " .period").bhtml(timetable.periods[period]);
-	var block = undefined;
+	var block;
 	if(period.includes("period")) {
 		block = timetable.timetable[daynum-1][period];
 		var blockBadge = $(column + " .block");

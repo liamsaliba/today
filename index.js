@@ -51,7 +51,9 @@ function onConnect(socket) {
 	l("Connected to client");
 
 	updateBulletin(socket);
-	var bulletinTimeout = setInterval(updateBulletin, 100000)
+	var bulletinTimeout = setInterval(function() {
+		updateBulletin(socket)
+	}, 3600000)
 }
 
 function updateBulletin(socket) {
