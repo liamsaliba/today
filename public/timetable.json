@@ -275,7 +275,8 @@
           "name": "Senior Years",
           "date": "2017-06-23",
           "abbr": "Chapel",
-          "periods": [4]
+          "periods": [4],
+          "small": true
         },
         {
           "name": "Further Maths SAC",

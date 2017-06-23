@@ -324,15 +324,44 @@ function hideBox(column, pos){
 	$(column + " .box:nth-child(" + (pos+2) + ")").slideUp();
 }
 
+function showBlock(block, column) {
+	var subjects = timetable.blocks[block].subjects;
+
+	for (var i = 0; i < 8; i++){
+		var box = $(column + " .box:nth-child(" + (i+2) + ")");
+		if(i < subjects.length) {
+			showBox(subjects[i], column, i);
+		} else {
+			// No subject shown in this box
+			hideBox(column, i);
+		}
+	}
+}
+
+const ENH_NO = 0
+const ENH_YES = 1
+const ENH_BLOCK = 2;
 function checkEnhancements(period, column) {
-	for(enhancement in enhancements) {
-		for(var p in enhancements[enhancement].periods) {
+	blockEnhancement = false;
+	periodEnhancements = getPeriodEnhancements(period);
+	for(var enhancement in periodEnhancements){
+		if(periodEnhancements[enhancement].block !== undefined)
+			return ENH_BLOCK;
+		blockEnhancement = true;
+	}
+	return blockEnhancement ? ENH_YES : ENH_NO;
+}
+
+function getPeriodEnhancements(period) {
+	var periodEnhancements = [];
+	for(var enhancement in enhancements){
+		for(var p in enhancements[enhancement].periods){
 			if(period == "period" + enhancements[enhancement].periods[p]){
-				return true;
+				periodEnhancements.push(enhancements[enhancement]);
 			}
 		}
 	}
-	return false;
+	return periodEnhancements;
 }
 
 function updateColumn(period, daynum, column) {
@@ -341,50 +370,41 @@ function updateColumn(period, daynum, column) {
 	
 	var block;
 	var hasEnhancements = checkEnhancements(period, column);
-	
-	if (!hasEnhancements) {
-		if(period.includes("period")) {
-			block = timetable.timetable[daynum-1][period];
-
-			var subjects = timetable.blocks[block].subjects;
-
-			for (var i = 0; i < 8; i++){
-				var box = $(column + " .box:nth-child(" + (i+2) + ")");
-				if(i < subjects.length) {
-					showBox(subjects[i], column, i);
-				} else {
-					// No subject shown in this box
-					hideBox(column, i);
-				}
-			}
-		} else {
+	switch (hasEnhancements){
+		case ENH_BLOCK:
+			var periodEnhancements = getPeriodEnhancements(period);
+			block = periodEnhancements[0].block;
+			showBlock(block, column);
+			break;
+		case ENH_YES:
 			// No subjects, so no blocks or boxes needed
 			$(column + " .box:not(:first)").slideUp();
-			// Show current period (recess, lunch, before, after school)
-			showBox({name: timetable.periods[period], small: true}, column, 0);
-		}
-	} else {
-		// No subjects, so no blocks or boxes needed
-		$(column + " .box:not(:first)").slideUp();
-		// Show current enhancements
-		for(enhancement in enhancements) {
-			for(var p in enhancements[enhancement].periods) {
-				if(period == "period" + enhancements[enhancement].periods[p]){
-					showBox(enhancements[enhancement], column, 0);
-				}
+			// Show current enhancements
+			var periodEnhancements = getPeriodEnhancements(period);
+			for(enhancement in periodEnhancements){
+				showBox(periodEnhancements[enhancement], column, enhancement);
 			}
-		}
+			break;
+		case ENH_NO:
+			if(period.includes("period")) {
+				block = timetable.timetable[daynum-1][period];
+				showBlock(block, column);
+			} else {
+				// No subjects, so no blocks or boxes needed
+				$(column + " .box:not(:first)").slideUp();
+				// Show current period (recess, lunch, before, after school)
+				showBox({name: timetable.periods[period], small: true}, column, 0);
+			}
+			break;
 	}
 
 	// Block backgrounds
-	if(DEBUG_COL && block) {
-		var type = column.includes("now") ? "now" : "next";
-		$(column + " .box").applyColor(block, type);
-	}
+	var type = column.includes("now") ? "now" : "next";
+	$(column + " .box").applyColor(block, type);
 
 	// Block badge
 	var blockBadge = $(column + " .block");
-	if(block !== 0 && block !== undefined && !hasEnhancements) {
+	if(block !== 0 && block !== undefined && hasEnhancements !== ENH_YES) {
 		blockBadge.bhtml('<span class="tiny">Block</span> ' + block);
 		blockBadge.applyColor(block, "badge");
 	} else {
