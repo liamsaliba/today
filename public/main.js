@@ -36,7 +36,6 @@ Date.prototype.minutesUntil = function() {
 	return Math.ceil((this.getTime() - d.getTime()) / 1000 / 60)
 }
 
-//TODO: implement assemblies/chapels/talks/events into calendar
 //TODO: add admin interface with switchable timetables (duplicate timetable "temporary" object)
 
 Number.prototype.leadZero = function(){
@@ -193,7 +192,7 @@ function timeLeftOfSchool(){
 	var keyDates = timetable.years[d.getYear()+1900];
 	for (var term in keyDates.school){
 		if(keyDates.school[term].name === "Term 4")
-			lastDay = new Date(keyDates.school[term].endDate + " 15:30");
+			lastDay = new Date(keyDates.school[term].endDate + " 16:30");
 	}
 	var m = lastDay.minutesUntil();
 	if (m > 0) {
