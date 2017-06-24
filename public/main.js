@@ -11,6 +11,8 @@ var timetable;
 var bulletin;
 var enhancements;
 
+var onHoliday;
+
 // Button variables
 var DEBUG_RND = false;
 var DEBUG_FRZ = false;
@@ -85,10 +87,7 @@ function runEveryDay(){
 
 function init() {
 	loadTimetable();
-	updateDate();
-	updateTime();
 	loadButtons();
-	loadComplete();
 }
 
 $(document).ready(function() { init(); })
@@ -136,9 +135,11 @@ function setBtnState(button, bool){
 function loadTimetable() {
 	$.getJSON('./timetable.json', function(data){
 		timetable = data;
-		getCurrentInfo(data);
 		updateDate();
+		updateTime();
 		updateEnhancements();
+		getCurrentInfo();
+		loadComplete();
 	});
 }
 
@@ -236,39 +237,43 @@ function showNext() {
 function getCurrentInfo() {
 	timeLeftOfSchool()
 
-	var periodTimes = timetable.days[d.getDay()].times;
-	var currentTime = d.getTime()
-	var periods = getPeriods(periodTimes, currentTime);
-	var currentPeriod = periods[0];
-	var nextPeriod = periods[1];
+	if(onHoliday){
+		$("#holiday-container").fadeIn();
+	} else {
+		$("#holiday-container").fadeOut();
+		var periodTimes = timetable.days[d.getDay()].times;
+		var currentTime = d.getTime()
+		var periods = getPeriods(periodTimes, currentTime);
+		var currentPeriod = periods[0];
+		var nextPeriod = periods[1];
 
-	//Time-till indicator
-	if(currentPeriod === "afterSchool"){
-		$(".column-now .time-till").slideUp();
-		// TODO: Show what's upcoming
-		if(nextPeriod === "afterSchool"){
-			showNext();
-			$(".column-next").slideUp();
-		} else {
-			$(".column-next").slideDown();
-		}
-	}
-	else {
-		if(currentPeriod === "beforeSchool"){
-			$(".column-now .time-till").bhtml(parseTime(periodTimes[nextPeriod].startTime).minutesUntil() + '<span class="tiny">m until school</span>');
-		} else {
-			if(currentPeriod.includes("period") && currentTime < parseTime(periodTimes[currentPeriod].startTime)){
-				$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].startTime).minutesUntil() + '<span class="tiny">m to class</span>');
+		//Time-till indicator
+		if(currentPeriod === "afterSchool"){
+			$(".column-now .time-till").slideUp();
+			// TODO: Show what's upcoming
+			if(nextPeriod === "afterSchool"){
+				showNext();
+				$(".column-next").slideUp();
 			} else {
-				$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].endTime).minutesUntil() + '<span class="tiny">m left</span>');
+				$(".column-next").slideDown();
 			}
 		}
-		$(".column-next").slideDown();
+		else {
+			if(currentPeriod === "beforeSchool"){
+				$(".column-now .time-till").bhtml(parseTime(periodTimes[nextPeriod].startTime).minutesUntil() + '<span class="tiny">m until school</span>');
+			} else {
+				if(currentPeriod.includes("period") && currentTime < parseTime(periodTimes[currentPeriod].startTime)){
+					$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].startTime).minutesUntil() + '<span class="tiny">m to class</span>');
+				} else {
+					$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].endTime).minutesUntil() + '<span class="tiny">m left</span>');
+				}
+			}
+			$(".column-next").slideDown();
+		}
+
+		updateColumn(currentPeriod, dayNumber,".column-now");
+		updateColumn(nextPeriod, dayNumber, ".column-next");
 	}
-
-	updateColumn(currentPeriod, dayNumber,".column-now");
-	updateColumn(nextPeriod, dayNumber, ".column-next");
-
 }
 
 function isToday(date){
@@ -454,18 +459,20 @@ function updateDate() {
 	var week, week2, term;
 	if(timetable === undefined) {
 		l("could not find timetable, setting approximate date")
-		week = d.getYearWeek();
-		week2 = d.getWeek();
-		term = "term " + d.getTerm();
+		//week = d.getYearWeek();
+		//week2 = d.getWeek();
+		//term = "term " + d.getTerm();
 	} else {
 		var termObj = getTerm();
 		term = termObj.name;
 
 		if(!isHoliday(term)){
+			onHoliday = false;
 			week = d.getYearWeek() - new Date(termObj.startDate).getYearWeek() + 1;
 			week2 = (week-1)%2+1;
 			$("#term-info").show();
 		} else { // on holiday
+			onHoliday = true;
 			$("#term-info").hide();
 			dayNumber = 0;
 		}

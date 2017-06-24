@@ -159,6 +159,7 @@ img#logo {
 	z-index: 1;
 	background: #222;
 	padding-top: 300px;
+	display: none;
 }
 
 
