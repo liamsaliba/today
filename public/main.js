@@ -145,7 +145,7 @@ function loadTimetable() {
 /// fades out loading screen
 function loadComplete() {
 	setTimeout(function(){
-		$("#loading").fadeOut();
+		$("#loading-container").fadeOut();
 	}, 400);
 }
 
@@ -209,10 +209,10 @@ function timeLeftOfSchool(){
 					string += "s ";
 			}
 		}
-		$("#school-left").bhtml(string + "left of year 12!");
+		$(".school-left").bhtml(string + "left of year 12!");
 	}
 	else 
-		$("#school-left").bhtml("End of 2017!")
+		$(".school-left").bhtml("End of 2017!")
 }
 
 

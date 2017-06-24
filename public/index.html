@@ -22,11 +22,13 @@
 				<h2><span id="term"></span> <span id="term-info"><b>&#8226;</b> week <span id="week">1</span> <b>&#8226;</b> day <span id="daynum">1</span></span>
 				 <b>&#8226;</b> <span id="shortdate"></span></h2>
 				<div class="padded box" id="rotator">
-					<p>Daniel plays too much chess / rubik's cube / rocket league / piano / spesh</p>
-					<cite>— Liam Saliba</cite>
+					<div id="motd" >
+						<p>Enjoy the holidays!</p>
+						<cite>— Mr Caracella</cite>
+					</div>
 				</div>
 				<div id="plenty-campus">
-					Year 12 Plenty Campus
+					Year 12 - Plenty Campus
 				</div>
 				<div id="header-back">
 					<span id="yearF"></span>
@@ -139,7 +141,6 @@
 					<div class="panel">
 						<div class="box-head">
 							<h1>NOTICES</h1>
-
 						</div>
 						<div class="box" id="announcements">
 							<div class="marquee">
@@ -155,7 +156,7 @@
 
 			<div id="footer">
 				Ivanhoe today | Liam Saliba >> contact for any issues or ideas
-				<span id="school-left"></span>
+				<span class="school-left"></span>
 				<div id="debug-buttons">
 					<button class="btn-toggle" id="btn-rndmode" name="DEBUG_RND" type="button">Random Loop</button>
 					<button class="btn-toggle" id="btn-color" name="DEBUG_COL" type="button">Coloured Boxes</button>
@@ -166,7 +167,7 @@
 			</div>
 		</div>
 		
-		<div id="loading">
+		<div class="fullscreen" id="loading-container">
 			<img id="loading-icon" src="loading.gif">
 			<script>
 				//random image loading screen
@@ -174,6 +175,15 @@
 			</script>
 		</div>
 
+		<div class="fullscreen" id="holiday-container">
+			<div class="padded container">
+				<div class="padded box">
+					<h1>It's <span class="term">the holidays!</span></h1>
+					<p>The school wishes you a good break with plenty of relaxation and rejuvenation*.</p>
+					<small>The school also reminds you that there are </small><b class="school-left"></b>
+				</div>
+			</div>
+		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="lib/flatpickr.min.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
