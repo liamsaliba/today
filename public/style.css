@@ -303,7 +303,7 @@ img#logo {
 
 
 #footer {
-	color: #ccc;
+	color: #bbb;
 	position: fixed;
 	width: 100%;
 	height: 45px;
@@ -317,6 +317,10 @@ img#logo {
 	display: inline-block;
 
 	z-index: 10;
+}
+
+#footer .school-left {
+	margin-left: 20px;
 }
 
 #school-left {
