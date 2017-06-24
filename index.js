@@ -52,6 +52,7 @@ function onConnect(socket) {
 
 	updateBulletin(socket);
 	var bulletinTimeout = setInterval(function() {
+		l("Calling bulletin update from timer")
 		updateBulletin(socket)
 	}, 3600000)
 }
