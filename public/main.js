@@ -236,41 +236,41 @@ function getCurrentInfo() {
 
 	if(onHoliday){
 		$("#holiday-container").fadeIn();
-	} else {
-		$("#holiday-container").fadeOut();
-		var periodTimes = timetable.days[d.getDay()].times;
-		var currentTime = d.getTime()
-		var periods = getPeriods(periodTimes, currentTime);
-		var currentPeriod = periods[0];
-		var nextPeriod = periods[1];
+		return;
+	}
+	$("#holiday-container").fadeOut();
+	var periodTimes = timetable.days[d.getDay()].times;
+	var currentTime = d.getTime()
+	var periods = getPeriods(periodTimes, currentTime);
+	var currentPeriod = periods[0];
+	var nextPeriod = periods[1];
 
-		//Time-till indicator
-		if(currentPeriod === "afterSchool"){
-			$(".column-now .time-till").slideUp();
-			// TODO: Show what's upcoming
-			if(nextPeriod === "afterSchool"){
-				showNext();
-				$(".column-next").slideUp();
-			} else {
-				$(".column-next").slideDown();
-			}
-		}
-		else {
-			if(currentPeriod === "beforeSchool"){
-				$(".column-now .time-till").bhtml(parseTime(periodTimes[nextPeriod].startTime).minutesUntil() + '<span class="tiny">m until school</span>');
-			} else {
-				if(currentPeriod.includes("period") && currentTime < parseTime(periodTimes[currentPeriod].startTime)){
-					$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].startTime).minutesUntil() + '<span class="tiny">m to class</span>');
-				} else {
-					$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].endTime).minutesUntil() + '<span class="tiny">m left</span>');
-				}
-			}
+	//Time-till indicator
+	if(currentPeriod === "afterSchool"){
+		$(".column-now .time-till").slideUp();
+		// TODO: Show what's upcoming
+		if(nextPeriod === "afterSchool"){
+			showNext();
+			$(".column-next").slideUp();
+		} else {
 			$(".column-next").slideDown();
 		}
-
-		updateColumn(currentPeriod, dayNumber,".column-now");
-		updateColumn(nextPeriod, dayNumber, ".column-next");
 	}
+	else {
+		if(currentPeriod === "beforeSchool"){
+			$(".column-now .time-till").bhtml(parseTime(periodTimes[nextPeriod].startTime).minutesUntil() + '<span class="tiny">m until school</span>');
+		} else {
+			if(currentPeriod.includes("period") && currentTime < parseTime(periodTimes[currentPeriod].startTime)){
+				$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].startTime).minutesUntil() + '<span class="tiny">m to class</span>');
+			} else {
+				$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].endTime).minutesUntil() + '<span class="tiny">m left</span>');
+			}
+		}
+		$(".column-next").slideDown();
+	}
+
+	updateColumn(currentPeriod, dayNumber,".column-now");
+	updateColumn(nextPeriod, dayNumber, ".column-next");
 }
 
 function isToday(date){
