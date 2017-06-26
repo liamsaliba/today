@@ -25,7 +25,7 @@ function l(string) {
 }
 
 function e(string){
-	console.log(new Date().toLocaleString() + " ! " + string)
+	console.error(new Date().toLocaleString() + " ! " + string)
 }
 
 

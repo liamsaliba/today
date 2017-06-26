@@ -50,11 +50,9 @@ jQuery.fn.extend({
 		this.slideUp(100, function(){
 			$(this).html(text).slideDown(100);
 		});
-		return this;
 	}, // animation when text is changed
 	bhtml: function(text) {
 		if(text != $(this).html()){
-			//console.log(text + " + " + $(this).html())
 			$(this).ahtml(text);
 		}
 	}, // sets assigned bg color, removing previous colour, with animation
@@ -449,41 +447,33 @@ function isHoliday(term){
 }
 
 function updateDate() {
+	if(timetable === undefined) {
+		console.error("could not find timetable")
+		return;
+	}
 	var date = d.getDate();
 	var month = d.getMonth();
 	if(month === 0)
 		month = 12;
 	var year = d.getYear()-100;
 	var day = d.getDay();
-	var week, week2, term;
-	if(timetable === undefined) {
-		l("could not find timetable, setting approximate date")
-		//week = d.getYearWeek();
-		//week2 = d.getWeek();
-		//term = "term " + d.getTerm();
-	} else {
-		var termObj = getTerm();
-		term = termObj.name;
+	var week, week2;
+	var termObj = getTerm();
+	var term = termObj.name;
 
-		if(!isHoliday(term)){
-			onHoliday = false;
-			week = d.getYearWeek() - new Date(termObj.startDate).getYearWeek() + 1;
-			week2 = (week-1)%2+1;
-			$("#term-info").show();
-		} else { // on holiday
-			onHoliday = true;
-			$("#term-info").hide();
-			dayNumber = 0;
-		}
+	if(!isHoliday(term)){
+		onHoliday = false;
+		week = d.getYearWeek() - new Date(termObj.startDate).getYearWeek() + 1;
+		week2 = (week-1)%2+1;
+		$("#term-info").show();
+	} else { // on holiday
+		onHoliday = true;
+		$("#term-info").hide();
+		dayNumber = 0;
 	}
 	
 	//weekends
-	if(day == 6 || day == 0){
-		dayNumber = 0;
-	}
-	else {
-		dayNumber = day + (week2-1)*5;
-	}
+	dayNumber = (day == 6 || day == 0) ? 0 : day + (week2-1)*5;
 
 	//$("#date").bhtml(date.leadZero() + " " + months[month] + " " + (year+2000))
 	$("#day").bhtml(days[day]);
@@ -625,7 +615,3 @@ socket.on('motd', function(data){
 	$("#motd p").html(data.info);
 	$("#motd cite").html("— " + data.from);
 })
-
-function l(string) {
-	console.log(new Date().toLocaleString() + " * " + string)
-}
