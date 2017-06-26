@@ -616,6 +616,16 @@ function updateBulletin() {
 	$("#announcements .marquee div").css("animation-duration", duration)
 }
 
+socket.on('motd', function(data){
+	if(data === null){
+		$("#rotator").fadeOut();
+		return;
+	}
+	$("#rotator").fadeIn();
+	$("#motd p").html(data.info);
+	$("#motd cite").html("— " + data.from);
+})
+
 function l(string) {
 	console.log(new Date().toLocaleString() + " * " + string)
 }
