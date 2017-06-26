@@ -215,16 +215,7 @@ function timeLeftOfSchool(){
 
 
 function getNextDay() {
-	if(dayNumber === 0){
-		if(d.getWeek() === 1){ //TODO: fix this (never is 1)
-			return 1;
-		} else {
-			return 6;
-		}
-	}
-	if(dayNumber === 10)
-		return 1;
-	return dayNumber + 1;
+	
 }
 
 function showNext() {
