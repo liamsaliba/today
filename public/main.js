@@ -211,12 +211,10 @@ function timeLeftOfSchool(){
 
 function getTomorrow(date) {
 	var tomorrow = new Date(new Date(date.getTime() + 86400000).setHours(0,0,0,0))
-	console.log("tomorrow is " + tomorrow)
 	return tomorrow;
 }
 
 function getCurrentInfo() {
-	getTomorrow(d);
 	timeLeftOfSchool()
 
 	if(term.break){
@@ -231,16 +229,16 @@ function getCurrentInfo() {
 	var currentPeriod = periods[0];
 	var nextPeriod = periods[1];
 
-	$(".column-next .title").html("NEXT");
 	//Time-till indicator
 	if(currentPeriod === "weekend" || currentPeriod === "dayoff"){
 		$(".column-now .title").html(getDayTitle(days[d.getDay()]));
 	} else {
 		$(".column-now .title").html("NOW");
 	}
+
 	if(currentPeriod === "afterSchool" || currentPeriod === "weekend" || currentPeriod === "dayoff"){
 		$(".column-now .time-till").slideUp();
-		$(".column-next").slideUp(); // TODO: don't do this.
+		$(".column-next .title").html(getDayTitle(days[getTomorrow(d).getDay()]))
 	}
 	else {
 		if(currentPeriod === "beforeSchool"){
@@ -252,6 +250,7 @@ function getCurrentInfo() {
 				$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].endTime).minutesUntil(d) + '<span class="tiny">m left</span>');
 			}
 		}
+		$(".column-next .title").html("NEXT");
 		$(".column-next").slideDown();
 	}
 
@@ -301,7 +300,6 @@ function showBox(subject, column, pos){
 		if(room === "" && teacher === "") {
 			if(!box.hasClass("box-short")) {
 				box.addClass("box-short").slideUp();
-				console.log("sliding")
 			}
 		}
 		else {
@@ -438,7 +436,6 @@ function getTerm(date) {
 			var startDate = new Date(keyDates[conditions[i]][epoch].startDate + " 00:00");
 			var endDate = new Date(keyDates[conditions[i]][epoch].endDate + " 23:59");
 			if(currentTime >= startDate && currentTime <= endDate) {
-				console.log(keyDates[conditions[i]][epoch])
 				return keyDates[conditions[i]][epoch];
 			}
 		}
