@@ -221,8 +221,8 @@ function getCurrentInfo() {
 		return;
 	}
 	$("#holiday-container").fadeOut();
-
-	var periodTimes = timetable.days[dayNumber].times;
+	// wrapped dayNumber
+	var periodTimes = timetable.days[(dayNumber-1)%5+1].times;
 	var currentTime = d.getTime()
 	var periods = getPeriods(periodTimes, currentTime);
 	var currentPeriod = periods[0];
@@ -251,7 +251,7 @@ function getCurrentInfo() {
 		$(".column-next").slideDown();
 	}
 
-	updateColumn(currentPeriod, dayNumber,".column-now");
+	updateColumn(currentPeriod, dayNumber, ".column-now");
 	updateColumn(nextPeriod, dayNumber, ".column-next");
 }
 
