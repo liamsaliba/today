@@ -16,7 +16,6 @@ var enhancements;
 var DEBUG_RND = false;
 var DEBUG_FRZ = false;
 var DEBUG_TICK = true;
-var DEBUG_COL = true;
 
 Date.prototype.getWeek = function() {
 	var onejan = new Date(this.getFullYear(), 0, 1);
