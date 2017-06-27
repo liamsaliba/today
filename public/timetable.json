@@ -205,61 +205,83 @@
         {
           "name": "ECP",
           "startDate": "2016-11-14",
-          "endDate": "2016-12-09"
+          "endDate": "2016-12-09",
+          "school": true,
+          "break": false
         },
         {
           "name": "Term 1",
           "startDate": "2017-01-31",
-          "endDate": "2017-03-31"
+          "endDate": "2017-03-31",
+          "school": true,
+          "break": false
         },
         {
           "name": "Term 2",
           "startDate": "2017-04-18",
-          "endDate": "2017-06-23"
+          "endDate": "2017-06-23",
+          "school": true,
+          "break": false
         },
         {
           "name": "Term 3",
           "startDate": "2017-07-17",
-          "endDate": "2017-09-22"
+          "endDate": "2017-09-22",
+          "school": true,
+          "break": false
         },
         {
           "name": "Term 4",
           "startDate": "2017-10-09",
-          "endDate": "2017-10-18"
+          "endDate": "2017-10-18",
+          "school": true,
+          "break": false
         }
       ],
       "holidays": [
         {
           "name": "Christmas Break",
           "startDate": "2016-12-10",
-          "endDate": "2017-01-30"
+          "endDate": "2017-01-30",
+          "school": false,
+          "break": true
         },
         {
           "name": "Easter Break",
           "startDate": "2017-04-01",
-          "endDate": "2017-04-17"
+          "endDate": "2017-04-17",
+          "school": false,
+          "break": true
         },
         {
           "name": "Winter Break",
           "startDate": "2017-06-24",
-          "endDate": "2017-07-16"
+          "endDate": "2017-07-16",
+          "school": false,
+          "break": true
         },
         {
           "name": "Spring Break",
           "startDate": "2017-09-23",
-          "endDate": "2017-10-08"
+          "endDate": "2017-10-08",
+          "school": false,
+          "break": true
         }
       ],
       "special": [
         {
           "name": "Staff PD Day",
-          "date": "2017-08-27",
-          "holiday": true
+          "startDate": "2017-08-28",
+          "endDate": "2017-08-28",
+          "school": false,
+          "break": false
         },
         {
           "name": "House Swimming Carnival",
-          "date": "2017-07-22",
-          "holiday": false
+          "startDate": "2017-07-22",
+          "endDate": "2017-07-22",
+          "school": false,
+          "break": false
         }
 
       ],
@@ -817,6 +839,7 @@
     "period6": "<span class=\"tiny\">Period</span> 6",
     "afterSchool": "After School",
     "weekend": "Weekend",
-    "holidays": "Holidays"
+    "holidays": "Holidays",
+    "dayoff": "No School"
   }
 }
