@@ -21,9 +21,12 @@ Date.prototype.getWeek = function() {
 	var onejan = new Date(this.getFullYear(), 0, 1);
     return weekInYear = Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7) 
 }
-
 Date.prototype.minutesUntil = function(date) {
-	return Math.ceil((this.getTime() - date.getTime()) / 1000 / 60)
+	return Math.abs(Math.ceil((this.getTime() - date.getTime()) / 1000 / 60));
+}
+
+Date.prototype.daysUntil = function(date) {
+	return Math.abs(Math.ceil((this.getTime() - date.getTime()) / 1000 / 60 / 60 / 24));
 }
 
 //TODO: add admin interface with switchable timetables (duplicate timetable "temporary" object)
@@ -206,13 +209,14 @@ function timeLeftOfSchool(){
 		$(".school-left").bhtml("End of 2017!")
 }
 
-function getTomorrow() {
-	var tomorrow = new Date(new Date(d.getTime() + 86400000).setHours(0,0,0,0))
+function getTomorrow(date) {
+	var tomorrow = new Date(new Date(date.getTime() + 86400000).setHours(0,0,0,0))
 	console.log("tomorrow is " + tomorrow)
+	return tomorrow;
 }
 
 function getCurrentInfo() {
-	getTomorrow();
+	getTomorrow(d);
 	timeLeftOfSchool()
 
 	if(term.break){
@@ -386,7 +390,17 @@ function updateColumn(period, daynum, column) {
 				// No subjects, so no blocks or boxes needed
 				$(column + " .box:not(:first)").slideUp();
 				// Show current period (recess, lunch, before, after school)
-				showBox({name: timetable.periods[period], small: true}, column, 0);
+				var name = timetable.periods[period];
+				var reason = "";
+				if(period === "dayoff") {
+					name = "No School"
+					reason = term.name;
+				}
+				if(period === "weekend") {
+					name = "No School"
+					reason = "It's " + days[d.getDay()] + "day!";
+				}
+				showBox({name: name, room: reason}, column, 0);
 			}
 			break;
 	}
@@ -453,6 +467,9 @@ function updateDate() {
 
 	if(term.break){ // on holiday
 		$("#term-info").hide();
+		var termResume = getTomorrow(new Date(term.endDate));
+		$("#resume-date").html(days[termResume.getDay()] + "day " + termResume.getDate() + " " + months[termResume.getMonth()] + " " + termResume.getFullYear());
+		$("#resume-left").html(d.daysUntil(termResume) + " days left of the holidays");
 		dayNumber = 0;
 		return;
 	}

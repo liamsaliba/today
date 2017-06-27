@@ -164,7 +164,8 @@ img#logo {
 }
 
 #holiday-container .box {
-	width: 900px;
+	width: 70%;
+	font-size: 34px;
 }
 
 .panel {
