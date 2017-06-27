@@ -228,6 +228,7 @@ function getCurrentInfo() {
 	var currentPeriod = periods[0];
 	var nextPeriod = periods[1];
 
+	$(".column-next .title").html("NEXT");
 	//Time-till indicator
 	if(currentPeriod === "weekend" || currentPeriod === "dayoff"){
 		$(".column-now .title").html(getDayTitle(days[d.getDay()]));
@@ -542,10 +543,10 @@ function updateBulletin() {
 	announcements = bulletin.announcements;
 	date = bulletin.date;
 	day = date.substring(0, date.indexOf("day"));
-	$("#today").html(getDayTitle(day));
+	$("#today").bhtml(getDayTitle(day));
 	// only the date, not day
 	date = date.substring(date.indexOf("day")+3)
-	$("#bulletin-date").html(date);
+	$("#bulletin-date").bhtml(date);
 
 	$("#temp-table").html(table);
 	var tablerow = $("#temp-table > table > tbody > tr");

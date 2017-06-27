@@ -21,6 +21,7 @@ body {
 	margin-right: auto;
 	margin-left: auto;
 	max-width: 1920px;
+	height: 100%;
 	padding: 0;
 }
 
@@ -41,7 +42,7 @@ div {
 	z-index: 100;
 }
 
-#loading-icon {
+.centrecentre {
 	position: absolute;
 	margin: 0;
 	top: 50%;
@@ -49,8 +50,6 @@ div {
 	margin-right: 50%; /* Half the width */
 	transform: translate(-50%, -50%);
 }
-
-
 
 /* Header stuff */
 
@@ -67,7 +66,8 @@ div {
 	padding-top: 5px;
 	border-bottom: 10px solid #a27249;
 	color: white;
-
+	background: url(/img/headerBg.jpg);
+	background-size: cover;
 	z-index: 10;
 }
 
@@ -113,7 +113,7 @@ img#logo {
 	background: #ffccd9;
 	height: 120px;
 	opacity: .95;
-	width: calc(100% - 1060px);
+	width: calc(100% - 1090px);
 }
 
 #header-back{
@@ -144,6 +144,8 @@ img#logo {
 #main-container{ 
 	padding: 15px 30px;
 	z-index: 0;
+	background-image: url(/img/bodyBg.jpg);
+	background-size: cover;
 }
 
 #left-container {
@@ -157,13 +159,13 @@ img#logo {
 
 #holiday-container {
 	z-index: 1;
-	background: #222;
-	padding-top: 300px;
+	background-color: rgba(34,34,34,.8);
 	display: none;
 }
 
-
-
+#holiday-container .box {
+	width: 900px;
+}
 
 .panel {
 	margin-bottom: 20px;
@@ -312,6 +314,7 @@ img#logo {
 
 	background: #940125;
 	width: 100%;
+	max-width: 1920px;
 	padding: 10px 20px;
 	border-top: 5px solid #a27249;
 
@@ -368,6 +371,7 @@ button, input {
   position: relative;
   top: -4px;
   	word-spacing: 0px;
+  	display: none;
 }
 
 }
