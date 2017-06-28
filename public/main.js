@@ -496,7 +496,8 @@ function updateColumn(period, daynum, column) {
 	// Block badge
 	var blockBadge = $(column + " .block");
 	if(block !== 0 && block !== undefined && hasEnhancements !== ENH_YES) {
-		blockBadge.bhtml('<span class="tiny">Block</span> ' + block);
+		blockBadge.html('<span class="tiny">Block</span> ' + block);
+		blockBadge.slideDown();
 		blockBadge.applyColor(block, "badge");
 	} else {
 		blockBadge.slideUp();
