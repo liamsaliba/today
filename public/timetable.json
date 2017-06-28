@@ -284,26 +284,26 @@
           "break": false
         }
       ],
-      "activities": [
+      "activity": [
         {
           "name": "Round Square Meeting",
-          "days": [5, 10],
-          "periods": "lunch"
+          "day": 5,
+          "periods": ["lunch"]
         },
         {
           "name": "Jazz Band",
-          "days": [5, 10],
-          "periods": "lunch"
+          "day": 5,
+          "periods": ["lunch"]
         },
         {
           "name": "Prefect Meeting",
-          "days": [2, 7],
-          "periods": "lunch"
+          "day": 2,
+          "periods": ["lunch"]
         },
         {
           "name": "Chess Club",
-          "days": [4, 9],
-          "periods": "lunch"
+          "day": 4,
+          "periods": ["lunch"]
         }
       ],
       "enhancement": [
@@ -418,6 +418,10 @@
     {
       "id": 0,
       "subjects": [
+      {
+        "abbr": "EP",
+        "name": "Enhancement Period"
+      }
       ]
     },
     {

@@ -12,6 +12,7 @@ var lastDay;
 var timetable;
 var bulletin;
 var enhancements;
+var activities;
 
 // Button variables
 var DEBUG_RND = false;
@@ -71,8 +72,8 @@ Date.prototype.getTomorrow = function() {
 }
 Date.prototype.formatDay = function(compare) {
 	if(compare.isToday(this)) return "today";
-	if(compare.getTomorrow().isToday(this)) return "tomorrow";
-	if(compare.getYesterday().isToday(this)) return "yesterday";
+	if(compare.getTomorrow().isToday(this)) return "yesterday";
+	if(compare.getYesterday().isToday(this)) return "tomorrow";
 	else return days[compare.getDay()] + "day"
 }
 
@@ -112,7 +113,9 @@ jQuery.fn.extend({
 	}
 })
 
-
+function getCycleDayNumber(){
+	return (dayNumber-1)%5+1;
+}
 
 
 function runEverySecond(){
@@ -122,10 +125,13 @@ function runEverySecond(){
 function runEveryHour(){
 	updateDate();
 	updateEnhancements();
+	updateActivities();
+	console.log("Ran hourly run.")
 }
 
 function runEveryDay(){
 	window.reload();
+	console.log("Ran daily run.")
 }
 
 function init() {
@@ -182,6 +188,7 @@ function loadTimetable() {
 		updateDate();
 		updateTime();
 		updateEnhancements();
+		updateActivities();
 		getCurrentInfo();
 		loadComplete();
 	});
@@ -259,8 +266,8 @@ function getCurrentInfo() {
 		return;
 	}
 	$("#holiday-container").fadeOut();
-	// wrapped dayNumber
-	var periodTimes = timetable.days[(dayNumber-1)%5+1].times;
+
+	var periodTimes = timetable.days[getCycleDayNumber()].times;
 	var currentTime = d.getTime()
 	var periods = getPeriods(periodTimes, currentTime);
 	var currentPeriod = periods[0];
@@ -298,6 +305,7 @@ function getCurrentInfo() {
 
 
 function showBox(subject, column, pos){
+	console.log(subject.name + " . " + column + " . " + pos)
 	var box = $(column + " .box:nth-child(" + (pos+2) + ")");
 	// Short block (json forced)
 	if(subject.small) {
@@ -361,9 +369,8 @@ function showBlock(block, column) {
 const ENH_NO = 0
 const ENH_YES = 1
 const ENH_BLOCK = 2;
-function checkEnhancements(period) {
+function checkEnhancements(periodEnhancements) {
 	blockEnhancement = false;
-	periodEnhancements = getPeriodEnhancements(period);
 	for(var enhancement in periodEnhancements){
 		if(periodEnhancements[enhancement].block !== undefined)
 			return ENH_BLOCK;
@@ -374,10 +381,18 @@ function checkEnhancements(period) {
 
 function getPeriodEnhancements(period) {
 	var periodEnhancements = [];
-	for(var enhancement in enhancements){
-		for(var p in enhancements[enhancement].periods){
-			if(period == "period" + enhancements[enhancement].periods[p]){
-				periodEnhancements.push(enhancements[enhancement]);
+	var checking;
+	if(period === "recess" || period === "lunch"){
+		checking = activities;
+	}
+	else if(period.includes("period")) {
+		checking = enhancements;
+	} else return periodEnhancements;
+
+	for(var enhancement in checking){
+		for(var p in checking[enhancement].periods){
+			if(period.replace("period", "") == checking[enhancement].periods[p]){
+				periodEnhancements.push(checking[enhancement]);
 			}
 		}
 	}
@@ -394,26 +409,43 @@ function updateEnhancements() {
 	}
 }
 
+function updateActivities() {
+	var activityObj = timetable.years[d.getYear()+1900].activity;
+	activities = [];
+	for(var activity in activityObj) {
+		if(getCycleDayNumber() === activityObj[activity].day)
+			activities.push(activityObj[activity])
+	}
+}
+
 function updateColumn(period, daynum, column) {
 	// Period indicator
 	$(column + " .period").bhtml(timetable.periods[period]);
 	
 	var block;
-	var hasEnhancements = checkEnhancements(period);
+	var periodEnhancements = getPeriodEnhancements(period)
+	var hasEnhancements = checkEnhancements(periodEnhancements);
 	switch (hasEnhancements){
 		case ENH_BLOCK:
-			var periodEnhancements = getPeriodEnhancements(period);
 			block = periodEnhancements[0].block;
 			showBlock(block, column);
 			break;
 		case ENH_YES:
 			// No subjects, so no blocks or boxes needed
-			$(column + " .box:not(:first)").slideUp();
+			$(column + " .box:not(:lt(" + (periodEnhancements.length+1) + "))").slideUp();
 			// Show current enhancements
-			var periodEnhancements = getPeriodEnhancements(period);
-			for(enhancement in periodEnhancements){
-				showBox(periodEnhancements[enhancement], column, enhancement);
+			for(var i = 0; i < periodEnhancements.length; i++){
+				showBox(periodEnhancements[i], column, i);
+				console.log(periodEnhancements[i])
 			}
+			var name = timetable.periods[period];
+			if(timetable.timetable[daynum-1][period] === 0)
+				name = "Enhancement Period";
+			else if(period.includes("period")){
+				hideBox(column, periodEnhancements.length);
+				break;
+			}
+			showBox({name: name}, column, periodEnhancements.length);
 			break;
 		case ENH_NO:
 			if(period.includes("period")) {
