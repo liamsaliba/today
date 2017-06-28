@@ -8,7 +8,7 @@ var months = ["January", "Feburary", "March", "April", "May", "June", "July",
 	"August", "September", "October", "November", "December"];
 var dayNumber;
 var term;
-var lastDay;
+var lastDayOfSchool;
 var timetable;
 var bulletin;
 var enhancements;
@@ -64,16 +64,13 @@ Date.prototype.timeOf = function(time){
 	return new Date(this.toDateString() + " " + time);
 }
 
-Date.prototype.getYesterday = function() {
-	return new Date(new Date(this.getTime() - 86400000).setHours(0,0,0,0))
-}
-Date.prototype.getTomorrow = function() {
-	return new Date(new Date(this.getTime() + 86400000).setHours(0,0,0,0))
+Date.prototype.addNDays = function(n) {
+	return new Date(new Date(this.getTime() + 86400000 * n).setHours(0,0,0,0))
 }
 Date.prototype.formatDay = function(compare) {
 	if(compare.isToday(this)) return "today";
-	if(compare.getTomorrow().isToday(this)) return "yesterday";
-	if(compare.getYesterday().isToday(this)) return "tomorrow";
+	if(compare.addNDays(1).isToday(this)) return "yesterday";
+	if(compare.addNDays(-1).isToday(this)) return "tomorrow";
 	else return days[compare.getDay()] + "day"
 }
 
@@ -184,7 +181,7 @@ function setBtnState(button, bool){
 function loadTimetable() {
 	$.getJSON('./timetable.json', function(data){
 		timetable = data;
-		lastDay = getLastDay();
+		lastDayOfSchool = getLastDayOfSchool();
 		updateDate();
 		updateTime();
 		updateEnhancements();
@@ -204,7 +201,7 @@ function loadComplete() {
 
 
 
-function getLastDay() {
+function getLastDayOfSchool() {
 	var keyDates = timetable.years[d.getYear()+1900];
 	var lastDate = new Date();
 	for (var t in keyDates.school){
@@ -216,7 +213,7 @@ function getLastDay() {
 }
 
 function updateSchoolLeft(){
-	var timeLeft = d.timeTill(lastDay);
+	var timeLeft = d.timeTill(lastDayOfSchool);
 	if(timeLeft === 0){
 		$(".school-left").html("End of year 12!")
 	} else {
@@ -282,8 +279,7 @@ function getCurrentInfo() {
 
 	if(currentPeriod === "afterSchool" || currentPeriod === "weekend" || currentPeriod === "dayoff"){
 		$(".column-now .time-till").slideUp();
-		$(".column-next .title").html(d.formatDay(d.getTomorrow()));
-
+		getTomorrowInfo();
 	}
 	else {
 		if(currentPeriod === "beforeSchool"){
@@ -303,10 +299,34 @@ function getCurrentInfo() {
 	updateColumn(nextPeriod, dayNumber, ".column-next");
 }
 
+function getTomorrowInfo(){
+	console.log(getDaysToNextSchoolDay());
+	$(".column-next .title").html(d.formatDay(d.addNDays(1)));
+}
 
+function getDaysToNextSchoolDay(){
+	var n; // days until next school day
+	var tomorrow = d.addNDays(1);
+	var daynum = getCycleDayNumber();
+	if(term.break){ // on holiday
+		return d.daysTill(new Date(term.endDate).addNDays(1));
+	}
+	else if(daynum === 0){
+		return (d.getDay() === 0) ? 2 : 3;
+	}
+	else if(daynum === 5) {
+		return 3;
+	} else {
+		return 1;
+	}
+	// if day back is a holiday...
+	//transform n
+	return n;
+
+}
 
 function showBox(subject, column, pos){
-	var box = $(column + " .box:nth-child(" + (pos+2) + ")");
+	var box = $(column + " .box:nth-child(" + (pos+2) + ")"); //MUST be +2
 	// Short block (json forced)
 	if(subject.small) {
 		// Need to check, otherwise animation will play every tick
@@ -530,7 +550,7 @@ function updateDate() {
 
 	if(term.break){ // on holiday
 		$("#term-info").hide();
-		var termResume = new Date(term.endDate).getTomorrow();
+		var termResume = new Date(term.endDate).addNDays(1);
 		$("#resume-date").html(days[termResume.getDay()] + "day " + termResume.getDate() + " " + months[termResume.getMonth()] + " " + termResume.getFullYear());
 		$("#resume-left").html(d.daysTill(termResume) + " days left of the holidays");
 		dayNumber = 0;
