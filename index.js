@@ -31,6 +31,7 @@ function e(string){
 
 
 const BULLETIN_PATH = "./emails/Bulletin.html";
+const BULLETIN_EXAMPLE_PATH = "./emails/Bulletin.example.html";
 var bulletin;
 // updates bulletin every hours
 var bulletinPushTimeout = setInterval(function() {
@@ -71,6 +72,11 @@ function getBulletinData() {
 		data = fs.readFileSync(BULLETIN_PATH, "ucs2")
 		l("Found bulletin at " + BULLETIN_PATH)
 	} catch (err) {
+		l("Could not find bulletin at " + BULLETIN_PATH)
+		try{
+			data = fs.readFileSync(BULLETIN_EXAMPLE_PATH, "ucs2")
+			l("Using example bulletin at " + BULLETIN_EXAMPLE_PATH)
+		}
 		throw err;
 	}
 	str = data.toString();
