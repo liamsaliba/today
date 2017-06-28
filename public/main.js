@@ -262,13 +262,18 @@ function getCurrentInfo() {
 		$("#holiday-container").fadeIn();
 		return;
 	}
-	$("#holiday-container").fadeOut();
 
 	var periodTimes = timetable.days[getCycleDayNumber()].times;
 	var currentTime = d.getTime()
 	var periods = getPeriods(periodTimes, currentTime);
 	var currentPeriod = periods[0];
 	var nextPeriod = periods[1];
+
+	if(currentPeriod === "afterSchool" && getTerm(d.addNDays(1)).break){
+		$("#holiday-container").fadeIn();
+		return;
+	}
+	$("#holiday-container").fadeOut();
 
 	//Time-till indicator
 	if(currentPeriod === "weekend" || currentPeriod === "dayoff"){
@@ -279,7 +284,13 @@ function getCurrentInfo() {
 
 	if(currentPeriod === "afterSchool" || currentPeriod === "weekend" || currentPeriod === "dayoff"){
 		$(".column-now .time-till").slideUp();
-		getTomorrowInfo();
+		$(".column-next .title").html(d.formatDay(d.addNDays(1)));
+		var tomorrowBoxes = getTomorrowInfo();
+		hideBoxes(".column-next", tomorrowBoxes.length)
+		for(var i = 0; i < tomorrowBoxes.length; i++){
+			showBox(tomorrowBoxes[i], ".column-next", i);
+		}
+		$(".column-next .box").applyColor(0, "now");
 	}
 	else {
 		if(currentPeriod === "beforeSchool"){
@@ -293,34 +304,53 @@ function getCurrentInfo() {
 		}
 		$(".column-next .title").html("NEXT");
 		$(".column-next").slideDown();
+		updateColumn(nextPeriod, dayNumber, ".column-next");
 	}
 
 	updateColumn(currentPeriod, dayNumber, ".column-now");
-	updateColumn(nextPeriod, dayNumber, ".column-next");
 }
 
 function getTomorrowInfo(){
-	console.log(getDaysToNextSchoolDay());
-	$(".column-next .title").html(d.formatDay(d.addNDays(1)));
+	var daysToSchool = getDaysToNextSchoolDay();
+	var boxes = [];
+	if(daysToSchool > 6){
+		boxes.push({name: "No School", room: "for " + daysToSchool + " days"})
+	}
+	else if(daysToSchool > 1){
+		boxes.push({name: "No School", room: "until " + d.formatDay(d.addNDays(daysToSchool))})
+		if(days[d.addNDays(daysToSchool).getDay()] !== "Mon"){
+			boxes.push({name: getTerm(d.addNDays(daysToSchool-1)).name, abbr: "NO SCHOOL", room: days[d.addNDays(daysToSchool-1).getDay()] + "day"})
+		} else {
+			boxes.push({name: "It's the weekend!"})
+		}
+	}
+	else {
+		//TODO: show blocks?
+		boxes.push({name: "School"})
+	}
+	return boxes;
 }
 
 function getDaysToNextSchoolDay(){
 	var n; // days until next school day
-	var tomorrow = d.addNDays(1);
 	var daynum = getCycleDayNumber();
 	if(term.break){ // on holiday
-		return d.daysTill(new Date(term.endDate).addNDays(1));
+		n = d.daysTill(new Date(term.endDate).addNDays(1));
 	}
 	else if(daynum === 0){
-		return (d.getDay() === 0) ? 2 : 3;
+		n = (d.getDay() === 0) ? 1 : 2;
 	}
 	else if(daynum === 5) {
-		return 3;
+		n = 3;
 	} else {
-		return 1;
+		n = 1;
 	}
-	// if day back is a holiday...
-	//transform n
+	// if day back is a holiday, transform n
+	var nextDay = d.addNDays(n);
+	while(!getTerm(nextDay).school){
+		n++;
+		nextDay = d.addNDays(n);
+	}
 	return n;
 
 }
@@ -366,6 +396,10 @@ function showBox(subject, column, pos){
 	box.find(".subject-abbr").html(abbr);
 
 	box.slideDown();
+}
+
+function hideBoxes(column, numNeeded){
+	$(column + " .box").slice(numNeeded).slideUp();
 }
 
 function hideBox(column, pos){
@@ -452,7 +486,7 @@ function updateColumn(period, daynum, column) {
 			break;
 		case ENH_YES:
 			// No subjects, so no blocks or boxes needed
-			$(column + " .box:not(:lt(" + (periodEnhancements.length+1) + "))").slideUp();
+			hideBoxes(column, periodEnhancements.length+1);
 			// Show current enhancements
 			for(var i = 0; i < periodEnhancements.length; i++){
 				showBox(periodEnhancements[i], column, i);
@@ -472,7 +506,8 @@ function updateColumn(period, daynum, column) {
 				showBlock(block, column);
 			} else {
 				// No subjects, so no blocks or boxes needed
-				$(column + " .box:not(:first)").slideUp();
+				hideBoxes(column, 1);
+				//$(column + " .box:not(:first)").slideUp();
 				// Show current period (recess, lunch, before, after school)
 				var name = timetable.periods[period];
 				var reason = "";
@@ -515,7 +550,7 @@ function updateColumn(period, daynum, column) {
 
 const conditions = ["special", "school", "holidays"]
 function getTerm(date) {
-	var keyDates = timetable.years[d.getYear()+1900];
+	var keyDates = timetable.years[date.getYear()+1900];
 	var currentTime = date.getTime();
 
 	for(var i = 0; i < conditions.length; i++){
