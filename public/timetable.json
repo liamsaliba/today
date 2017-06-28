@@ -283,7 +283,28 @@
           "school": false,
           "break": false
         }
-
+      ],
+      "activities": [
+        {
+          "name": "Round Square Meeting",
+          "days": [5, 10],
+          "periods": "lunch"
+        },
+        {
+          "name": "Jazz Band",
+          "days": [5, 10],
+          "periods": "lunch"
+        },
+        {
+          "name": "Prefect Meeting",
+          "days": [2, 7],
+          "periods": "lunch"
+        },
+        {
+          "name": "Chess Club",
+          "days": [4, 9],
+          "periods": "lunch"
+        }
       ],
       "enhancement": [
         {
