@@ -283,7 +283,7 @@ function getCurrentInfo() {
 	}
 	else {
 		if(currentPeriod === "beforeSchool"){
-			$(".column-now .time-till").bhtml(d.minutesTill(d.timeOf(periodTimes[nextPeriod].startTime)) + '<span class="tiny">m Till school</span>');
+			$(".column-now .time-till").bhtml(d.minutesTill(d.timeOf(periodTimes[nextPeriod].startTime)) + '<span class="tiny">m till school</span>');
 		} else {
 			if(currentPeriod.includes("period") && currentTime < d.timeOf(periodTimes[currentPeriod].startTime)){
 				$(".column-now .time-till").bhtml(d.minutesTill(d.timeOf(periodTimes[currentPeriod].startTime)) + '<span class="tiny">m to class</span>');
