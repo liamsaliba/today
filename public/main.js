@@ -32,6 +32,8 @@ Date.prototype.daysTill = function(date) {
 	return Math.ceil((date.getTime() - this.getTime()) / 1000 / 60 / 60 / 24);
 }
 
+const FMT_PREFIX = "<small>";
+const FMT_SUFFIX = "</small>";
 Date.prototype.timeTill = function(date) {
 	var secondsLeft = this.secondsTill(date);
 	if(secondsLeft <= 0) return 0;
@@ -44,46 +46,34 @@ Date.prototype.timeTill = function(date) {
 
 	for(var i in timeTill){
 		if(timeTill[i][0] !== 0){
-			returnedString += timeTill[i][0] + " " + timeTill[i][1];
+			returnedString += timeTill[i][0] + FMT_PREFIX + " " + timeTill[i][1];
 			if(timeTill[i][0].needsPlural())
 				returnedString += "s";
-			returnedString += " ";
-		}
-	}
-	return returnedString.trim();
-}
-
-Date.prototype.timeTillSmall = function(date) {
-	var secondsLeft = this.secondsTill(date);
-	if(secondsLeft <= 0) return 0;
-	var returnedString = "";
-	var timeTill = [[Math.floor(secondsLeft/7/24/60/60), "week"], 
-		[Math.floor(secondsLeft/24/60/60)%7, "day"],
-		[Math.floor(secondsLeft/60/60)%24, "hour"], 
-		[Math.floor(secondsLeft/60%60), "min"], 
-		[Math.floor(secondsLeft%60), "sec"]];
-
-	for(var i in timeTill){
-		if(timeTill[i][0] !== 0){
-			returnedString += timeTill[i][0] + "<small> " + timeTill[i][1];
-			if(timeTill[i][0].needsPlural())
-				returnedString += "s";
-			returnedString += "</small> ";
+			returnedString += FMT_SUFFIX + " ";
 		}
 	}
 	return returnedString.trim();
 }
 
 Date.prototype.isToday = function(date) {
-	return new Date(this).setHours(0,0,0,0) === date.setHours(0,0,0,0)
+	return new Date(this.getTime()).setHours(0,0,0,0) === new Date(date.getTime()).setHours(0,0,0,0);
 }
 // was parseTime
 Date.prototype.timeOf = function(time){
 	return new Date(this.toDateString() + " " + time);
 }
 
+Date.prototype.getYesterday = function() {
+	return new Date(new Date(this.getTime() - 86400000).setHours(0,0,0,0))
+}
 Date.prototype.getTomorrow = function() {
 	return new Date(new Date(this.getTime() + 86400000).setHours(0,0,0,0))
+}
+Date.prototype.formatDay = function(compare) {
+	if(compare.isToday(this)) return "today";
+	if(compare.getTomorrow().isToday(this)) return "tomorrow";
+	if(compare.getYesterday().isToday(this)) return "yesterday";
+	else return days[compare.getDay()] + "day"
 }
 
 //TODO: add admin interface with switchable timetables (duplicate timetable "temporary" object)
@@ -219,7 +209,7 @@ function getLastDay() {
 }
 
 function updateSchoolLeft(){
-	var timeLeft = d.timeTillSmall(lastDay);
+	var timeLeft = d.timeTill(lastDay);
 	if(timeLeft === 0){
 		$(".school-left").html("End of year 12!")
 	} else {
@@ -278,14 +268,14 @@ function getCurrentInfo() {
 
 	//Time-till indicator
 	if(currentPeriod === "weekend" || currentPeriod === "dayoff"){
-		$(".column-now .title").html(getDayTitle(days[d.getDay()]));
+		$(".column-now .title").html(d.formatDay(d));
 	} else {
 		$(".column-now .title").html("NOW");
 	}
 
 	if(currentPeriod === "afterSchool" || currentPeriod === "weekend" || currentPeriod === "dayoff"){
 		$(".column-now .time-till").slideUp();
-		$(".column-next .title").html(getDayTitle(days[d.getTomorrow().getDay()]))
+		$(".column-next .title").html(d.formatDay(d.getTomorrow()));
 	}
 	else {
 		if(currentPeriod === "beforeSchool"){
@@ -599,7 +589,7 @@ function updateBulletin() {
 	announcements = bulletin.announcements;
 	date = bulletin.date;
 	day = date.substring(0, date.indexOf("day"));
-	$("#today").bhtml(getDayTitle(day));
+	$("#today").bhtml(d.formatDay(new Date(date)));
 	// only the date, not day
 	date = date.substring(date.indexOf("day")+3)
 	$("#bulletin-date").bhtml(date);
@@ -634,18 +624,6 @@ function updateBulletin() {
 	else 
 		duration = 9999999999999;
 	$("#announcements .marquee div").css("animation-duration", duration)
-}
-// TODO: fix this
-function getDayTitle(day) {
-	if(day === days[d.getDay()]){
-		return "today"
-	} else if (day === days[d.getDay()+1]){
-		return "tomorrow"
-	} else if (day === days[d.getDay()-1]){
-		return "yesterday"
-	} else {
-		return day + "day"
-	}
 }
 
 socket.on('motd', function(data){
