@@ -5,6 +5,5 @@
 # Dynamic plugins .dll
 bin/
 node_modules
-public/img/
 emails/Bulletin.html
 emails/Bulletin_files
