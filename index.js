@@ -75,9 +75,10 @@ function getBulletinData() {
 		l("Could not find bulletin at " + BULLETIN_PATH)
 		try{
 			data = fs.readFileSync(BULLETIN_EXAMPLE_PATH, "ucs2")
-			l("Using example bulletin at " + BULLETIN_EXAMPLE_PATH)
+			l("Instead using example bulletin at " + BULLETIN_EXAMPLE_PATH)
+		} catch(err) {
+			throw err;
 		}
-		throw err;
 	}
 	str = data.toString();
 	str = sanitizeHtml(str);
