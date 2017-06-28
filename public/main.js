@@ -8,6 +8,7 @@ var months = ["January", "Feburary", "March", "April", "May", "June", "July",
 	"August", "September", "October", "November", "December"];
 var dayNumber;
 var term;
+var lastDay;
 var timetable;
 var bulletin;
 var enhancements;
@@ -18,15 +19,71 @@ var DEBUG_FRZ = false;
 var DEBUG_TICK = true;
 
 Date.prototype.getWeek = function() {
-	var onejan = new Date(this.getFullYear(), 0, 1);
+	var onejan = new Date(this.getFullYear(), 0, 1); // January 1st
     return weekInYear = Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7) 
 }
-Date.prototype.minutesUntil = function(date) {
-	return Math.abs(Math.ceil((this.getTime() - date.getTime()) / 1000 / 60));
+Date.prototype.secondsTill = function(date) {
+	return Math.ceil((date.getTime() - this.getTime()) / 1000);
+}
+Date.prototype.minutesTill = function(date) {
+	return Math.ceil((date.getTime() - this.getTime()) / 1000 / 60);
+}
+Date.prototype.daysTill = function(date) {
+	return Math.ceil((date.getTime() - this.getTime()) / 1000 / 60 / 60 / 24);
 }
 
-Date.prototype.daysUntil = function(date) {
-	return Math.abs(Math.ceil((this.getTime() - date.getTime()) / 1000 / 60 / 60 / 24));
+Date.prototype.timeTill = function(date) {
+	var secondsLeft = this.secondsTill(date);
+	if(secondsLeft <= 0) return 0;
+	var returnedString = "";
+	var timeTill = [[Math.floor(secondsLeft/7/24/60/60), "week"], 
+		[Math.floor(secondsLeft/24/60/60)%7, "day"],
+		[Math.floor(secondsLeft/60/60)%24, "hour"], 
+		[Math.floor(secondsLeft/60%60), "min"], 
+		[Math.floor(secondsLeft%60), "sec"]];
+
+	for(var i in timeTill){
+		if(timeTill[i][0] !== 0){
+			returnedString += timeTill[i][0] + " " + timeTill[i][1];
+			if(timeTill[i][0].needsPlural())
+				returnedString += "s";
+			returnedString += " ";
+		}
+	}
+	return returnedString.trim();
+}
+
+Date.prototype.timeTillSmall = function(date) {
+	var secondsLeft = this.secondsTill(date);
+	if(secondsLeft <= 0) return 0;
+	var returnedString = "";
+	var timeTill = [[Math.floor(secondsLeft/7/24/60/60), "week"], 
+		[Math.floor(secondsLeft/24/60/60)%7, "day"],
+		[Math.floor(secondsLeft/60/60)%24, "hour"], 
+		[Math.floor(secondsLeft/60%60), "min"], 
+		[Math.floor(secondsLeft%60), "sec"]];
+
+	for(var i in timeTill){
+		if(timeTill[i][0] !== 0){
+			returnedString += timeTill[i][0] + "<small> " + timeTill[i][1];
+			if(timeTill[i][0].needsPlural())
+				returnedString += "s";
+			returnedString += "</small> ";
+		}
+	}
+	return returnedString.trim();
+}
+
+Date.prototype.isToday = function(date) {
+	return new Date(this).setHours(0,0,0,0) === date.setHours(0,0,0,0)
+}
+// was parseTime
+Date.prototype.timeOf = function(time){
+	return new Date(this.toDateString() + " " + time);
+}
+
+Date.prototype.getTomorrow = function() {
+	return new Date(new Date(this.getTime() + 86400000).setHours(0,0,0,0))
 }
 
 //TODO: add admin interface with switchable timetables (duplicate timetable "temporary" object)
@@ -35,6 +92,10 @@ Number.prototype.leadZero = function(){
 	if (this < 10)
 		return "0" + this;
 	return this;
+}
+
+Number.prototype.needsPlural = function() {
+	return !(this == 1);
 }
 
 jQuery.fn.extend({
@@ -60,6 +121,8 @@ jQuery.fn.extend({
 		}
 	}
 })
+
+
 
 
 function runEverySecond(){
@@ -125,6 +188,7 @@ function setBtnState(button, bool){
 function loadTimetable() {
 	$.getJSON('./timetable.json', function(data){
 		timetable = data;
+		lastDay = getLastDay();
 		updateDate();
 		updateTime();
 		updateEnhancements();
@@ -143,12 +207,28 @@ function loadComplete() {
 
 
 
-function parseTime(time) {
-	var returnedDate = new Date(d.toDateString() + " " + time);
-	if(returnedDate.toString() == "Invalid Date")
-		console.error("(" + d.toDateString() + " " + time + ") is invalid! Please investigate!");
-	return returnedDate;
+function getLastDay() {
+	var keyDates = timetable.years[d.getYear()+1900];
+	var lastDate = new Date();
+	for (var t in keyDates.school){
+		var thisEndDate = new Date(keyDates.school[t].endDate);
+		if(thisEndDate > lastDate)
+			lastDate = thisEndDate;
+	}
+	return lastDate.timeOf("15:30");
 }
+
+function updateSchoolLeft(){
+	var timeLeft = d.timeTillSmall(lastDay);
+	if(timeLeft === 0){
+		$(".school-left").html("End of year 12!")
+	} else {
+		$(".school-left").html(timeLeft + " left of year 12!");
+	}
+}
+
+
+
 
 function getPeriods(periodTimes, currentTime) {
 	if(term.break) return ["holiday", "holiday"]
@@ -162,8 +242,8 @@ function getPeriods(periodTimes, currentTime) {
 			nextPeriod = period;
 			break;
 		}
-		else if(currentTime < parseTime(periodTimes[period].endTime)){
-			if(currentTime >= parseTime(periodTimes[period].startTime)){
+		else if(currentTime < d.timeOf(periodTimes[period].endTime)){
+			if(currentTime >= d.timeOf(periodTimes[period].startTime)){
 				currentPeriod = period
 			}
 			else {
@@ -181,41 +261,8 @@ function getPeriods(periodTimes, currentTime) {
 	return [currentPeriod, nextPeriod];
 }
 
-function timeLeftOfSchool(){
-	var lastDay;
-	var keyDates = timetable.years[d.getYear()+1900];
-	for (var t in keyDates.school){
-		if(keyDates.school[t].name === "Term 4")
-			lastDay = new Date(keyDates.school[t].endDate + " 16:30");
-	}
-	var m = lastDay.minutesUntil(d);
-	if (m > 0) {
-		var string = "";
-		var timeTill = [[Math.floor(m/7/24/60), "week"], [Math.floor(m/24/60)%7, "day"],
-		[Math.floor(m/60)%(24), "hour"], [m%60, "min"]];
-
-		for(var i = 0; i < timeTill.length; i++){
-			if(timeTill[i][0] !== 0){
-				string += timeTill[i][0] + " " + timeTill[i][1];
-				if(timeTill[i][0] == 1)
-					string += " ";
-				else ///pluralisation
-					string += "s ";
-			}
-		}
-		$(".school-left").bhtml(string + "left of year 12!");
-	}
-	else 
-		$(".school-left").bhtml("End of 2017!")
-}
-
-function getTomorrow(date) {
-	var tomorrow = new Date(new Date(date.getTime() + 86400000).setHours(0,0,0,0))
-	return tomorrow;
-}
-
 function getCurrentInfo() {
-	timeLeftOfSchool()
+	updateSchoolLeft()
 
 	if(term.break){
 		$("#holiday-container").fadeIn();
@@ -238,16 +285,16 @@ function getCurrentInfo() {
 
 	if(currentPeriod === "afterSchool" || currentPeriod === "weekend" || currentPeriod === "dayoff"){
 		$(".column-now .time-till").slideUp();
-		$(".column-next .title").html(getDayTitle(days[getTomorrow(d).getDay()]))
+		$(".column-next .title").html(getDayTitle(days[d.getTomorrow().getDay()]))
 	}
 	else {
 		if(currentPeriod === "beforeSchool"){
-			$(".column-now .time-till").bhtml(parseTime(periodTimes[nextPeriod].startTime).minutesUntil(d) + '<span class="tiny">m until school</span>');
+			$(".column-now .time-till").bhtml(d.minutesTill(d.timeOf(periodTimes[nextPeriod].startTime)) + '<span class="tiny">m Till school</span>');
 		} else {
-			if(currentPeriod.includes("period") && currentTime < parseTime(periodTimes[currentPeriod].startTime)){
-				$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].startTime).minutesUntil(d) + '<span class="tiny">m to class</span>');
+			if(currentPeriod.includes("period") && currentTime < d.timeOf(periodTimes[currentPeriod].startTime)){
+				$(".column-now .time-till").bhtml(d.minutesTill(d.timeOf(periodTimes[currentPeriod].startTime)) + '<span class="tiny">m to class</span>');
 			} else {
-				$(".column-now .time-till").bhtml(parseTime(periodTimes[currentPeriod].endTime).minutesUntil(d) + '<span class="tiny">m left</span>');
+				$(".column-now .time-till").bhtml(d.minutesTill(d.timeOf(periodTimes[currentPeriod].endTime)) + '<span class="tiny">m left</span>');
 			}
 		}
 		$(".column-next .title").html("NEXT");
@@ -258,23 +305,11 @@ function getCurrentInfo() {
 	updateColumn(nextPeriod, dayNumber, ".column-next");
 }
 
-function isToday(date){
-	return new Date(d).setHours(0,0,0,0) === date.setHours(0,0,0,0)
-}
 
-function updateEnhancements() {
-	var enhancementObj = timetable.years[d.getYear()+1900].enhancement;
-	enhancements = [];
-	for(var event in enhancementObj) {
-		if(isToday(new Date(enhancementObj[event].date))){
-			enhancements.push(enhancementObj[event]);
-		}
-	}
-}
 
 function showBox(subject, column, pos){
 	var box = $(column + " .box:nth-child(" + (pos+2) + ")");
-	// Short block
+	// Short block (json forced)
 	if(subject.small) {
 		// Need to check, otherwise animation will play every tick
 		if(!box.hasClass("box-short")){
@@ -359,6 +394,16 @@ function getPeriodEnhancements(period) {
 	return periodEnhancements;
 }
 
+function updateEnhancements() {
+	var enhancementObj = timetable.years[d.getYear()+1900].enhancement;
+	enhancements = [];
+	for(var event in enhancementObj) {
+		if(d.isToday(new Date(enhancementObj[event].date))){
+			enhancements.push(enhancementObj[event]);
+		}
+	}
+}
+
 function updateColumn(period, daynum, column) {
 	// Period indicator
 	$(column + " .period").bhtml(timetable.periods[period]);
@@ -425,7 +470,7 @@ function updateColumn(period, daynum, column) {
 		$(column + " .end-time").bhtml(timetable.days[(daynum-1)%5+1].times[period].endTime);
 	}
 }
-// SETS term / holiday
+
 const conditions = ["special", "school", "holidays"]
 function getTerm(date) {
 	var keyDates = timetable.years[d.getYear()+1900];
@@ -464,9 +509,9 @@ function updateDate() {
 
 	if(term.break){ // on holiday
 		$("#term-info").hide();
-		var termResume = getTomorrow(new Date(term.endDate));
+		var termResume = new Date(term.endDate).getTomorrow();
 		$("#resume-date").html(days[termResume.getDay()] + "day " + termResume.getDate() + " " + months[termResume.getMonth()] + " " + termResume.getFullYear());
-		$("#resume-left").html(d.daysUntil(termResume) + " days left of the holidays");
+		$("#resume-left").html(d.daysTill(termResume) + " days left of the holidays");
 		dayNumber = 0;
 		return;
 	}
@@ -477,12 +522,10 @@ function updateDate() {
 
 	$("#week").bhtml(week2 + " <small>(" + week + ")</small>");
 	$("#daynum").bhtml(dayNumber);
-
-	
 }
 
 function updateTime() {
-	d = getDate();
+	d = getCurrentDate();
 	var hours = d.getHours();
 	var minutes = d.getMinutes();
 	var seconds = d.getSeconds();
@@ -501,7 +544,7 @@ function updateTime() {
 }
 
 // Date function with debugging features
-function getDate(){
+function getCurrentDate(){
 	// Freezes time
 	if(DEBUG_FRZ){
 		return
@@ -572,7 +615,7 @@ function updateBulletin() {
 			event = $(this).find("td:nth-child(4) a").html().replace(/\s\s+/g, ' ');
 			venue = $(this).find("td:nth-child(5) p").html().replace(/\s\s+/g, ' ');
 			venue = venue.substring(venue.indexOf("]") + 3);
-			tabletext += "<li><span class='bulletin-event'>" + event + "</span> at <span class='bulletin-venue'>" + venue + "</span><span class='bulletin-time'>" + startTime + " - " + endTime + "</span></li>";
+			tabletext += "<li><span class='bulletin-event'>" + event + "</span> <span class='bulletin-venue'>" + venue + "</span><span class='bulletin-time'>" + startTime + " - " + endTime + "</span></li>";
 		}
 	});
 	$("#events .scroller").html(tabletext);
@@ -592,7 +635,7 @@ function updateBulletin() {
 		duration = 9999999999999;
 	$("#announcements .marquee div").css("animation-duration", duration)
 }
-
+// TODO: fix this
 function getDayTitle(day) {
 	if(day === days[d.getDay()]){
 		return "today"
