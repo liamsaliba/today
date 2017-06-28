@@ -283,6 +283,7 @@ function getCurrentInfo() {
 	if(currentPeriod === "afterSchool" || currentPeriod === "weekend" || currentPeriod === "dayoff"){
 		$(".column-now .time-till").slideUp();
 		$(".column-next .title").html(d.formatDay(d.getTomorrow()));
+
 	}
 	else {
 		if(currentPeriod === "beforeSchool"){
@@ -305,7 +306,6 @@ function getCurrentInfo() {
 
 
 function showBox(subject, column, pos){
-	console.log(subject.name + " . " + column + " . " + pos)
 	var box = $(column + " .box:nth-child(" + (pos+2) + ")");
 	// Short block (json forced)
 	if(subject.small) {
@@ -436,7 +436,6 @@ function updateColumn(period, daynum, column) {
 			// Show current enhancements
 			for(var i = 0; i < periodEnhancements.length; i++){
 				showBox(periodEnhancements[i], column, i);
-				console.log(periodEnhancements[i])
 			}
 			var name = timetable.periods[period];
 			if(timetable.timetable[daynum-1][period] === 0)
