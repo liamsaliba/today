@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+			<link rel="shortcut icon" href="img/favicon.ico" type="image/vnd.microsoft.icon" />
+
+			<meta charset="utf-8">
+		    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+		    <link rel="stylesheet" href="/admin/admin.css">
+		    <link rel="stylesheet" href="/lib/flatpickr.min.css">
+		    <title>Ivanhoe today admin</title>
+	</head>
+	<body>
+		<div class="container">
+			<div id="page-header">
+				<img id="logo" src="/img/logo.png">
+				<ul>
+					<li>
+						today administrator 
+						<b>&#8226;</b> <span id="term">term 1</span> <span id="term-info">
+						<b>&#8226;</b> week <span id="week">1</span> 
+						<b>&#8226;</b> day <span id="daynum">1</span></span> 
+						<b>&#8226;</b> <span id="day">thurs</span>day 
+						<b>&#8226;</b> <span id="shortdate">1/4/5</span> 
+						<b>&#8226;</b> <span id="hour">12</span>:<span id="min">12</span>:<span id="sec"></span><span id="meridian"></span>
+					</li>
+				</ul>
+				<div id="debug-buttons">
+					<input id="flatpickr" type="text" placeholder="Pick Date / Time">
+					<button class="btn-toggle" id="btn-reset" name="timeReset" type="button">Reset</button>
+					<button class="btn-toggle" id="btn-freeze" name="timeFreeze" type="button">Freeze</button>
+				</div>
+			</div>
+			<div class="container flexbox" id="main-container">
+			</div>
+			<div id="footer">
+				<b>Ivanhoe today admin</b> - Liam Saliba 2017 - please contact for any ideas or issues
+			</div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="/lib/flatpickr.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/admin/admin.js"></script>
+	</body>
+</html>

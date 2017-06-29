@@ -10,6 +10,7 @@ app.use(express.static(__dirname + '/public'));
 
 var sanitizeHtml = require('sanitize-html');
 var io = require('socket.io')(http);
+var aio = io.of('/admin');
 
 const PORTNUMBER = 6060;
 
@@ -26,10 +27,11 @@ function l(string) {
 }
 
 function e(string){
-	console.error(new Date().toLocaleString() + " ! " + "[" + l.caller.name + "] " + string)
+	console.error(new Date().toLocaleString() + " ! " + "[" + e.caller.name + "] " + string)
 }
 
 function init() {
+	loadTimetable();
 	pushTimetable();
 	pushBulletin();
 	l("Server initialised.")
@@ -37,38 +39,36 @@ function init() {
 
 
 // load file using fs (library)
-function loadFile(path, examplePath, encode) {
+function loadFile(path, encode) {
 	var data = "";
 	try {
 		data = fs.readFileSync(path, encode)
 		l("Found " + path)
 	} catch (err) {
-		l("Could not find " + path)
-		try{
-			data = fs.readFileSync(examplePath, encode)
-			l("Instead using " + examplePath)
-		} catch(err) {
-			throw err;
-		}
+		throw "Could not find " + path
 	}
 	return data.toString();
 }
 
 
 var timetable;
-const TIMETABLE_PATH = "./admin/timetable.json";
-const TIMETABLE_EXAMPLE_PATH = "./admin/timetable.example.json";
+const TIMETABLE_PATH = "./resources/timetable.json";
+const TIMETABLE_EXAMPLE_PATH = "./resources/timetable.example.json";
 function updateTimetable() {
-	l("Timetable update requested")
+	
+}
+
+function loadTimetable() {
+	l("Timetable load requested")
 	var newTimetable;
 	try {
-		newTimetable = loadFile(TIMETABLE_PATH, TIMETABLE_EXAMPLE_PATH, "utf8");
+		newTimetable = loadFile(TIMETABLE_PATH, "utf8");
 	} catch(err){
-		throw err;
+		e(err.message);
 	}
 
 	if(newTimetable === timetable){
-		throw "timetable has not changed"
+		throw "Timetable has not changed"
 	}
 	timetable = newTimetable;
 	l("Timetable updated.")
@@ -77,12 +77,6 @@ function updateTimetable() {
 //sends bulletin to all clients
 function pushTimetable() {
 	l("Timetable push requested")
-	try {
-		updateTimetable();
-	} catch (err) {
-		e(err.message)
-		return;
-	}
 	try {
 		io.emit("timetable", {timetable});
 		l("Timetable pushed");
@@ -106,9 +100,13 @@ function updateBulletin() {
 	l("Bulletin update requested")
 	var data;
 	try {
-		data = loadFile(BULLETIN_PATH, BULLETIN_EXAMPLE_PATH, "ucs2");
+		data = loadFile(BULLETIN_PATH, "ucs2");
 	} catch(err){
-		throw "Could not get bulletin data (" + err.message + ")";
+		try {
+			data = loadFile(BULLETIN_EXAMPLE_PATH, "ucs2");
+		} catch (err) {
+			throw "Could not get bulletin data (" + err.message + ")";
+		}
 	}
 	data = sanitizeHtml(data);
 	l("Bulletin sanitized")
@@ -185,4 +183,13 @@ function onConnect(socket) {
 	l("Sent bulletin to client")
 	socket.emit('motd', motd);
 	l("Sent motd to client")
+}
+
+aio.on('connection', admin_onConnect)
+
+function admin_onConnect(socket) {
+	l("Connected to admin client");
+
+	socket.emit('timetable', timetable);
+	l("Sent timetable to admin client")
 }
