@@ -12,30 +12,67 @@
 		    <title>Ivanhoe today admin</title>
 	</head>
 	<body>
-		<div class="container">
+		<div id="site-container">
 			<div id="page-header">
 				<img id="logo" src="/img/logo.png">
-				<ul>
-					<li>
-						today administrator 
-						<b>&#8226;</b> <span id="term">term 1</span> <span id="term-info">
-						<b>&#8226;</b> week <span id="week">1</span> 
-						<b>&#8226;</b> day <span id="daynum">1</span></span> 
-						<b>&#8226;</b> <span id="day">thurs</span>day 
-						<b>&#8226;</b> <span id="shortdate">1/4/5</span> 
-						<b>&#8226;</b> <span id="hour">12</span>:<span id="min">12</span>:<span id="sec"></span><span id="meridian"></span>
-					</li>
-				</ul>
-				<div id="debug-buttons">
-					<input id="flatpickr" type="text" placeholder="Pick Date / Time">
-					<button class="btn-toggle" id="btn-reset" name="timeReset" type="button">Reset</button>
-					<button class="btn-toggle" id="btn-freeze" name="timeFreeze" type="button">Freeze</button>
+				<div id="header-info">today administrator 
+					<b>&#8226;</b> <span id="term">term 1</span> <span id="term-info">
+					<b>&#8226;</b> week <span id="week">1</span> 
+					<b>&#8226;</b> day <span id="daynum">1</span></span> 
+					<b>&#8226;</b> <span id="day">thurs</span>day 
+					<b>&#8226;</b> <span id="shortdate">1/4/5</span> 
+					<b>&#8226;</b> <span id="hour">12</span>:<span id="min">12</span>:<span id="sec"></span><span id="meridian"></span>
 				</div>
 			</div>
 			<div class="container flexbox" id="main-container">
-				<div class="container">
-					<div id="iframe-wrapper">
-						<iframe src="/" id="scaled-frame"></iframe>
+				<div class="container" id="left-container">
+					<div class="panel">
+						<div class="box-head">
+							<h1>Preview</h1>
+							<a href="/">go to app</a>
+						</div>
+						<div id="iframe-wrapper">
+							<iframe src="/" id="scaled-frame"></iframe>
+						</div>
+					</div>
+					<div class="panel">
+						<div class="box-head">
+
+						</div>
+						<div class="box">
+
+						</div>
+					</div>
+				</div>
+				<div class="container" id="right-container">
+					<div class="panel">
+						<div class="box-head">
+							<h1>TIME CONTROL</h1>
+						</div>
+						<div class="box">
+							<div id="debug-buttons">
+								<input id="flatpickr" type="text" placeholder="Pick Date / Time">
+								<button class="btn-toggle" id="btn-reset" name="timeReset" type="button">Reset</button>
+								<button class="btn-toggle" id="btn-freeze" name="timeFreeze" type="button">Freeze</button>
+							</div>
+						</div>
+					</div>
+					<div class="panel">
+						<div class="box-head">
+							<h1>TIMETABLE</h1>
+						</div>
+						<div class="box">
+							<button class="btn-toggle" id="btn-reset" name="timeReset" type="button">Main</button>
+							<button class="btn-toggle" id="btn-freeze" name="timeFreeze" type="button">Temporary</button>
+						</div>
+					</div>
+					<div class="panel">
+						<div class="box-head">
+							<h1>MOTD</h1>
+						</div>
+						<div class="box">
+
+						</div>
 					</div>
 				</div>
 			</div>

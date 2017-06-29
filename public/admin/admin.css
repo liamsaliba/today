@@ -13,28 +13,21 @@
 	--scalar: 0.6;
 }
 
-body {
+html, body {
 	width: 100%;
 	height: 100%;
 	margin: 0;
-	overflow: hidden;
 }
 
 .container{
 	position: relative;
 	margin-right: auto;
 	margin-left: auto;
-	max-width: 1920px;
-	height: 100%;
 	padding: 0;
 }
 
-div {
-	display: block;
-}
-
 #page-header {
-	position: relative;
+	position: fixed;
 	background: #940125;
 	width: 100%;
 	height: 80px;
@@ -44,15 +37,7 @@ div {
 	z-index: 10;
 }
 
-ul {
-	float: left;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
-
-li {
+#header-info {
 	font-size: 30px;
     float: left;
     display: block;
@@ -79,59 +64,95 @@ img#logo {
 /* body stuff */
 .flexbox {
 	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-content: stretch;
+}
+
+#site-container {
+	overflow: hidden;
+    height: 100%;
 }
 
 #main-container{ 
-	padding: 15px 30px;
+	padding: 90px 30px;
+	min-height: calc(100% - 80px);
 	z-index: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+#left-container {
+	min-width: 1152px;
+
+}
+
+#right-container {
+	min-width: 600px;
+}
+
+.box {
+	color: black;
+	border: 2px solid #8f0024;
+	/*margin-bottom: 8px;*/
+	overflow: auto;
+	font-size: 24px;
+	padding: 8px;
+	background: #ffebf0;
+}
+
+.panel {
+	margin-bottom: 20px;
+}
+
+.box-head {
+	padding: 5px;
+	font-weight: bold;
+	color: #3c2a1b;
+	height: 75px;
+	overflow: hidden;
+}
+
+
+.box-head h1 {
+	display: inline-block;
+	font-size: 3.5em;
+	word-spacing: -5px;
+	text-transform: uppercase;
 }
 
 
 
 #footer {
 	color: #bbb;
-	position: fixed;
-	width: 100%;
-	height: 45px;
-	bottom: 0;
 
 	background: #940125;
 	width: 100%;
-	max-width: 1920px;
 	padding: 10px 20px;
 	border-top: 5px solid #a27249;
 
 	display: inline-block;
 
 	z-index: 10;
-}
-
-#footer .school-left {
-	margin-left: 20px;
-}
-
-#school-left {
-	font-style: italic;
-	margin-left: 20px;
+	padding-bottom: 32000px;
+    margin-bottom: -32000px;
 }
 
 #debug-buttons {
 	display: inline-block;
-	float: right;
+	margin: 0 auto;
 }
 
 button, input {
-	margin: 0;
 	border: none;
-	margin-top: 10px;
-	margin-left: 5px;
-	padding: 5px 10px;
+	padding: 10px 15px;
 	color: black;
 	background: #ffb77a;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	font-size: 22px;
+	font-size: 26px;
+	min-width: 120px;
 }
 
 .padded {
