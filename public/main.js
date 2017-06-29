@@ -3,8 +3,8 @@ var th = setInterval(runEveryHour, 3600000);
 var td = setInterval(runEveryDay, 86400000);
 
 var d = new Date();
-var days = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"];
-var months = ["January", "Feburary", "March", "April", "May", "June", "July",
+const days = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"];
+const months = ["January", "Feburary", "March", "April", "May", "June", "July",
 	"August", "September", "October", "November", "December"];
 var dayNumber;
 var term;
@@ -131,7 +131,7 @@ function runEveryDay(){
 }
 
 function init() {
-	
+
 }
 
 $(document).ready(function() { init(); })
@@ -643,8 +643,7 @@ function randomDate(){
 
 
 
-
-var socket = io();
+const socket = io.connect();
 
 socket.on('timetable', function(data) {
 	loadTimetable(data)
