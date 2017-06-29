@@ -123,16 +123,15 @@ function runEveryHour(){
 	updateDate();
 	updateEnhancements();
 	updateActivities();
-	console.log("Ran hourly run.")
+	updateBulletin(bulletin);
 }
 
 function runEveryDay(){
 	window.reload();
-	console.log("Ran daily run.")
 }
 
 function init() {
-	loadButtons();
+	
 }
 
 $(document).ready(function() { init(); })
@@ -148,7 +147,7 @@ $("#flatpickr").change(function() {
 	d = new Date(Date.parse($(this).val()));
 	runEveryHour();
 	runEverySecond();
-	updateBulletin();
+	updateBulletin(bulletin); // simply to change title
 });
 
 /// DEBUG BUTTONS
@@ -160,12 +159,10 @@ $(".btn-toggle").click(function() {
 })
 
 // set button state for all toggleable buttons
-function loadButtons() {
-	$(".btn-toggle").each(function() {
-		var bool = $(this).attr('name');
-		setBtnState(this, window[bool]);
-	})
-}
+$(".btn-toggle").each(function() {
+	var bool = $(this).attr('name');
+	setBtnState(this, window[bool]);
+});
 
 // show button state for its variable
 function setBtnState(button, bool){
