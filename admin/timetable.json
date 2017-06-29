@@ -1,0 +1,870 @@
+{
+  "days": [
+    {
+      "id": 0,
+      "times": {
+      }
+    },
+    {
+      "id": 1,
+      "times": {
+        "form": {
+          "startTime": "8:30",
+          "endTime": "8:35"
+        },
+        "period1": {
+          "startTime": "8:45",
+          "endTime": "9:40"
+        },
+        "period2": {
+          "startTime": "9:45",
+          "endTime": "10:40"
+        },
+        "recess": {
+          "startTime": "10:40",
+          "endTime": "11:00"
+        },
+        "period3": {
+          "startTime": "11:05",
+          "endTime": "12:00"
+        },
+        "period4": {
+          "startTime": "12:05",
+          "endTime": "12:45"
+        },
+        "lunch": {
+          "startTime": "12:45",
+          "endTime": "13:30"
+        },
+        "period5": {
+          "startTime": "13:35",
+          "endTime": "14:30"
+        },
+        "period6": {
+          "startTime": "14:35",
+          "endTime": "15:30"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "times": {
+        "period1": {
+          "startTime": "8:30",
+          "endTime": "9:25"
+        },
+        "period2": {
+          "startTime": "9:30",
+          "endTime": "10:25"
+        },
+        "recess": {
+          "startTime": "10:25",
+          "endTime": "10:45"
+        },
+        "period3": {
+          "startTime": "10:50",
+          "endTime": "11:45"
+        },
+        "period4": {
+          "startTime": "11:50",
+          "endTime": "12:45"
+        },
+        "lunch": {
+          "startTime": "12:45",
+          "endTime": "13:30"
+        },
+        "period5": {
+          "startTime": "13:35",
+          "endTime": "14:30"
+        },
+        "period6": {
+          "startTime": "14:35",
+          "endTime": "15:30"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "times": {
+        "form": {
+          "startTime": "8:30",
+          "endTime": "8:40"
+        },
+        "period1": {
+          "startTime": "8:45",
+          "endTime": "9:40"
+        },
+        "period2": {
+          "startTime": "9:45",
+          "endTime": "10:40"
+        },
+        "recess": {
+          "startTime": "10:40",
+          "endTime": "11:05"
+        },
+        "period3": {
+          "startTime": "11:10",
+          "endTime": "12:05"
+        },
+        "period4": {
+          "startTime": "12:10",
+          "endTime": "13:05"
+        },
+        "lunch": {
+          "startTime": "13:05",
+          "endTime": "14:00"
+        },
+        "period5": {
+          "startTime": "14:05",
+          "endTime": "15:00"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "times": {
+        "period1": {
+          "startTime": "8:30",
+          "endTime": "9:23"
+        },
+        "period2": {
+          "startTime": "9:26",
+          "endTime": "10:19"
+        },
+        "recess": {
+          "startTime": "10:19",
+          "endTime": "10:39"
+        },
+        "period3": {
+          "startTime": "10:44",
+          "endTime": "11:37"
+        },
+        "period4": {
+          "startTime": "11:40",
+          "endTime": "12:33"
+        },
+        "lunch": {
+          "startTime": "12:33",
+          "endTime": "13:08"
+        },
+        "period5": {
+          "startTime": "13:13",
+          "endTime": "14:06"
+        },
+        "period6": {
+          "startTime": "14:10",
+          "endTime": "15:30"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "times": {
+        "form": {
+          "startTime": "8:30",
+          "endTime": "8:35"
+        },
+        "period1": {
+          "startTime": "8:45",
+          "endTime": "9:40"
+        },
+        "period2": {
+          "startTime": "9:45",
+          "endTime": "10:40"
+        },
+        "recess": {
+          "startTime": "10:40",
+          "endTime": "11:00"
+        },
+        "period3": {
+          "startTime": "11:05",
+          "endTime": "12:00"
+        },
+        "period4": {
+          "startTime": "12:05",
+          "endTime": "12:45"
+        },
+        "lunch": {
+          "startTime": "12:45",
+          "endTime": "13:30"
+        },
+        "period5": {
+          "startTime": "13:35",
+          "endTime": "14:30"
+        },
+        "period6": {
+          "startTime": "14:35",
+          "endTime": "15:30"
+        }
+      }
+    }
+  ],
+  "years": {
+    "2017": {
+      "school": [
+        {
+          "name": "ECP",
+          "startDate": "2016-11-14",
+          "endDate": "2016-12-09",
+          "school": true,
+          "break": false
+        },
+        {
+          "name": "Term 1",
+          "startDate": "2017-01-31",
+          "endDate": "2017-03-31",
+          "school": true,
+          "break": false
+        },
+        {
+          "name": "Term 2",
+          "startDate": "2017-04-18",
+          "endDate": "2017-06-23",
+          "school": true,
+          "break": false
+        },
+        {
+          "name": "Term 3",
+          "startDate": "2017-07-17",
+          "endDate": "2017-09-22",
+          "school": true,
+          "break": false
+        },
+        {
+          "name": "Term 4",
+          "startDate": "2017-10-09",
+          "endDate": "2017-10-18",
+          "school": true,
+          "break": false
+        }
+      ],
+      "holidays": [
+        {
+          "name": "Christmas Break",
+          "startDate": "2016-12-10",
+          "endDate": "2017-01-30",
+          "school": false,
+          "break": true
+        },
+        {
+          "name": "Easter Break",
+          "startDate": "2017-04-01",
+          "endDate": "2017-04-17",
+          "school": false,
+          "break": true
+        },
+        {
+          "name": "Winter Break",
+          "startDate": "2017-06-24",
+          "endDate": "2017-07-16",
+          "school": false,
+          "break": true
+        },
+        {
+          "name": "Spring Break",
+          "startDate": "2017-09-23",
+          "endDate": "2017-10-08",
+          "school": false,
+          "break": true
+        }
+      ],
+      "special": [
+        {
+          "name": "Staff PD Day",
+          "startDate": "2017-08-28",
+          "endDate": "2017-08-28",
+          "school": false,
+          "break": false
+        },
+        {
+          "name": "House Swimming Carnival",
+          "startDate": "2017-07-22",
+          "endDate": "2017-07-22",
+          "school": false,
+          "break": false
+        }
+      ],
+      "activity": [
+        {
+          "name": "Round Square Meeting",
+          "day": 5,
+          "periods": ["lunch"]
+        },
+        {
+          "name": "Jazz Band",
+          "day": 5,
+          "periods": ["lunch"]
+        },
+        {
+          "name": "Prefect Meeting",
+          "day": 2,
+          "periods": ["lunch"]
+        },
+        {
+          "name": "Chess Club",
+          "day": 4,
+          "periods": ["lunch"]
+        }
+      ],
+      "enhancement": [
+        {
+          "name": "OIGA - Financial Literacy",
+          "date": "2017-06-19",
+          "abbr": "EP",
+          "periods": [4]
+        },
+        {
+          "name": "Academic Awards",
+          "date": "2017-06-20",
+          "abbr": "Assembly",
+          "room": "Gymmnasium",
+          "periods": [4]
+        },
+        {
+          "name": "Block 4",
+          "date": "2017-06-22",
+          "block": 4,
+          "abbr": "EP",
+          "periods": [6]
+        },
+        {
+          "name": "Senior Years Chapel",
+          "date": "2017-06-23",
+          "abbr": "Chapel",
+          "periods": [4],
+          "small": true
+        },
+        {
+          "name": "Further Maths SAC",
+          "date": "2017-07-18",
+          "abbr": "EP",
+          "periods": [5,6]
+        },
+        {
+          "name": "Block 5",
+          "date": "2017-07-20",
+          "block": 5,
+          "abbr": "EP",
+          "periods": [5,6]
+        },
+        {
+          "name": "Business Management SAC",
+          "date": "2017-07-25",
+          "abbr": "EP",
+          "periods": [5,6]
+        },
+        {
+          "name": "Block 3",
+          "date": "2017-07-27",
+          "block": 3,
+          "abbr": "EP",
+          "periods": [5,6]
+        },
+        {
+          "name": "Elevate - Ace Your Exams",
+          "date": "2017-08-01",
+          "abbr": "EP",
+          "periods": [5,6]
+        },
+        {
+          "name": "Block 2",
+          "date": "2017-08-08",
+          "block": 2,
+          "abbr": "EP",
+          "periods": [5,6]
+        },
+        {
+          "name": "Block 1",
+          "date": "2017-08-15",
+          "block": 1,
+          "abbr": "EP",
+          "periods": [5,6]
+        },
+        {
+          "name": "Block 6",
+          "date": "2017-08-22",
+          "block": 6,
+          "abbr": "EP",
+          "periods": [5,6]
+        },
+        {
+          "name": "Further Maths SAC",
+          "date": "2017-08-29",
+          "abbr": "EP",
+          "periods": [5,6]
+        },
+        {
+          "name": "Maths Methods SAC",
+          "date": "2017-09-05",
+          "abbr": "EP",
+          "periods": [5,6]
+        },
+        {
+          "name": "English SAC",
+          "date": "2017-09-12",
+          "abbr": "EP",
+          "periods": [5,6]
+        },
+        {
+          "name": "Methods Exam Seminar",
+          "date": "2017-09-19",
+          "abbr": "EP",
+          "periods": [5,6]
+        }
+      ]
+    }
+  },
+  "blocks": [
+    {
+      "id": 0,
+      "subjects": [
+      {
+        "abbr": "EP",
+        "name": "Enhancement Period"
+      }
+      ]
+    },
+    {
+      "id": 1,
+      "subjects": [
+        {
+          "abbr": "12EC1",
+          "name": "Economics",
+          "fullname": "Economics",
+          "teacher": "Gary Hodges",
+          "teacherabbr": "GHO",
+          "room": "R210"
+        },
+        {
+          "abbr": "12HH1",
+          "name": "Health & Human Dev.",
+          "fullname": "Health & Human Development",
+          "teacher": "Craig Caracella",
+          "teacherabbr": "CDC",
+          "room": "R110"
+        },
+        {
+          "abbr": "12LI1",
+          "name": "Literature",
+          "fullname": "English Literature",
+          "teacher": "Graham White",
+          "teacherabbr": "GMW",
+          "room": "R101"
+        },
+        {
+          "abbr": "12FM1",
+          "name": "Further Maths",
+          "fullname": "Further Mathematics",
+          "teacher": "Pauline Swain",
+          "teacherabbr": "PLS",
+          "room": "R103"
+        },
+        {
+          "abbr": "12SM1",
+          "name": "Specialist Maths",
+          "fullname": "Specialist Mathematics",
+          "teacher": "Tamara Ferraro",
+          "teacherabbr": "TKF",
+          "room": "R105"
+        },
+        {
+          "abbr": "12PS1, 12PS2",
+          "name": "Private Study",
+          "fullname": "Private Study",
+          "small": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "subjects": [
+        {
+          "abbr": "12AC1",
+          "name": "Accounting",
+          "fullname": "Accounting",
+          "teacher": "Heath Bullen",
+          "teacherabbr": "HBU",
+          "room": "R110"
+        },
+        {
+          "abbr": "12EN1",
+          "name": "English",
+          "fullname": "English",
+          "teacher": "Denise Whelan",
+          "teacherabbr": "DJW",
+          "room": "R101"
+        },
+        {
+          "abbr": "12HR1",
+          "name": "History",
+          "fullname": "History: Revolutions",
+          "teacher": "Rachel O'Keeffe",
+          "teacherabbr": "ROK",
+          "room": "R108"
+        },
+        {
+          "abbr": "12ME1",
+          "name": "Media",
+          "fullname": "Media Studies",
+          "teacher": "Kelly Jackson",
+          "teacherabbr": "KJA",
+          "room": "C6"
+        },
+        {
+          "abbr": "12FR1",
+          "name": "French",
+          "fullname": "French",
+          "teacher": "Angela Burton",
+          "teacherabbr": "ANB",
+          "room": "R208"
+        },
+        {
+          "abbr": "12JA1",
+          "name": "Japanese",
+          "fullname": "Japanese",
+          "teacher": "Kumiko McLay",
+          "teacherabbr": "KMC",
+          "room": "R201"
+        },
+        {
+          "abbr": "12PS3, 12PS4",
+          "name": "Private Study",
+          "fullname": "Private Study",
+          "small": true
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "subjects": [
+        {
+          "abbr": "12CH1",
+          "name": "Chemistry",
+          "fullname": "Chemistry",
+          "teacher": "Rebecca Smith",
+          "teacherabbr": "RSM",
+          "room": "R106"
+        },
+        {
+          "abbr": "12GE1",
+          "name": "Geography",
+          "fullname": "Geography",
+          "teacher": "Jesse Delaney",
+          "teacherabbr": "JDE",
+          "room": "R104"
+        },
+        {
+          "abbr": "12FM2",
+          "name": "Further Maths",
+          "fullname": "Further Mathematics",
+          "teacher": "Samantha Scott",
+          "teacherabbr": "SNS",
+          "room": "R109"
+        },
+        {
+          "abbr": "12SA1",
+          "name": "Studio Arts",
+          "fullname": "Studio Arts",
+          "teacher": "Helene Swift",
+          "teacherabbr": "HSW",
+          "room": "C3"
+        },
+        {
+          "abbr": "12MM1",
+          "name": "Maths Methods",
+          "fullname": "Mathematical Methods",
+          "teacher": "Jeff Capuano",
+          "teacherabbr": "JLC",
+          "room": "R105"
+        },
+        {
+          "abbr": "12PS5, 12PS6",
+          "name": "Private Study",
+          "fullname": "Private Study",
+          "small": true
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "subjects": [
+        {
+          "abbr": "12BI1",
+          "name": "Biology",
+          "fullname": "Biology",
+          "teacher": "Geoff Place",
+          "teacherabbr": "GRP",
+          "room": "R205"
+        },
+        {
+          "abbr": "12BM1",
+          "name": "Business Management",
+          "fullname": "Business Management",
+          "teacher": "Heath Bullen",
+          "teacherabbr": "HBU",
+          "room": "R109"
+        },
+        {
+          "abbr": "12EAL1",
+          "name": "English EAL",
+          "fullname": "English as an Additional Language",
+          "teacher": "Natalie Grimmer",
+          "teacherabbr": "NGR",
+          "room": "R210"
+        },
+        {
+          "abbr": "12E2",
+          "name": "English",
+          "fullname": "English",
+          "teacher": "Chris Bourne",
+          "teacherabbr": "CBO",
+          "room": "R101"
+        },
+        {
+          "abbr": "12GP1",
+          "name": "Global Politics",
+          "fullname": "Global Politics",
+          "teacher": "Kathryn Horsford",
+          "teacherabbr": "KHO",
+          "room": "R110"
+        },
+        {
+          "abbr": "12MP1",
+          "name": "Music",
+          "fullname": "Music Performance",
+          "teacher": "Virginia Creed",
+          "teacherabbr": "VIC",
+          "room": "M3"
+        },
+        {
+          "abbr": "12PDT1",
+          "name": "PDT",
+          "fullname": "Product Design Technology",
+          "teacher": "Ken Whitechurch",
+          "teacherabbr": "KWW",
+          "room": "C7"
+        },
+        {
+          "abbr": "12PS7, 12PS8",
+          "name": "Private Study",
+          "fullname": "Private Study",
+          "small": true
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "subjects": [
+        {
+          "abbr": "12BI2",
+          "name": "Biology",
+          "fullname": "Biology",
+          "teacher": "Geoff Place",
+          "teacherabbr": "GRP",
+          "room": "R205"
+        },
+        {
+          "abbr": "12ITS1",
+          "name": "Software Development",
+          "fullname": "Computing: Software Development",
+          "teacher": "Dennis Kolasseril",
+          "teacherabbr": "DKO",
+          "room": "C4"
+        },
+        {
+          "abbr": "12EN3",
+          "name": "English",
+          "fullname": "English",
+          "teacher": "Graham White",
+          "teacherabbr": "GMW",
+          "room": "R101"
+        },
+        {
+          "abbr": "12FM3",
+          "name": "Further Maths",
+          "fullname": "Further Mathematics",
+          "teacher": "Pauline Swain",
+          "teacherabbr": "PLS",
+          "room": "R103"
+        },
+        {
+          "abbr": "12PH1",
+          "name": "Physics",
+          "fullname": "Physics",
+          "teacher": "Samantha Scott",
+          "teacherabbr": "SNS",
+          "room": "R206"
+        },
+        {
+          "abbr": "12PS9, 12PS10",
+          "name": "Private Study",
+          "fullname": "Private Study",
+          "small": true
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "subjects": [
+        {
+          "abbr": "12BM2",
+          "name": "Business Management",
+          "fullname": "Business Management",
+          "teacher": "Heath Bullen",
+          "teacherabbr": "HBU",
+          "room": "R109"
+        },
+        {
+          "abbr": "12EN4",
+          "name": "English",
+          "fullname": "English",
+          "teacher": "Denise Whelan",
+          "teacherabbr": "DJW",
+          "room": "R101"
+        },
+        {
+          "abbr": "12LS1",
+          "name": "Legal Studies",
+          "fullname": "Legal Studies",
+          "teacher": "Rachel O'Keeffe",
+          "teacherabbr": "ROK",
+          "room": "R107"
+        },
+        {
+          "abbr": "12MM2",
+          "name": "Maths Methods",
+          "fullname": "Mathematical Methods",
+          "teacher": "Angelo Ratskos",
+          "teacherabbr": "ANR",
+          "room": "P11"
+        },
+        {
+          "abbr": "12PE1",
+          "name": "PE",
+          "fullname": "Physical Education",
+          "teacher": "Andrew Luscombe",
+          "teacherabbr": "ALU",
+          "room": "R110"
+        },
+        {
+          "abbr": "12PY1",
+          "name": "Psychology",
+          "fullname": "Psychology",
+          "teacher": "Pippa Lidgett",
+          "teacherabbr": "PLI",
+          "room": "R208"
+        },
+        {
+          "abbr": "12VC1",
+          "name": "VCD",
+          "fullname": "Visual Communication and Design",
+          "teacher": "Lawrence Dalton",
+          "teacherabbr": "LGD",
+          "room": "C5"
+        },
+        {
+          "abbr": "12PS11",
+          "name": "Private Study",
+          "fullname": "Private Study",
+          "small": true
+        }
+      ]
+    }
+  ],
+  "timetable": [
+    {
+      "period1": 4,
+      "period2": 2,
+      "period3": 1,
+      "period4": 0,
+      "period5": 5,
+      "period6": 3
+    },
+    {
+      "period1": 1,
+      "period2": 1,
+      "period3": 6,
+      "period4": 5,
+      "period5": 0,
+      "period6": 0
+    },
+    {
+      "period1": 2,
+      "period2": 2,
+      "period3": 6,
+      "period4": 3,
+      "period5": 4
+    },
+    {
+      "period1": 3,
+      "period2": 3,
+      "period3": 5,
+      "period4": 6,
+      "period5": 4,
+      "period6": 0
+    },
+    {
+      "period1": 1,
+      "period2": 4,
+      "period3": 5,
+      "period4": 0,
+      "period5": 2,
+      "period6": 6
+    },
+    {
+      "period1": 4,
+      "period2": 2,
+      "period3": 1,
+      "period4": 0,
+      "period5": 5,
+      "period6": 3
+    },
+    {
+      "period1": 6,
+      "period2": 6,
+      "period3": 5,
+      "period4": 1,
+      "period5": 0,
+      "period6": 0
+    },
+    {
+      "period1": 4,
+      "period2": 4,
+      "period3": 3,
+      "period4": 2,
+      "period5": 6
+    },
+    {
+      "period1": 5,
+      "period2": 5,
+      "period3": 3,
+      "period4": 1,
+      "period5": 2,
+      "period6": 0
+    },
+    {
+      "period1": 6,
+      "period2": 4,
+      "period3": 1,
+      "period4": 0,
+      "period5": 3,
+      "period6": 2
+    }
+  ],
+  "periods": {
+    "beforeSchool": "Before School",
+    "form": "Form",
+    "period1": "<span class=\"tiny\">Period</span> 1",
+    "period2": "<span class=\"tiny\">Period</span> 2",
+    "recess": "Recess",
+    "period3": "<span class=\"tiny\">Period</span> 3",
+    "period4": "<span class=\"tiny\">Period</span> 4",
+    "lunch": "Lunch",
+    "period5": "<span class=\"tiny\">Period</span> 5",
+    "period6": "<span class=\"tiny\">Period</span> 6",
+    "afterSchool": "After School",
+    "weekend": "Weekend",
+    "holidays": "Holidays",
+    "dayoff": "No School"
+  }
+}

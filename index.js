@@ -13,46 +13,105 @@ var io = require('socket.io')(http);
 
 const PORTNUMBER = 6060;
 
-// HTTP server, listen for activity on port 3000
+// HTTP server, listen for activity on port
 http.listen(PORTNUMBER, function(){
 	l("Public server started, listening on port " + PORTNUMBER);
+	init();
 });
 
 
 // logging library
 function l(string) {
-	console.log(new Date().toLocaleString() + " * " + string)
+	console.log(new Date().toLocaleString() + " * " + "[" + l.caller.name + "] " + string)
 }
 
 function e(string){
-	console.error(new Date().toLocaleString() + " ! " + string)
+	console.error(new Date().toLocaleString() + " ! " + "[" + l.caller.name + "] " + string)
+}
+
+function init() {
+	pushTimetable();
+	pushBulletin();
+	l("Server initialised.")
 }
 
 
+// load file using fs (library)
+function loadFile(path, examplePath, encode) {
+	var data = "";
+	try {
+		data = fs.readFileSync(path, encode)
+		l("Found " + path)
+	} catch (err) {
+		l("Could not find " + path)
+		try{
+			data = fs.readFileSync(examplePath, encode)
+			l("Instead using " + examplePath)
+		} catch(err) {
+			throw err;
+		}
+	}
+	return data.toString();
+}
 
-const BULLETIN_PATH = "./emails/Bulletin.html";
-const BULLETIN_EXAMPLE_PATH = "./emails/Bulletin.example.html";
+
+var timetable;
+const TIMETABLE_PATH = "./admin/timetable.json";
+const TIMETABLE_EXAMPLE_PATH = "./admin/timetable.example.json";
+function updateTimetable() {
+	l("Timetable update requested")
+	var newTimetable;
+	try {
+		newTimetable = loadFile(TIMETABLE_PATH, TIMETABLE_EXAMPLE_PATH, "utf8");
+	} catch(err){
+		throw err;
+	}
+
+	if(newTimetable === timetable){
+		throw "timetable has not changed"
+	}
+	timetable = newTimetable;
+	l("Timetable updated.")
+}
+
+//sends bulletin to all clients
+function pushTimetable() {
+	l("Timetable push requested")
+	try {
+		updateTimetable();
+	} catch (err) {
+		e(err.message)
+		return;
+	}
+	try {
+		io.emit("timetable", {timetable});
+		l("Timetable pushed");
+	} catch (err){
+		e(err);
+	}
+}
+
 var bulletin;
 // updates bulletin every hours
 var bulletinPushTimeout = setInterval(function() {
 	l("Bulletin timer update")
 	pushBulletin();
 }, 3600000);
-// updates bulletin on startup
-init();
-function init() {
-	pushBulletin();
-	l("Server initialised.")
-}
+
+
+const BULLETIN_PATH = "./emails/Bulletin.html";
+const BULLETIN_EXAMPLE_PATH = "./emails/Bulletin.example.html";
 // gets bulletin html and formats it
 function updateBulletin() {
 	l("Bulletin update requested")
 	var data;
 	try {
-		data = getBulletinData();
-	} catch (err){
+		data = loadFile(BULLETIN_PATH, BULLETIN_EXAMPLE_PATH, "ucs2");
+	} catch(err){
 		throw "Could not get bulletin data (" + err.message + ")";
 	}
+	data = sanitizeHtml(data);
+	l("Bulletin sanitized")
 	var newBulletin;
 	try {
 		newBulletin = formatBulletin(data)
@@ -62,29 +121,10 @@ function updateBulletin() {
 	if(newBulletin === bulletin){
 		throw "Bulletin has not changed"
 	}
-	bulletin = newBulletin
+	bulletin = newBulletin;
+	l("Bulletin updated")
 }
-// get bulletin html from file and sanitise it
-function getBulletinData() {
-	// open file in UTF16-LE (ucs2) because windows
-	var data = "";
-	try {
-		data = fs.readFileSync(BULLETIN_PATH, "ucs2")
-		l("Found bulletin at " + BULLETIN_PATH)
-	} catch (err) {
-		l("Could not find bulletin at " + BULLETIN_PATH)
-		try{
-			data = fs.readFileSync(BULLETIN_EXAMPLE_PATH, "ucs2")
-			l("Instead using example bulletin at " + BULLETIN_EXAMPLE_PATH)
-		} catch(err) {
-			throw err;
-		}
-	}
-	str = data.toString();
-	str = sanitizeHtml(str);
-	l("Bulletin sanitized")
-	return str;
-}
+
 // returns bulletin object
 function formatBulletin(str){
 	var date = str.substring(str.indexOf("Plenty Campus – Student Daily Bulletin –") + 42, 
@@ -96,6 +136,7 @@ function formatBulletin(str){
 }
 //sends bulletin to all clients
 function pushBulletin() {
+	l("Bulletin push requested")
 	try {
 		updateBulletin();
 	} catch (err) {
@@ -104,7 +145,7 @@ function pushBulletin() {
 	}
 	try {
 		io.emit("bulletin", {bulletin});
-		l("Bulletin pushed (" + bulletin.date + ")");
+		l("bulletin pushed (" + bulletin.date + ")");
 	} catch (err){
 		e(err);
 	}
@@ -138,6 +179,10 @@ io.on('connection', onConnect)
 function onConnect(socket) {
 	l("Connected to client");
 
+	socket.emit('timetable', timetable);
+	l("Sent timetable to client")
 	socket.emit('bulletin', bulletin);
+	l("Sent bulletin to client")
 	socket.emit('motd', motd);
+	l("Sent motd to client")
 }

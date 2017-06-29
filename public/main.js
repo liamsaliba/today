@@ -132,7 +132,6 @@ function runEveryDay(){
 }
 
 function init() {
-	loadTimetable();
 	loadButtons();
 }
 
@@ -178,17 +177,15 @@ function setBtnState(button, bool){
 
 
 /// Loads master timetable json into variable
-function loadTimetable() {
-	$.getJSON('./timetable.json', function(data){
-		timetable = data;
-		lastDayOfSchool = getLastDayOfSchool();
-		updateDate();
-		updateTime();
-		updateEnhancements();
-		updateActivities();
-		getCurrentInfo();
-		loadComplete();
-	});
+function loadTimetable(data) {
+	timetable = JSON.parse(data);
+	lastDayOfSchool = getLastDayOfSchool();
+	updateDate();
+	updateTime();
+	updateEnhancements();
+	updateActivities();
+	getCurrentInfo();
+	loadComplete();
 }
 
 /// fades out loading screen
@@ -650,28 +647,18 @@ function randomDate(){
 
 
 
-// read file helper function
-// https://stackoverflow.com/questions/14446447/javascript-read-local-text-file
-function importJSON(filename){
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-	    if (this.readyState == 4 && this.status == 200) {
-	        return JSON.parse(this.responseText);
-	    }
-	};
-	xmlhttp.open("GET", filename, true);
-	xmlhttp.send();
-}
-
-
 var socket = io();
 
-socket.on('bulletin', function(data){
-	bulletin = data;
-	updateBulletin();
-})
+socket.on('timetable', function(data) {
+	loadTimetable(data)
+});
 
-function updateBulletin() {
+socket.on('bulletin', function(data) {
+	updateBulletin(data)
+});
+
+function updateBulletin(data) {
+	bulletin = data;
 	table = bulletin.table;
 	announcements = bulletin.announcements;
 	date = bulletin.date;
