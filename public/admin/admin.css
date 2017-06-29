@@ -9,6 +9,10 @@
 	margin: 0;
 }
 
+:root{
+	--scalar: 0.6;
+}
+
 body {
 	width: 100%;
 	height: 100%;
@@ -181,4 +185,34 @@ button, input {
 	color: #555;
 	float: right;
 	margin-top: 28px;
+}
+
+
+
+
+#iframe-wrapper {
+	width: calc(1920px*var(--scalar)); height: calc((880px)*var(--scalar)); padding: 0; overflow: hidden;
+	border: 5px #a27249 solid;
+}
+
+iframe {
+	margin-top: calc(-170px*var(--scalar));
+}
+
+#scaled-frame {
+	width: 1920px; height: 1080px; border: 0px;
+}
+
+#scaled-frame {
+    zoom: var(--scalar);
+    -moz-transform: scale(var(--scalar));
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(var(--scalar));
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(var(--scalar));
+    -webkit-transform-origin: 0 0;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+ 	#scaled-frame  { zoom: 1;  }
 }
