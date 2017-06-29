@@ -26,7 +26,7 @@
 				</div>
 			</div>
 			<div class="container flexbox" id="main-container">
-				<div class="container" id="left-container">
+				<div class="container flexchild" id="left-container">
 					<div class="panel">
 						<div class="box-head">
 							<h1>Preview</h1>
@@ -45,7 +45,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="container" id="right-container">
+				<div class="container flexchild" id="right-container">
 					<div class="panel">
 						<div class="box-head">
 							<h1>TIME CONTROL</h1>
@@ -71,8 +71,15 @@
 						<div class="box-head">
 							<h1>MOTD</h1>
 						</div>
+						<div class="padded box" id="rotator">
+							<div id="motd" >
+								<p></p>
+								<cite></cite>
+							</div>
+						</div>
 						<div class="box">
-
+							<textarea placeholder="Message" rows="3"></textarea>
+							— <input placeholder="Name"></input>
 						</div>
 					</div>
 				</div>

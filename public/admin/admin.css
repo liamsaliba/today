@@ -69,8 +69,12 @@ img#logo {
 	align-content: stretch;
 }
 
+.flexchild {
+	flex: 1;
+	margin: 0px 5px;
+}
+
 #site-container {
-	overflow: hidden;
     height: 100%;
 }
 
@@ -94,7 +98,7 @@ img#logo {
 .box {
 	color: black;
 	border: 2px solid #8f0024;
-	/*margin-bottom: 8px;*/
+	margin-bottom: 8px;
 	overflow: auto;
 	font-size: 24px;
 	padding: 8px;
@@ -103,6 +107,13 @@ img#logo {
 
 .panel {
 	margin-bottom: 20px;
+}
+
+#rotator {
+	border-radius: 10px;
+	background: #ffccd9;
+	height: 120px;
+	opacity: .95;
 }
 
 .box-head {
@@ -124,6 +135,8 @@ img#logo {
 
 
 #footer {
+	position: absolute;
+	bottom: 0;
 	color: #bbb;
 
 	background: #940125;
@@ -134,8 +147,6 @@ img#logo {
 	display: inline-block;
 
 	z-index: 10;
-	padding-bottom: 32000px;
-    margin-bottom: -32000px;
 }
 
 #debug-buttons {
@@ -143,16 +154,25 @@ img#logo {
 	margin: 0 auto;
 }
 
-button, input {
+button, input, textarea {
 	border: none;
 	padding: 10px 15px;
 	color: black;
-	background: #ffb77a;
-	text-align: center;
+	background: white;
 	text-decoration: none;
-	display: inline-block;
 	font-size: 26px;
 	min-width: 120px;
+}
+
+button, input {
+	text-align: center;
+	display: inline-block;
+}
+
+textarea {
+	width: 100%;
+	display: block;
+	margin-bottom: 5px
 }
 
 .padded {
