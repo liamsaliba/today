@@ -15,9 +15,9 @@ var enhancements;
 var activities;
 
 // Button variables
-var DEBUG_RND = false;
-var DEBUG_FRZ = false;
-var DEBUG_TICK = true;
+var timeFreeze = false;
+var timeTick = false;
+var timeReset = false;
 
 Date.prototype.getWeek = function() {
 	var onejan = new Date(this.getFullYear(), 0, 1); // January 1st
@@ -100,21 +100,25 @@ function runEveryDay(){
 }
 
 function init() {
-
+	resetButtons();
 }
 
 $(document).ready(function() { init(); })
 
 // Time/date picker for debug
-flatpickr('#flatpickr', {
+var fp = flatpickr('#flatpickr', {
 	enableTime: true
 });
 
 $("#flatpickr").change(function() {
 	d = new Date(Date.parse($(this).val()));
+	setState(this, true)
+	timeTick = true;
+	socket.emit("time", d);
+
+
 	runEveryHour();
 	runEverySecond();
-	socket.emit("time", d);
 });
 
 /// DEBUG BUTTONS
@@ -122,17 +126,19 @@ $("#flatpickr").change(function() {
 $(".btn-toggle").click(function() {
 	var bool = $(this).attr('name');
 	window[bool] = !window[bool];
-	setBtnState(this, window[bool]);
+	setState(this, window[bool]);
 })
 
-// set button state for all toggleable buttons
-$(".btn-toggle").each(function() {
-	var bool = $(this).attr('name');
-	setBtnState(this, window[bool]);
-});
+function resetButtons() {
+	// set button state for all toggleable buttons
+	$(".btn-toggle, input").each(function() {
+		var bool = $(this).attr('name');
+		setState(this, window[bool]);
+	});
+}
 
 // show button state for its variable
-function setBtnState(button, bool){
+function setState(button, bool){
 	$(button).removeClass("bg-"+!bool).addClass("bg-"+bool);
 }
 
@@ -229,15 +235,19 @@ function updateTime() {
 
 // Date function with debugging features
 function getCurrentDate(){
+	if(timeReset) {
+		timeReset = false;
+		timeTick = false;
+		resetButtons();
+	}	
 	// Freezes time
-	if(DEBUG_FRZ){
+	if(timeFreeze){
 		return
-	} // randomise date
-	else if(DEBUG_RND){
-		return randomDate();
 	} // continue ticking from previous date
-	else if(DEBUG_TICK){
-		return new Date(d.getTime() + 1000);
+	else if(timeTick){
+		var tempDate = new Date(d.getTime() + 1000);
+		fp.setDate(tempDate);
+		return tempDate;
 	} // new date (default)
 	else{
 		return new Date();

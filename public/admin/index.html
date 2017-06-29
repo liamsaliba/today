@@ -8,6 +8,7 @@
 		    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 		    <link rel="stylesheet" href="/admin/admin.css">
+		    <link rel="stylesheet" href="/colors.css">
 		    <link rel="stylesheet" href="/lib/flatpickr.min.css">
 		    <title>Ivanhoe today admin</title>
 	</head>
@@ -51,7 +52,7 @@
 						</div>
 						<div class="box">
 							<div id="debug-buttons">
-								<input id="flatpickr" type="text" placeholder="Pick Date / Time">
+								<input id="flatpickr" name="timeTick" type="text" placeholder="Pick Date / Time">
 								<button class="btn-toggle" id="btn-reset" name="timeReset" type="button">Reset</button>
 								<button class="btn-toggle" id="btn-freeze" name="timeFreeze" type="button">Freeze</button>
 							</div>
@@ -62,8 +63,8 @@
 							<h1>TIMETABLE</h1>
 						</div>
 						<div class="box">
-							<button class="btn-toggle" id="btn-reset" name="timeReset" type="button">Main</button>
-							<button class="btn-toggle" id="btn-freeze" name="timeFreeze" type="button">Temporary</button>
+							<button class="btn-toggle" id="btn-reset" name="mainTT" type="button">Main</button>
+							<button class="btn-toggle" id="btn-freeze" name="tempTT" type="button">Temporary</button>
 						</div>
 					</div>
 					<div class="panel">
