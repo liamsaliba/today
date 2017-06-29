@@ -172,9 +172,7 @@ function pushMotd(info, from){
 
 
 
-io.on('connection', onConnect)
-
-function onConnect(socket) {
+io.on('connection', (socket) => {
 	l("Connected to client");
 
 	socket.emit('timetable', timetable);
@@ -183,13 +181,11 @@ function onConnect(socket) {
 	l("Sent bulletin to client")
 	socket.emit('motd', motd);
 	l("Sent motd to client")
-}
+})
 
-aio.on('connection', admin_onConnect)
-
-function admin_onConnect(socket) {
+io.of('/admin').on('connection', (socket) => {
 	l("Connected to admin client");
 
 	socket.emit('timetable', timetable);
 	l("Sent timetable to admin client")
-}
+})
