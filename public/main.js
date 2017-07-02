@@ -1,6 +1,4 @@
-var ts = setInterval(runEverySecond, 1000);
-var th = setInterval(runEveryHour, 3600000);
-var td = setInterval(runEveryDay, 86400000);
+var ts, th, td;
 
 var d = new Date();
 const days = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"];
@@ -131,7 +129,9 @@ function runEveryDay(){
 }
 
 function init() {
-
+	ts = setInterval(runEverySecond, 1000);
+	th = setInterval(runEveryHour, 3600000);
+	td = setInterval(runEveryDay, 86400000);
 }
 
 $(document).ready(function() { init(); })

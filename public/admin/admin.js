@@ -1,6 +1,4 @@
-var ts = setInterval(runEverySecond, 1000);
-var th = setInterval(runEveryHour, 3600000);
-var td = setInterval(runEveryDay, 86400000);
+var ts, th, td;
 
 var d = new Date();
 const days = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"];
@@ -72,8 +70,6 @@ Date.prototype.formatDay = function(compare) {
 	else return days[compare.getDay()] + "day"
 }
 
-//TODO: add admin interface with switchable timetables (duplicate timetable "temporary" object)
-
 Number.prototype.leadZero = function(){
 	if (this < 10)
 		return "0" + this;
@@ -100,6 +96,9 @@ function runEveryDay(){
 }
 
 function init() {
+	ts = setInterval(runEverySecond, 1000);
+	th = setInterval(runEveryHour, 3600000);
+	td = setInterval(runEveryDay, 86400000);
 	resetButtons();
 }
 
