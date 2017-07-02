@@ -185,7 +185,4 @@ io.on('connection', (socket) => {
 
 io.of('/admin').on('connection', (socket) => {
 	l("Connected to admin client");
-
-	socket.emit('timetable', timetable);
-	l("Sent timetable to admin client")
 })
