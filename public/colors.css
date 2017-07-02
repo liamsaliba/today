@@ -116,8 +116,10 @@
 
 .bg-true {
 	background: #00a81f !important;
+	color: white;
 }
 
 .bg-false {
 	background: #a81600 !important;
+	color: white;
 }
