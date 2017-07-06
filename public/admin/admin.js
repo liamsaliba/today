@@ -130,7 +130,7 @@ $(".btn-toggle").click(function() {
 
 function resetButtons() {
 	// set button state for all toggleable buttons
-	$(".btn-toggle, input").each(function() {
+	$("#debug-buttons .btn-toggle, #debug-buttons input").each(function() 	{
 		var bool = $(this).attr('name');
 		setState(this, window[bool]);
 	});
@@ -254,9 +254,29 @@ function getCurrentDate(){
 }
 
 
-
-const socket = io.connect("/admin");
+const socket = io.connect("/");
+const admin_socket = io.connect("/admin");
 
 socket.on('timetable', function(data) {
 	loadTimetable(data)
+});
+
+socket.on('motd', function(data){
+	if(data === null){
+		$("#rotator").fadeOut();
+		return;
+	}
+	$("#rotator").fadeIn();
+	$("#motd p").html(data.info);
+	$("#motd cite").html("— " + data.from);
+})
+
+$('#motd-input').submit(function(){
+	var data = $('#motd-input form').serializeArray().reduce(function(obj, item) {
+	    obj[item.name] = item.value;
+	    return obj;
+	}, {});
+	admin_socket.emit("motd", data);
+	setState($("#motd-submit"),true);
+	return false;
 });

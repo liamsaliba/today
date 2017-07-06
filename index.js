@@ -167,9 +167,8 @@ function pushMotd(info, from){
 	} catch (err){
 		e(err)
 	}
+	motd = {info: info, from: from}
 }
-
-
 
 
 io.on('connection', (socket) => {
@@ -179,10 +178,19 @@ io.on('connection', (socket) => {
 	l("Sent timetable to client")
 	socket.emit('bulletin', bulletin);
 	l("Sent bulletin to client")
-	socket.emit('motd', motd);
-	l("Sent motd to client")
+	if(motd !== undefined) {
+		socket.emit('motd', motd);
+		l("Sent motd to client")
+	}
 })
 
 io.of('/admin').on('connection', (socket) => {
 	l("Connected to admin client");
+
+	socket.on("motd", function(data){
+		l("Caught new motd")
+		motd = data;
+		io.sockets.emit("motd", motd);
+		l("Sent motd to clients");
+	})
 })

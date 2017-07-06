@@ -114,6 +114,7 @@ img#logo {
 	background: #ffccd9;
 	height: 120px;
 	opacity: .95;
+	display: none;
 }
 
 .box-head {
@@ -149,10 +150,6 @@ img#logo {
 	z-index: 10;
 }
 
-#debug-buttons {
-	display: inline-block;
-	margin: 0 auto;
-}
 
 button, input, textarea {
 	border: none;
@@ -164,12 +161,12 @@ button, input, textarea {
 	min-width: 120px;
 }
 
-button, input {
+button, #flatpickr {
 	text-align: center;
 	display: inline-block;
 }
 
-textarea {
+form textarea, form input {
 	width: 100%;
 	display: block;
 	margin-bottom: 5px

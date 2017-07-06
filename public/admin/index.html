@@ -62,7 +62,7 @@
 						<div class="box-head">
 							<h1>TIMETABLE SWITCHER</h1>
 						</div>
-						<div class="box">
+						<div class="box" id="debug-buttons">
 							<button class="btn-toggle" id="btn-reset" name="mainTT" type="button">Main</button>
 							<button class="btn-toggle" id="btn-freeze" name="tempTT" type="button">Temporary</button>
 						</div>
@@ -72,14 +72,19 @@
 							<h1>MOTD</h1>
 						</div>
 						<div class="padded box" id="rotator">
-							<div id="motd" >
+							<div id="motd">
 								<p></p>
 								<cite></cite>
 							</div>
 						</div>
-						<div class="box">
-							<textarea placeholder="Message" rows="3"></textarea>
-							— <input placeholder="Name"></input>
+						<div class="box" id="motd-input">
+							<form action="">
+								Message (announcement)
+								<textarea id="motd-message" name="info" placeholder="Message" rows="3"></textarea>
+								Name (from)
+								<input type="text" id="motd-from" placeholder="Name" name="from" value="The School"></input>
+								<input type="submit" id="motd-submit"></button>
+							</form>
 						</div>
 					</div>
 				</div>

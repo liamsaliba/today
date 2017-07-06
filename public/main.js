@@ -72,8 +72,6 @@ Date.prototype.formatDay = function(compare) {
 	else return days[compare.getDay()] + "day"
 }
 
-//TODO: add admin interface with switchable timetables (duplicate timetable "temporary" object)
-
 Number.prototype.leadZero = function(){
 	if (this < 10)
 		return "0" + this;
