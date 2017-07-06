@@ -257,7 +257,7 @@ function getCurrentDate(){
 
 
 const socket = io.connect("/");
-const admin_socket = io.connect("/admin");
+const adminSocket = io.connect("/admin");
 
 socket.on('timetable', function(data) {
 	loadTimetable(data)
@@ -281,7 +281,9 @@ $('#motd-input').submit(function(){
 	    obj[item.name] = item.value;
 	    return obj;
 	}, {});
-	admin_socket.emit("motd", motd);
+	if (motd.info === "")
+		motd = null;
+	adminSocket.emit("motd", motd);
 	setState($("#motd-submit"),true);
 	return false;
 });
