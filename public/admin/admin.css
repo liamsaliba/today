@@ -80,7 +80,7 @@ img#logo {
 
 #main-container{ 
 	padding: 90px 30px;
-	min-height: calc(100% - 80px);
+	min-height: calc(100vh - 43px);
 	z-index: 0;
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -136,16 +136,12 @@ img#logo {
 
 
 #footer {
-	position: absolute;
-	bottom: 0;
 	color: #bbb;
 
 	background: #940125;
 	width: 100%;
 	padding: 10px 20px;
 	border-top: 5px solid #a27249;
-
-	display: inline-block;
 
 	z-index: 10;
 }
