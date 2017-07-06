@@ -11,6 +11,7 @@ var timetable;
 var bulletin;
 var enhancements;
 var activities;
+var motd;
 
 // Button variables
 var timeFreeze = false;
@@ -134,6 +135,7 @@ function resetButtons() {
 		var bool = $(this).attr('name');
 		setState(this, window[bool]);
 	});
+	setState($("#motd-submit"),false);
 }
 
 // show button state for its variable
@@ -269,14 +271,17 @@ socket.on('motd', function(data){
 	$("#rotator").fadeIn();
 	$("#motd p").html(data.info);
 	$("#motd cite").html("— " + data.from);
+	if(motd !== data)
+		setState($("#motd-submit"),false);
+	else motd = data;
 })
 
 $('#motd-input').submit(function(){
-	var data = $('#motd-input form').serializeArray().reduce(function(obj, item) {
+	motd = $('#motd-input form').serializeArray().reduce(function(obj, item) {
 	    obj[item.name] = item.value;
 	    return obj;
 	}, {});
-	admin_socket.emit("motd", data);
+	admin_socket.emit("motd", motd);
 	setState($("#motd-submit"),true);
 	return false;
 });
