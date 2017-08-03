@@ -1,5 +1,8 @@
 var ts, th, td;
 
+const socket = io.connect("/");
+const adminSocket = io.connect("/admin");
+
 var d = new Date();
 const days = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"];
 const months = ["January", "Feburary", "March", "April", "May", "June", "July",
@@ -114,7 +117,7 @@ $("#flatpickr").change(function() {
 	d = new Date(Date.parse($(this).val()));
 	setState(this, true)
 	timeTick = true;
-	socket.emit("time", d);
+	adminSocket.emit("time-set", d);
 
 
 	runEveryHour();
@@ -237,12 +240,14 @@ function updateTime() {
 // Date function with debugging features
 function getCurrentDate(){
 	if(timeReset) {
+		adminSocket.emit("time-set", "reset")
 		timeReset = false;
 		timeTick = false;
 		resetButtons();
 	}	
 	// Freezes time
 	if(timeFreeze){
+		adminSocket.emit("time-set", "freeze")
 		return
 	} // continue ticking from previous date
 	else if(timeTick){
@@ -256,8 +261,7 @@ function getCurrentDate(){
 }
 
 
-const socket = io.connect("/");
-const adminSocket = io.connect("/admin");
+
 
 socket.on('timetable', function(data) {
 	loadTimetable(data)

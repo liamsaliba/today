@@ -193,4 +193,10 @@ io.of('/admin').on('connection', (socket) => {
 		io.sockets.emit("motd", motd);
 		l("Sent motd to clients");
 	})
+
+	socket.on("time-set", function(data){
+		l("Caught time (" + data + ")")
+		io.sockets.emit("time-set", data)
+		l("Sent time to clients")
+	})
 })

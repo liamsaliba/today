@@ -13,9 +13,8 @@ var enhancements;
 var activities;
 
 // Button variables
-var DEBUG_RND = false;
 var DEBUG_FRZ = false;
-var DEBUG_TICK = true;
+var DEBUG_TICK = false;
 
 Date.prototype.getWeek = function() {
 	var onejan = new Date(this.getFullYear(), 0, 1); // January 1st
@@ -142,10 +141,7 @@ flatpickr('#flatpickr', {
 });
 
 $("#flatpickr").change(function() {
-	d = new Date(Date.parse($(this).val()));
-	runEveryHour();
-	runEverySecond();
-	updateBulletin(bulletin); // simply to change title
+	setDate(new Date(Date.parse($(this).val())));
 });
 
 /// DEBUG BUTTONS
@@ -629,6 +625,13 @@ function getCurrentDate(){
 	};
 }
 
+function setDate(date){
+	d = date;
+	runEveryHour();
+	runEverySecond();
+	updateBulletin(bulletin);
+}
+
 function randomDate(){
    var startDate = new Date(2017,0,1,8,0,0,0).getTime();
    var endDate =  new Date(2017,0,1,17,0,0,0).getTime();
@@ -702,4 +705,18 @@ socket.on('motd', function(data){
 	$("#rotator").fadeIn();
 	$("#motd p").html(data.info);
 	$("#motd cite").html("— " + data.from);
+})
+
+socket.on('time-set', function(data){
+	if(data === "reset") {
+		DEBUG_TICK = false;
+		DEBUG_FRZ = false;
+	}
+	else if (data === "freeze")
+		DEBUG_FRZ = true;
+	else {
+		setDate(new Date(data));
+		DEBUG_TICK = true;
+		DEBUG_FRZ = false;
+	}
 })
