@@ -287,7 +287,7 @@
       "activity": [
         {
           "name": "Round Square Meeting",
-          "day": 5,
+          "day": 1,
           "periods": ["lunch"]
         },
         {
@@ -410,6 +410,56 @@
           "date": "2017-09-19",
           "abbr": "EP",
           "periods": [5,6]
+        },
+        {
+          "name": "Formal Preparation",
+          "date": "2017-08-11",
+          "periods": [4,5,6]
+        },
+        {
+          "name": "Wellbeing",
+          "date": "2017-08-14",
+          "periods": [4]
+        },
+        {
+          "name": "Head of Campus Assembly",
+          "date": "2017-08-18",
+          "periods": [4]
+        },
+        {
+          "name": "Wellbeing - The Power of Sleep",
+          "date": "2017-08-21",
+          "periods": [4]
+        },
+        {
+          "name": "Year 9 Performance Assembly",
+          "date": "2017-08-25",
+          "periods": [4]
+        },
+        {
+          "name": "Winter Sports Assembly",
+          "date": "2017-09-01",
+          "periods": [4]
+        },
+        {
+          "name": "VTAC Session w Ms McFadden",
+          "date": "2017-09-04",
+          "periods": [4]
+        },
+        {
+          "name": "Final Assembly Rehearsal",
+          "date": "2017-09-08",
+          "periods": [4]
+        },
+        {
+          "name": "Senior Years Chapel",
+          "date": "2017-09-11",
+          "periods": [4]
+        },
+        {
+          "name": "Year 8 Performance Assembly",
+          "date": "2017-09-15",
+          "periods": [4]
         }
       ]
     }
