@@ -464,8 +464,7 @@ a {
 .marquee div {
 	float: top;
 	height: 50%;
-	padding-top: 30px;
-	padding-bottom: 30px;
+	padding-bottom: 50px;
 	animation-name: marquee;
 	animation-iteration-count: infinite;
 	animation-timing-function: linear;
@@ -495,6 +494,7 @@ a {
 
 .bulletin-venue {
 	font-style: italic;
+	display: block;
 }
 
 #events li {
