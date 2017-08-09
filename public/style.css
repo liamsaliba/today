@@ -334,7 +334,8 @@ img#logo {
 }
 
 #debug-buttons {
-	display: inline-block;
+	/*display: inline-block;*/
+	display: none;
 	float: right;
 }
 
@@ -463,7 +464,8 @@ a {
 .marquee div {
 	float: top;
 	height: 50%;
-	padding-bottom: 120px;
+	padding-top: 30px;
+	padding-bottom: 30px;
 	animation-name: marquee;
 	animation-iteration-count: infinite;
 	animation-timing-function: linear;
@@ -477,6 +479,7 @@ a {
  	0%   { transform: translateY(0)}
     100% { transform: translateY(-100%) }
 }
+
 
 
 
@@ -498,3 +501,4 @@ a {
 	padding-bottom: 20px;
 	list-style: none;
 }
+

@@ -613,9 +613,6 @@ function getCurrentDate(){
 	// Freezes time
 	if(DEBUG_FRZ){
 		return
-	} // randomise date
-	else if(DEBUG_RND){
-		return randomDate();
 	} // continue ticking from previous date
 	else if(DEBUG_TICK){
 		return new Date(d.getTime() + 1000);
@@ -679,8 +676,7 @@ function updateBulletin(data) {
 			tabletext += "<li><span class='bulletin-event'>" + event + "</span> <span class='bulletin-venue'>" + venue + "</span><span class='bulletin-time'>" + startTime + " - " + endTime + "</span></li>";
 		}
 	});
-	$("#events .scroller").html(tabletext);
-	$("#announcements .scroller").html("<p></p>" + announcements);
+	$("#events .scroller").html("<h2>Events</h2>" + tabletext + "<br><br><h2>Announcements</h2>" + announcements);
 
 	// ensure that if the scroller is short enough, there's no need to scroll it
 	var duration;
@@ -689,7 +685,12 @@ function updateBulletin(data) {
 	} else
 		duration = 9999999999999;
 	$("#events .marquee div").css("animation-duration", duration)
+}
 
+function updateNotices(data){
+	$("#announcements .scroller").html("<p></p>" + announcements);
+
+	var duration;
 	if($("#announcements .scroller").height() > $("#announcements").height())
 		duration = (.08*$("#announcements .scroller").height() + "s");
 	else 
