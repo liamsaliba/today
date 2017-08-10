@@ -4,17 +4,13 @@
 	<head>
 		<link rel="shortcut icon" href="img/favicon.ico" type="image/vnd.microsoft.icon" />
 
-		<script type="text/javascript">
-		  if (screen.width <= 800) {
-		    window.location = "/mobile/";
-		  }
-		</script>
-
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+			<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+			<meta name="theme-color" content="#940125">
 
-	    <link rel="stylesheet" href="/style.css">
+	    <link rel="stylesheet" href="/mobile/style.css">
 	    <link rel="stylesheet" href="/colors.css">
 	    <link rel="stylesheet" href="/lib/flatpickr.min.css">
 
@@ -24,9 +20,9 @@
 	<body>
 		<div class="container">
 			<div id="page-header">
-				<img id="logo" src="img/logo.png">
+				<img id="logo" src="/img/logo.png">
 				<h1><span id="day">thurs</span><b>day</b> <b>&#8226;</b>
-					<span id="hour">12</span>:<span id="min">12</span><small>:</small><small id="sec"></small><b id="meridian"></b></h1>
+				<span id="hour">12</span>:<span id="min">12</span><small>:</small><small id="sec"></small><b id="meridian"></b></h1>
 				<h2><span id="term"></span> <span id="term-info"><b>&#8226;</b> week <span id="week">1</span> <b>&#8226;</b> day <span id="daynum">1</span></span>
 				 <b>&#8226;</b> <span id="shortdate"></span></h2>
 				<div class="padded box" id="rotator">
@@ -35,18 +31,15 @@
 						<cite></cite>
 					</div>
 				</div>
-				<div id="plenty-campus">
-					Year 12 - Plenty Campus
-				</div>
 				<div id="header-back">
 					<span id="yearF"></span>
 				</div>
 			</div>
 
 			<div class="container flexbox" id="main-container">
-				<div class="container" id="left-container">
+				<div class="container flexchild" id="left-container">
 					<div class="flexbox panel" id="timetable">
-						<div class="column-now">
+						<div class="column-now flexchild">
 							<div class="box-head">
 								<h1><span class="title"></span> <span class="period badge badge-info"></span> <span class="block badge badge-warning"></span></span> <span class="time-till badge"></span></h1>
 								<br>
@@ -87,7 +80,7 @@
 							</div>
 						</div>
 
-						<div class="column-next">
+						<div class="column-next flexchild">
 							<div class="box-head">
 								<h1><span class="title"></span> <span class="period badge badge-info"></span> <span class="block badge badge-warning"></span></h1>
 								<br>
@@ -129,7 +122,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="container" id="right-container">
+				<div class="container flexchild" id="right-container">
 					<div class="panel">
 						<div class="box-head">
 							<h1><span class="title" id="today"></span> <span class="badge badge-info" id="bulletin-date"></span></h1>
@@ -167,7 +160,7 @@ Thank you for those of you who have returned them already.
 			</div>
 
 			<div id="footer">
-				<b>Ivanhoe today</b> - Liam Saliba 2017 - please contact for any ideas or issues
+				<b id="plenty-campus">Liam Saliba, 86737</b> |
 				<span class="school-left"></span>
 				<div id="debug-buttons">
 					<button class="btn-toggle" id="btn-freeze" name="DEBUG_FRZ" type="button">Freeze Time</button>
@@ -178,7 +171,7 @@ Thank you for those of you who have returned them already.
 		</div>
 
 		<div class="fullscreen" id="loading-container">
-			<img class="centrecentre" id="loading-icon" src="img/loading.gif">
+			<img class="centrecentre" id="loading-icon" src="/img/loading.gif">
 			<script>
 				//random image loading screen
 				//document.getElementById("loading-icon").src = "img/pic ("+Math.ceil(Math.random()*95)+").jpeg";
@@ -200,7 +193,7 @@ Thank you for those of you who have returned them already.
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="/lib/flatpickr.min.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
-		<script src="/main.js"></script>
+		<script src="/mobile/main.js"></script>
 	</body>
 
 </html>

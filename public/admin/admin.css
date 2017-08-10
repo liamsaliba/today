@@ -78,7 +78,7 @@ img#logo {
     height: 100%;
 }
 
-#main-container{ 
+#main-container{
 	padding: 90px 30px;
 	min-height: calc(100vh - 43px);
 	z-index: 0;

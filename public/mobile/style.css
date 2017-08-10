@@ -13,14 +13,11 @@ html, body {
 	width: 100%;
 	height: 100%;
 	margin: 0;
-	overflow: hidden;
 }
 
 .container{
 	position: relative;
-	margin-right: auto;
-	margin-left: auto;
-	max-width: 1920px;
+	margin: 0 auto;
 	height: 100%;
 	padding: 0;
 }
@@ -39,6 +36,7 @@ div {
 
 #loading-container {
 	background: white;
+	opacity: .98;
 	z-index: 100;
 }
 
@@ -54,17 +52,16 @@ div {
 /* Header stuff */
 
 #meridian {
-	margin-left: 5px;
+	margin-left: 2px;
 }
 
 #page-header {
 	position: relative;
 	background: #940125;
 	width: 100%;
-	height: 170px;
-	padding: 20px;
-	padding-top: 5px;
-	border-bottom: 10px solid #a27249;
+	height: 54px;
+	padding: 5px 10px;
+	border-bottom: 4px solid #a27249;
 	color: white;
 	background: url(/img/headerBg.jpg);
 	background-size: cover;
@@ -74,10 +71,8 @@ div {
 #page-header h1 {
 	letter-spacing: -3px;
 	font-weight: normal;
-	display: inline-block;
-	font-size: 70px;
-	margin-top: 22px;
-	position: fixed;
+	display: block;
+	font-size: 1.8em;
 	overflow: hidden;
 	text-transform: lowercase;
 }
@@ -88,20 +83,20 @@ div {
 }
 
 #page-header h2 {
-	top: 10px;
-	opacity: .98;
-	font-size: 36px;
-	font-weight: normal;
 	position: relative;
+	top: -8px;
+	opacity: .98;
+	font-size: 0.8em;
+	font-weight: normal;
 	display: inline-block;
 	text-transform: lowercase;
 }
 
 img#logo {
-	height: 110px;
-	margin: 10px 15px;
-	margin-bottom: 0px;
-	margin-right: 30px
+	height: 40px;
+	float: left;
+	padding-right: 10px;
+	margin-top: -2px;
 }
 
 #rotator {
@@ -119,18 +114,17 @@ img#logo {
 
 #header-back{
 	position: absolute;
-	top: -70px;
-	left: 380px;
-	height: 230px;
+	top: -40px;
+	right: 10px;
+	text-align: right;
 	overflow: hidden;
-	font-size: 300px;
+	font-size: 160px;
 	opacity: .15;
 	letter-spacing: -10px;
+	height: 90px;
 }
 
 #plenty-campus{
-	left: 125px;
-	position: absolute;
 	text-transform: uppercase;
 	font-weight: bold;
 }
@@ -140,12 +134,22 @@ img#logo {
 /* body stuff */
 .flexbox {
 	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-content: stretch;
 }
 
+.flexchild {
+	flex: 1;
+	margin: 0px 5px;
+}
+
+
 #main-container{
-	padding: 15px 30px;
+	padding: 6px;
+	padding-top: 15px;
 	z-index: 0;
-	background-image: url(/img/bodyBg.jpg);
+	background: #eaedf2 url(/img/bodyBg.jpg);
 	background-size: cover;
 }
 
@@ -155,7 +159,7 @@ img#logo {
 
 #right-container {
 	width: 45%;
-	margin-left: 20px;
+	margin-left: 5px;
 }
 
 #holiday-container {
@@ -166,25 +170,24 @@ img#logo {
 
 #holiday-container .box {
 	width: 75%;
-	font-size: 34px;
+	font-size: 14px;
 }
 
 .panel {
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 }
 
 .box-head {
-	padding: 5px;
 	font-weight: bold;
 	color: #3c2a1b;
-	height: 75px;
+	height: 36px;
 	overflow: hidden;
 }
 
 
 .box-head h1 {
 	display: inline-block;
-	font-size: 3.5em;
+	font-size: 1.75em;
 	word-spacing: -5px;
 }
 
@@ -194,43 +197,36 @@ img#logo {
 
 .box {
 	color: black;
-	border: 2px solid #8f0024;
+	border: 1px solid #8f0024;
 	/*margin-bottom: 8px;*/
 	overflow: hidden;
-	font-size: 24px;
-	padding: 8px;
+	font-size: 1em;
+	padding: 5px;
 	background: #ffebf0;
 }
 
 
 #events {
-	max-height: 340px;
+	max-height: 200px;
 }
 
 #announcements {
-	max-height: 330px;
+	max-height: 200px;
 }
-
-/* unused */
-#upcoming {
-	height: 200px;
-}
-
-
-
 
 
 
 
 
 #timetable .box {
-	margin-bottom: 10px;
-	height: 90px;
+	margin-bottom: 4px;
+	height: 52px;
 	/*display: none;*/
+	overflow: hidden;
 }
 
 .box-short {
-	height: 66px !important;
+	height: 36px !important;
 }
 
 .box-short .line:nth-child(2) {
@@ -239,14 +235,11 @@ img#logo {
 
 .column-now {
 	width: 55%;
-	margin-right: 12px;
-	max-height: 850px;
 }
 
 .column-next {
 	width: 45%;
 	opacity: .85;
-	max-height: 850px;
 }
 
 .column-now > .box {
@@ -256,10 +249,6 @@ img#logo {
 
 .column-next > .box {
 	display: none;
-}
-
-#timetable .box {
-	overflow: hidden;
 }
 
 #timetable .box .line {
@@ -276,13 +265,13 @@ img#logo {
 #timetable .box .line:not(:first-child) {
 	position: relative;
 	top: -5px;
+	font-size: 1em;
 }
 
 
 .subject-title {
-	font-size: 40px;
+	font-size: 20px;
 	/*text-transform: uppercase;*/
-	width: 600px;
 }
 
 .column-now .subject-title {
@@ -311,21 +300,14 @@ img#logo {
 	position: absolute;
 	bottom: 0;
 	color: #bbb;
-
+	font-size: 11px;
 	background: #940125;
 	width: 100%;
-	padding: 10px 20px;
-	border-top: 5px solid #a27249;
+	padding: 5px 10px;
+	border-top: 2px solid #a27249;
 
-	display: inline-block;
 
 	z-index: 10;
-
-	max-width: 1920px;
-}
-
-#footer .school-left {
-	margin-left: 20px;
 }
 
 #school-left {
@@ -334,7 +316,7 @@ img#logo {
 }
 
 #debug-buttons {
-	/*display: inline-block;*/
+	display: inline-block;
 	display: none;
 	float: right;
 }
@@ -354,14 +336,14 @@ button, input {
 }
 
 .padded {
-	padding: 10px 15px;
+	padding: 3px 5px;
 }
 
 
 
 .badge {
-	font-size: 24px;
-  padding: 3px 10px;
+	font-size: 12px;
+  padding: 2px 5px;
   font-weight: bold;
   white-space: nowrap;
   color: #ffffff;
@@ -371,7 +353,7 @@ button, input {
   border-radius: 9px;
   vertical-align: middle;
   position: relative;
-  top: -4px;
+  top: -2px;
   	word-spacing: 0px;
   	display: none;
 }
@@ -394,22 +376,22 @@ button, input {
 }
 
 .tiny {
-	font-size: .8em;
+	font-size: 8px;
 }
 
 .info {
 	font-weight: normal;
 	font-style: italic;
-	font-size: 24px;
+	font-size: 14px;
 	color: #555;
 	float: right;
-	margin-top: 28px;
+	margin-top: 10px;
 }
 
 .start-time, .end-time {
 	position: relative;
 	top: -10px;
-	font-size: 12px;
+	font-size: 8px;
 	font-weight: normal;
 	color: #aaa;
 }
@@ -462,17 +444,18 @@ a {
 
 
 .bulletin-time {
-	font-size: 18px;
+	font-size: .6em;
 	display: block;
 }
 
 .bulletin-event {
 	font-weight: bold;
-	font-size: 32px;
+	font-size: 1em;
 }
 
 .bulletin-venue {
 	font-style: italic;
+	font-size: .8em;
 	display: block;
 }
 
