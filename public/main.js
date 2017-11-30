@@ -30,8 +30,8 @@ Date.prototype.daysTill = function(date) {
 	return Math.ceil((date.getTime() - this.getTime()) / 1000 / 60 / 60 / 24);
 }
 
-const FMT_PREFIX = "<small>";
-const FMT_SUFFIX = "</small>";
+const FORMAT_PREFIX = "<small>";
+const FORMAT_SUFFIX = "</small>";
 Date.prototype.timeTill = function(date) {
 	var secondsLeft = this.secondsTill(date);
 	if(secondsLeft <= 0) return 0;
@@ -44,10 +44,10 @@ Date.prototype.timeTill = function(date) {
 
 	for(var i in timeTill){
 		if(timeTill[i][0] !== 0){
-			returnedString += timeTill[i][0] + FMT_PREFIX + " " + timeTill[i][1];
+			returnedString += timeTill[i][0] + FORMAT_PREFIX + " " + timeTill[i][1];
 			if(timeTill[i][0].needsPlural())
 				returnedString += "s";
-			returnedString += FMT_SUFFIX + " ";
+			returnedString += FORMAT_SUFFIX + " ";
 		}
 	}
 	return returnedString.trim();
@@ -56,7 +56,6 @@ Date.prototype.timeTill = function(date) {
 Date.prototype.isToday = function(date) {
 	return new Date(this.getTime()).setHours(0,0,0,0) === new Date(date.getTime()).setHours(0,0,0,0);
 }
-// was parseTime
 Date.prototype.timeOf = function(time){
 	return new Date(this.toDateString() + " " + time);
 }
@@ -87,7 +86,7 @@ jQuery.fn.extend({
 		this.slideUp(100, function(){
 			$(this).html(text).slideDown(100);
 		});
-	}, // animation when text is changed
+	}, // animation only when text is changed
 	bhtml: function(text) {
 		if(text != $(this).html()){
 			$(this).ahtml(text);
@@ -550,7 +549,11 @@ function getTerm(date) {
 			}
 		}
 	}
-	return undefined;
+	return {
+          "name": "Unknown Term",
+          "school": false,
+          "break": true
+        };
 }
 
 function updateDate() {
@@ -566,7 +569,6 @@ function updateDate() {
 	var day = d.getDay();
 	var week, week2;
 	term = getTerm(d);
-
 	$("#day").bhtml(days[day]);
 	$("#shortdate").bhtml(date.leadZero() + "/" + month.leadZero() + "/" + year);
 	$("#yearF").html(year);
